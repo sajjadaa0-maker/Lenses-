@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب عدسات طبية - عيادة البصريات</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .eye-section {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .eye-title {
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+        }
+        button {
+            width: 100%;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #128C7E;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>طلب عدسات طبية</h2>
+    
+    <div class="form-group">
+        <label>رقم هاتف التاجر (مع رمز الدولة بدون +):</label>
+        <input type="text" id="merchantPhone" value="9647700000000" placeholder="مثال: 9647700000000">
+    </div>
+
+    <div class="form-group">
+        <label>نوع العدسة:</label>
+        <select id="lensType">
+            <option value="بلوكات (Blue Cut - حماية من الضوء الأزرق)">بلوكات (Blue Cut)</option>
+            <option value="ملتيكوتد (Multicoated - عادية)">ملتيكوتد (Multicoated)</option>
+            <option value="فوتو / تظليل شمسي (Photochromic)">فوتو / تظليل شمسي</option>
+            <option value="فوتو بلوكات (Photo Blue Cut)">فوتو بلوكات</option>
+            <option value="بروجريسيف (Progressive)">بروجريسيف (تدريجي)</option>
+            <option value="باي فوكل (Bifocal)">باي فوكل (ثنائية البؤرة)</option>
+            <option value="كروية فقط (Spherical)">كروية (Spherical)</option>
+            <option value="مركبة / انحراف (Toric/Cylinder)">مركبة / انحراف (Cylinder)</option>
+        </select>
+    </div>
+
+    <!-- العين اليمنى -->
+    <div class="eye-section">
+        <div class="eye-title">العين اليمنى (OD)</div>
+        <div class="grid-3">
+            <div>
+                <label>SPH</label>
+                <input type="text" id="odSph" placeholder="0.00">
+            </div>
+            <div>
+                <label>CYL</label>
+                <input type="text" id="odCyl" placeholder="0.00">
+            </div>
+            <div>
+                <label>AXIS</label>
+                <input type="text" id="odAxis" placeholder="0°">
+            </div>
+        </div>
+    </div>
+
+    <!-- العين اليسرى -->
+    <div class="eye-section">
+        <div class="eye-title">العين اليسرى (OS)</div>
+        <div class="grid-3">
+            <div>
+                <label>SPH</label>
+                <input type="text" id="osSph" placeholder="0.00">
+            </div>
+            <div>
+                <label>CYL</label>
+                <input type="text" id="osCyl" placeholder="0.00">
+            </div>
+            <div>
+                <label>AXIS</label>
+                <input type="text" id="osAxis" placeholder="0°">
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="form-group">
+            <label>العدد (أزواج/عدسات):</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+        <div class="form-group">
+            <label>ملاحظات إضافية (مؤشر الضغط/ملاحظة):</label>
+            <input type="text" id="notes" placeholder="مثال: Index 1.61 أو اسم العميل">
+        </div>
+    </div>
+
+    <button onclick="sendToWhatsApp()">إرسال الطلب عبر واتساب</button>
+</div>
+
+<script>
+    function sendToWhatsApp() {
+        const phone = document.getElementById('merchantPhone').value.trim();
+        const lensType = document.getElementById('lensType').value;
+        const quantity = document.getElementById('quantity').value;
+        const notes = document.getElementById('notes').value;
+
+        const odSph = document.getElementById('odSph').value || '0.00';
+        const odCyl = document.getElementById('odCyl').value || '0.00';
+        const odAxis = document.getElementById('odAxis').value || '-';
+
+        const osSph = document.getElementById('osSph').value || '0.00';
+        const osCyl = document.getElementById('osCyl').value || '0.00';
+        const osAxis = document.getElementById('osAxis').value || '-';
+
+        if (!phone) {
+            alert('يرجى إدخال رقم هاتف التاجر');
+            return;
+        }
+
+        let message = `*طلب عدسات طبية جديد* 👓\n\n`;
+        message += `*نوع العدسة:* ${lensType}\n`;
+        message += `*العدد:* ${quantity}\n\n`;
+        
+        message += `*العين اليمنى (OD):*\n`;
+        message += `SPH: ${odSph} | CYL: ${odCyl} | AXIS: ${odAxis}\n\n`;
+        
+        message += `*العين اليسرى (OS):*\n`;
+        message += `SPH: ${osSph} | CYL: ${osCyl} | AXIS: ${osAxis}\n\n`;
+
+        if (notes) {
+            message += `*ملاحظات:* ${notes}\n`;
+        }
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+        
+        window.open(whatsappUrl, '_blank');
+    }
+</script>
+
+</body>
+</html>
