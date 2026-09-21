@@ -10,32 +10,26 @@
         :root {
             --bg-color: #f4f6f8;
             --card-bg: #ffffff;
-            --input-bg: #f8fafc;
+            --input-bg: #ffffff;
             --primary-text: #1e293b;
             --secondary-text: #64748b;
             --border-color: #cbd5e1;
             --accent-color: #0284c7;
-            
-            /* ألوان خصائص العدسات الأساسية */
+
+            /* ألوان خصائص العدسات المخصصة */
             --color-multicoated: #fef08a;
             --border-multicoated: #ca8a04;
-            
             --color-green-cut: #bbf7d0;
             --border-green-cut: #16a34a;
-            
             --color-blue-cut: #bae6fd;
             --border-blue-cut: #0284c7;
-            
             --color-photochromic: #e2e8f0;
             --border-photochromic: #475569;
-            
             --color-photo-blue: #93c5fd;
             --border-photo-blue: #1d4ed8;
-            
             --color-photo-glass: #cff4fc;
             --border-photo-glass: #0891b2;
-            
-            --color-white-plastic: #f8fafc;
+            --color-white-plastic: #ffffff;
             --border-white-plastic: #64748b;
         }
 
@@ -61,9 +55,7 @@
         }
 
         @media (max-width: 850px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
+            .main-layout { grid-template-columns: 1fr; }
         }
 
         .header {
@@ -72,17 +64,8 @@
             padding-bottom: 10px;
         }
 
-        .header h2 {
-            margin: 0;
-            color: var(--accent-color);
-            font-size: 1.4rem;
-        }
-
-        .header p {
-            margin: 4px 0 0 0;
-            color: var(--secondary-text);
-            font-size: 0.85rem;
-        }
+        .header h2 { margin: 0; color: var(--accent-color); font-size: 1.4rem; }
+        .header p { margin: 4px 0 0 0; color: var(--secondary-text); font-size: 0.85rem; }
 
         .card {
             background-color: var(--card-bg);
@@ -93,9 +76,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .form-group {
-            margin-bottom: 12px;
-        }
+        .form-group { margin-bottom: 12px; }
 
         label {
             display: block;
@@ -126,7 +107,7 @@
             background-color: #fef2f2 !important;
         }
 
-        /* تصميم أزرار ألوان العدسات الظاهرة دائماً */
+        /* أزرار ألوان العدسات: محايدة أولاً وتتغير عند النقر فقط */
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
@@ -135,33 +116,26 @@
         }
 
         .tag-btn {
-            border: 1px solid transparent;
-            color: #0f172a;
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
             padding: 7px 14px;
             border-radius: 20px;
             font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            opacity: 0.75;
         }
 
-        /* ألوان غير النشطة المحددة مسبقاً */
-        .tag-btn[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); }
-        .tag-btn[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); }
-        .tag-btn[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); }
-        .tag-btn[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); }
-        .tag-btn[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); }
-        .tag-btn[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
-        .tag-btn[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); }
-        .tag-btn[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; }
-
-        /* حالة الضغط والتفعيل للزر المحدد */
-        .tag-btn.active {
-            opacity: 1;
-            transform: scale(1.05);
-            box-shadow: 0 0 0 3px #0f172a, 0 4px 6px rgba(0,0,0,0.1);
-        }
+        /* تفاعل الألوان عند النقر فقط */
+        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; }
+        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; }
+        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; }
+        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); font-weight: bold; }
+        .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); font-weight: bold; }
+        .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); font-weight: bold; }
+        .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); font-weight: bold; }
+        .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; font-weight: bold; }
 
         .degrees-grid {
             display: grid;
@@ -170,26 +144,15 @@
             margin-bottom: 12px;
         }
 
-        /* جدول العينين للـ Bifocal و Progressive */
         .eye-table {
             width: 100%;
             margin-bottom: 12px;
             border-collapse: collapse;
         }
 
-        .eye-table th {
-            font-size: 0.75rem;
-            color: var(--secondary-text);
-            padding: 4px;
-        }
-
-        .eye-table td {
-            padding: 3px;
-        }
-
-        .eye-table input {
-            padding: 8px 4px;
-        }
+        .eye-table th { font-size: 0.75rem; color: var(--secondary-text); padding: 4px; }
+        .eye-table td { padding: 3px; }
+        .eye-table input { padding: 8px 4px; }
 
         .hidden { display: none !important; }
 
@@ -205,11 +168,7 @@
             font-size: 1rem;
         }
 
-        .sidebar {
-            position: sticky;
-            top: 20px;
-            height: fit-content;
-        }
+        .sidebar { position: sticky; top: 20px; height: fit-content; }
 
         .preview-card {
             background-color: #ffffff;
@@ -226,29 +185,11 @@
             margin-bottom: 12px;
         }
 
-        .clinic-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #0f172a;
-        }
+        .clinic-title { font-size: 1.2rem; font-weight: bold; color: #0f172a; }
+        .clinic-title-ar { font-size: 0.95rem; color: var(--accent-color); font-weight: 600; }
+        .clinic-address { font-size: 0.75rem; color: var(--secondary-text); margin-top: 2px; }
 
-        .clinic-title-ar {
-            font-size: 0.95rem;
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        .clinic-address {
-            font-size: 0.75rem;
-            color: var(--secondary-text);
-            margin-top: 2px;
-        }
-
-        .summary-list {
-            max-height: 480px;
-            overflow-y: auto;
-            margin-bottom: 12px;
-        }
+        .summary-list { max-height: 480px; overflow-y: auto; margin-bottom: 12px; }
 
         .summary-card-group {
             border-radius: 8px;
@@ -274,15 +215,24 @@
             padding: 4px 0;
             border-bottom: 1px dashed rgba(0,0,0,0.15);
         }
-        .summary-line-item:last-child {
-            border-bottom: none;
+        .summary-line-item:last-child { border-bottom: none; }
+
+        /* الشارة المميزة للغاية للـ Bifocal و Progressive */
+        .special-design-badge {
+            display: inline-block;
+            background-color: #dc2626;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+            margin-left: 5px;
         }
 
-        .action-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .action-btns { display: flex; flex-direction: column; gap: 8px; }
 
         .btn-action {
             width: 100%;
@@ -295,7 +245,7 @@
 
         .btn-whatsapp { background-color: #22c55e; color: #fff; }
         .btn-download { background-color: #0284c7; color: #fff; }
-        
+
         .remove-link {
             color: #ef4444;
             background: none;
@@ -308,7 +258,9 @@
 </head>
 <body>
 
+<!-- قوائم الخيارات التلقائية والمقترحة -->
 <datalist id="common-degrees">
+    <option value="Plano (0.00)">
     <option value="-0.25"><option value="-0.50"><option value="-0.75"><option value="-1.00">
     <option value="-1.25"><option value="-1.50"><option value="-1.75"><option value="-2.00">
     <option value="-2.25"><option value="-2.50"><option value="-2.75"><option value="-3.00">
@@ -316,7 +268,18 @@
     <option value="+0.25"><option value="+0.50"><option value="+0.75"><option value="+1.00">
     <option value="+1.25"><option value="+1.50"><option value="+1.75"><option value="+2.00">
     <option value="+2.25"><option value="+2.50"><option value="+2.75"><option value="+3.00">
-    <option value="+3.25"><option value="+3.50"><option value="+3.75"><option value="+4.00">
+</datalist>
+
+<datalist id="add-degrees">
+    <option value="+1.00">
+    <option value="+1.25">
+    <option value="+1.50">
+    <option value="+1.75">
+    <option value="+2.00">
+    <option value="+2.25">
+    <option value="+2.50">
+    <option value="+2.75">
+    <option value="+3.00">
 </datalist>
 
 <div class="main-layout">
@@ -362,11 +325,11 @@
                     <div class="degrees-grid">
                         <div>
                             <label>SPH</label>
-                            <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" placeholder="e.g. -1.00" oninput="updateSummary()">
+                            <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" oninput="updateSummary()">
                         </div>
                         <div>
                             <label>CYL</label>
-                            <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" placeholder="e.g. -0.50" oninput="updateSummary()">
+                            <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" oninput="updateSummary()">
                         </div>
                     </div>
                 </div>
@@ -386,25 +349,25 @@
                         <tbody>
                             <tr>
                                 <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" placeholder="0.00" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" placeholder="0.00" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="numeric" class="r-axis" placeholder="180°" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" class="r-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                             </tr>
                             <tr>
                                 <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" placeholder="0.00" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" placeholder="0.00" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="numeric" class="l-axis" placeholder="180°" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" class="l-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group qty-group">
                     <label>Lens Quantity (العدد)</label>
-                    <input type="number" class="quantity" placeholder="تحديد العدد مطلوب" min="1" oninput="clearQtyError(this); updateSummary();">
+                    <input type="number" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
@@ -427,9 +390,9 @@
             </div>
 
             <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent-color);">Order Summary:</div>
-            
+
             <div class="summary-list" id="summaryList">
-                <!-- الوصفات المكتملة فقط ستظهر هنا -->
+                <!-- الوصفات المكتملة تظهر هنا -->
             </div>
 
             <div style="border-top: 2px dashed var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between;" id="totalQuantity">
@@ -462,13 +425,29 @@
         const parent = selectEl.closest('.card');
         const singleSec = parent.querySelector('.single-vision-section');
         const dualSec = parent.querySelector('.dual-eye-section');
-        
+        const qtyGroup = parent.querySelector('.qty-group');
+
         if (selectEl.value === 'Single Vision') {
             singleSec.classList.remove('hidden');
             dualSec.classList.add('hidden');
+            qtyGroup.classList.remove('hidden');
         } else {
+            // إخفاء خانة العدد للـ Bifocal و Progressive لأنها عدسة واحدة مخصصة
             singleSec.classList.add('hidden');
             dualSec.classList.remove('hidden');
+            qtyGroup.classList.add('hidden');
+        }
+    }
+
+    // تنسيق الـ ADD تلقائياً إضافة + ورقمين عشريين
+    function formatAddValue(input) {
+        let val = input.value.trim();
+        if (!val) return;
+
+        val = val.replace('+', '');
+        let num = parseFloat(val);
+        if (!isNaN(num)) {
+            input.value = '+' + Math.abs(num).toFixed(2);
         }
     }
 
@@ -516,11 +495,11 @@
                 <div class="degrees-grid">
                     <div>
                         <label>SPH</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" placeholder="e.g. -1.00" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" oninput="updateSummary()">
                     </div>
                     <div>
                         <label>CYL</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" placeholder="e.g. -0.50" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" oninput="updateSummary()">
                     </div>
                 </div>
             </div>
@@ -539,25 +518,25 @@
                     <tbody>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" placeholder="0.00" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" placeholder="0.00" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="numeric" class="r-axis" placeholder="180°" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" class="r-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                         </tr>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" placeholder="0.00" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" placeholder="0.00" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="numeric" class="l-axis" placeholder="180°" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" class="l-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="form-group">
+            <div class="form-group qty-group">
                 <label>Lens Quantity (العدد)</label>
-                <input type="number" class="quantity" placeholder="تحديد العدد مطلوب" min="1" oninput="clearQtyError(this); updateSummary();">
+                <input type="number" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -566,7 +545,7 @@
         `;
         container.appendChild(newItem);
 
-        // التعديل الثاني: التمرير التلقائي وتركيز المؤشر في الوصفة الجديدة
+        // التمرير والتركيز التلقائي
         newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setTimeout(() => {
             const firstInput = newItem.querySelector('.single-sph');
@@ -602,7 +581,7 @@
             const notes = item.querySelector('.item-notes').value;
 
             let hasDegrees = false;
-            let lineData = { qty: parseInt(qtyVal) || 0, notes: notes, design: design };
+            let lineData = { qty: (design === 'Single Vision') ? (parseInt(qtyVal) || 0) : 1, notes: notes, design: design };
 
             if (design === 'Single Vision') {
                 const sph = item.querySelector('.single-sph').value.trim();
@@ -610,11 +589,11 @@
                 if (sph || cyl) {
                     hasDegrees = true;
                     lineData.type = 'single';
-                    lineData.sph = sph || '0.00';
+                    lineData.sph = sph || 'Plano';
                     lineData.cyl = cyl || '0.00';
                 }
             } else {
-                // Bifocal / Progressive
+                // Bifocal أو Progressive
                 const rSph = item.querySelector('.r-sph').value.trim();
                 const rCyl = item.querySelector('.r-cyl').value.trim();
                 const rAxis = item.querySelector('.r-axis').value.trim();
@@ -625,20 +604,21 @@
                 const lAxis = item.querySelector('.l-axis').value.trim();
                 const lAdd = item.querySelector('.l-add').value.trim();
 
-                if (rSph || rCyl || rAdd || lSph || lCyl || lAdd) {
+                const hasRight = rSph || rCyl || rAdd;
+                const hasLeft = lSph || lCyl || lAdd;
+
+                if (hasRight || hasLeft) {
                     hasDegrees = true;
                     lineData.type = 'dual';
-                    lineData.right = { sph: rSph || '0.00', cyl: rCyl || '0.00', axis: rAxis, add: rAdd };
-                    lineData.left = { sph: lSph || '0.00', cyl: lCyl || '0.00', axis: lAxis, add: lAdd };
+                    lineData.right = hasRight ? { sph: rSph || 'Plano', cyl: rCyl || '0.00', axis: rAxis, add: rAdd } : null;
+                    lineData.left = hasLeft ? { sph: lSph || 'Plano', cyl: lCyl || '0.00', axis: lAxis, add: lAdd } : null;
                 }
             }
 
-            // التعديل الخامس: تنبيه ونقل التركيز إذا أدخل درجات ونسي العدد
-            if (hasDegrees && !qtyVal) {
+            if (design === 'Single Vision' && hasDegrees && !qtyVal) {
                 qtyInput.classList.add('input-error');
-                qtyInput.focus();
-            } else if (hasDegrees && qtyVal) {
-                qtyInput.classList.remove('input-error');
+            } else if (hasDegrees) {
+                if (design === 'Single Vision') qtyInput.classList.remove('input-error');
                 totalLenses += lineData.qty;
 
                 const groupKey = `${tag}||${design}`;
@@ -649,7 +629,6 @@
             }
         });
 
-        // توليد الكروت في التلخيص المدمج
         Object.keys(grouped).forEach((key) => {
             const group = grouped[key];
 
@@ -663,7 +642,19 @@
             else if (group.tag.includes("White Plastic")) colorClass = "white-plastic";
 
             let groupHTML = `<div class="summary-card-group ${colorClass}">`;
-            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:4px; color:#0f172a;">${group.tag} <small style="color:#64748b; font-weight:normal;">(${group.design})</small></div>`;
+            
+            // تمييز الـ Bifocal و Progressive بشارة حمراء فخمة
+            let designLabel = group.design;
+            if (group.design === 'Bifocal' || group.design === 'Progressive') {
+                designLabel = `<span class="special-design-badge">⚡ ${group.design}</span>`;
+            } else {
+                designLabel = `<small style="color:#64748b; font-weight:normal;">(${group.design})</small>`;
+            }
+
+            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px; color:#0f172a; display:flex; justify-content:space-between; align-items:center;">
+                <span>${group.tag}</span>
+                <span>${designLabel}</span>
+            </div>`;
 
             group.lines.forEach((line) => {
                 groupHTML += `<div class="summary-line-item">`;
@@ -671,16 +662,20 @@
                 if (line.type === 'single') {
                     groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph} | C:${line.cyl}</span>`;
                 } else {
-                    groupHTML += `<div style="font-family: monospace; font-size: 0.78rem;">`;
-                    groupHTML += `<b>R:</b> ${line.right.sph} / ${line.right.cyl} ${line.right.axis ? 'x' + line.right.axis : ''} ${line.right.add ? 'ADD:' + line.right.add : ''}<br>`;
-                    groupHTML += `<b>L:</b> ${line.left.sph} / ${line.left.cyl} ${line.left.axis ? 'x' + line.left.axis : ''} ${line.left.add ? 'ADD:' + line.left.add : ''}`;
+                    groupHTML += `<div style="font-family: monospace; font-size: 0.8rem;">`;
+                    if (line.right) {
+                        groupHTML += `<b style="color:#0284c7;">R:</b> ${line.right.sph} / ${line.right.cyl} ${line.right.axis ? 'x' + line.right.axis + '°' : ''} ${line.right.add ? '<b>ADD:</b>' + line.right.add : ''}<br>`;
+                    }
+                    if (line.left) {
+                        groupHTML += `<b style="color:#0284c7;">L:</b> ${line.left.sph} / ${line.left.cyl} ${line.left.axis ? 'x' + line.left.axis + '°' : ''} ${line.left.add ? '<b>ADD:</b>' + line.left.add : ''}`;
+                    }
                     groupHTML += `</div>`;
                 }
                 if (line.notes) {
-                    groupHTML += `<small style="color: #475569;">Note: ${line.notes}</small>`;
+                    groupHTML += `<small style="color: #475569; display:block;">Note: ${line.notes}</small>`;
                 }
                 groupHTML += `</div>`;
-                groupHTML += `<div style="font-weight:bold; font-size:0.85rem; background:#fff; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div>`;
+                groupHTML += `<div style="font-weight:bold; font-size:0.85rem; background:#fff; padding:2px 8px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div>`;
                 groupHTML += `</div>`;
             });
 
@@ -715,35 +710,40 @@
             const qty = item.querySelector('.quantity').value;
             const notes = item.querySelector('.item-notes').value;
 
-            if (qty) {
+            if (design !== 'Single Vision' || qty) {
                 activeCount++;
-                text += `🔹 *#${activeCount} ${tag}* (${design})\n`;
+                text += `🔹 *#${activeCount} ${tag}* [${design.toUpperCase()}]\n`;
                 if (design === 'Single Vision') {
-                    const sph = item.querySelector('.single-sph').value || '0.00';
+                    const sph = item.querySelector('.single-sph').value || 'Plano';
                     const cyl = item.querySelector('.single-cyl').value || '0.00';
                     text += `• SPH: ${sph} | CYL: ${cyl}\n`;
+                    text += `• *Qty:* ${qty} pcs\n`;
                 } else {
-                    const rSph = item.querySelector('.r-sph').value || '0.00';
-                    const rCyl = item.querySelector('.r-cyl').value || '0.00';
+                    const rSph = item.querySelector('.r-sph').value;
+                    const rCyl = item.querySelector('.r-cyl').value;
                     const rAxis = item.querySelector('.r-axis').value;
                     const rAdd = item.querySelector('.r-add').value;
 
-                    const lSph = item.querySelector('.l-sph').value || '0.00';
-                    const lCyl = item.querySelector('.l-cyl').value || '0.00';
+                    const lSph = item.querySelector('.l-sph').value;
+                    const lCyl = item.querySelector('.l-cyl').value;
                     const lAxis = item.querySelector('.l-axis').value;
                     const lAdd = item.querySelector('.l-add').value;
 
-                    text += `• R: ${rSph} / ${rCyl} ${rAxis ? 'x' + rAxis : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
-                    text += `• L: ${lSph} / ${lCyl} ${lAxis ? 'x' + lAxis : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
+                    if (rSph || rCyl || rAdd) {
+                        text += `• *R:* ${rSph || 'Plano'} / ${rCyl || '0.00'} ${rAxis ? 'x' + rAxis + '°' : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
+                    }
+                    if (lSph || lCyl || lAdd) {
+                        text += `• *L:* ${lSph || 'Plano'} / ${lCyl || '0.00'} ${lAxis ? 'x' + lAxis + '°' : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
+                    }
+                    text += `• *Qty:* 1 Pair/Lens\n`;
                 }
-                text += `• *Qty:* ${qty} pcs\n`;
                 if (notes) text += `• *Note:* ${notes}\n`;
                 text += `--------------------------------\n`;
             }
         });
 
         if (activeCount === 0) {
-            alert("يرجى إدخال درجات وعدسات أولاً للإرسال عبر واتساب.");
+            alert("يرجى إدخال درجات أولاً للإرسال.");
             return;
         }
 
@@ -756,3 +756,4 @@
 
 </body>
 </html>
+ 
