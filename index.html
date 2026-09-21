@@ -16,17 +16,27 @@
             --border-color: #cbd5e1;
             --accent-color: #0284c7;
             
-            /* ألوان أنواع العدسات */
-            --color-multicoated: #fef9c3;
+            /* ألوان خصائص العدسات الأساسية */
+            --color-multicoated: #fef08a;
             --border-multicoated: #ca8a04;
-            --color-green-cut: #dcfce7;
+            
+            --color-green-cut: #bbf7d0;
             --border-green-cut: #16a34a;
-            --color-blue-cut: #e0f2fe;
+            
+            --color-blue-cut: #bae6fd;
             --border-blue-cut: #0284c7;
-            --color-photochromic: #f1f5f9;
+            
+            --color-photochromic: #e2e8f0;
             --border-photochromic: #475569;
-            --color-photo-glass: #e0f7fa;
-            --border-photo-glass: #00acc1;
+            
+            --color-photo-blue: #93c5fd;
+            --border-photo-blue: #1d4ed8;
+            
+            --color-photo-glass: #cff4fc;
+            --border-photo-glass: #0891b2;
+            
+            --color-white-plastic: #f8fafc;
+            --border-white-plastic: #64748b;
         }
 
         * {
@@ -111,42 +121,74 @@
             border-color: var(--accent-color);
         }
 
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+
+        /* تصميم أزرار ألوان العدسات الظاهرة دائماً */
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             margin-bottom: 12px;
         }
 
         .tag-btn {
-            background-color: #f1f5f9;
-            border: 1px solid var(--border-color);
-            color: var(--primary-text);
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 0.8rem;
+            border: 1px solid transparent;
+            color: #0f172a;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            opacity: 0.75;
         }
 
+        /* ألوان غير النشطة المحددة مسبقاً */
+        .tag-btn[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); }
+        .tag-btn[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); }
+        .tag-btn[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); }
+        .tag-btn[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); }
+        .tag-btn[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); }
+        .tag-btn[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
+        .tag-btn[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); }
+        .tag-btn[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; }
+
+        /* حالة الضغط والتفعيل للزر المحدد */
         .tag-btn.active {
-            font-weight: bold;
-            box-shadow: 0 0 0 2px var(--accent-color);
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px #0f172a, 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .tag-btn[data-type="Multicoated"].active { background-color: var(--color-multicoated); border-color: var(--border-multicoated); }
-        .tag-btn[data-type="Blue Cut (Green)"].active { background-color: var(--color-green-cut); border-color: var(--border-green-cut); }
-        .tag-btn[data-type="Blue Cut (Blue)"].active { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); }
-        .tag-btn[data-type="Photochromic"].active { background-color: #cbd5e1; }
-        .tag-btn[data-type="Photo Blue Cut"].active { background: #38bdf8; color: #fff; }
-        .tag-btn[data-type="Photo Glass"].active { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
-        .tag-btn[data-type="White Plastic"].active { background-color: #fff; border-color: #000; }
 
         .degrees-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-bottom: 12px;
+        }
+
+        /* جدول العينين للـ Bifocal و Progressive */
+        .eye-table {
+            width: 100%;
+            margin-bottom: 12px;
+            border-collapse: collapse;
+        }
+
+        .eye-table th {
+            font-size: 0.75rem;
+            color: var(--secondary-text);
+            padding: 4px;
+        }
+
+        .eye-table td {
+            padding: 3px;
+        }
+
+        .eye-table input {
+            padding: 8px 4px;
         }
 
         .hidden { display: none !important; }
@@ -160,6 +202,7 @@
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .sidebar {
@@ -207,7 +250,6 @@
             margin-bottom: 12px;
         }
 
-        /* تصميم كارت التلخيص مع إمكانية دمج الأسطر */
         .summary-card-group {
             border-radius: 8px;
             padding: 10px;
@@ -220,8 +262,8 @@
         .summary-card-group.multicoated { background-color: var(--color-multicoated); border-left-color: var(--border-multicoated); }
         .summary-card-group.green-cut { background-color: var(--color-green-cut); border-left-color: var(--border-green-cut); }
         .summary-card-group.blue-cut { background-color: var(--color-blue-cut); border-left-color: var(--border-blue-cut); }
-        .summary-card-group.photochromic { background-color: #f1f5f9; border-left-color: #475569; }
-        .summary-card-group.photo-blue { background: linear-gradient(90deg, #f1f5f9 60%, #e0f2fe 100%); border-left-color: #0284c7; }
+        .summary-card-group.photochromic { background-color: var(--color-photochromic); border-left-color: var(--border-photochromic); }
+        .summary-card-group.photo-blue { background-color: var(--color-photo-blue); border-left-color: var(--border-photo-blue); }
         .summary-card-group.photo-glass { background-color: var(--color-photo-glass); border-left-color: var(--border-photo-glass); }
         .summary-card-group.white-plastic { background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #64748b; }
 
@@ -230,7 +272,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 4px 0;
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            border-bottom: 1px dashed rgba(0,0,0,0.15);
         }
         .summary-line-item:last-child {
             border-bottom: none;
@@ -266,7 +308,6 @@
 </head>
 <body>
 
-<!-- قائمة الخيارات السريعة للدرجات (SPH/CYL) من 0.25 إلى 4.00 مع المتاح للكتابة الحرّة -->
 <datalist id="common-degrees">
     <option value="-0.25"><option value="-0.50"><option value="-0.75"><option value="-1.00">
     <option value="-1.25"><option value="-1.50"><option value="-1.75"><option value="-2.00">
@@ -279,7 +320,7 @@
 </datalist>
 
 <div class="main-layout">
-    <!-- القسم الأيسر: نموذج الإدخال -->
+    <!-- القسم الأيسر: نماذج الإدخال -->
     <div class="content-area">
         <div class="header">
             <h2>Lens Order Form</h2>
@@ -287,16 +328,16 @@
         </div>
 
         <div id="itemsContainer">
-            <!-- كارت الإدخال الأول -->
+            <!-- الكارت الأول -->
             <div class="card order-item" id="item-1">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);">Prescription #1</span>
+                    <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #1</span>
                     <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
                 </div>
 
                 <div style="margin-bottom: 10px;">
                     <label>Design Type</label>
-                    <select class="design-type" onchange="toggleAddSection(this); updateSummary();">
+                    <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
                         <option value="Single Vision">Single Vision (سنجل)</option>
                         <option value="Bifocal">Bifocal (باي فوكل)</option>
                         <option value="Progressive">Progressive (بروجريسيف)</option>
@@ -304,7 +345,6 @@
                 </div>
 
                 <label>Lens Properties:</label>
-                <!-- الترتيب التنازلي الجديد لأنواع العدسات -->
                 <div class="lens-tags">
                     <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
                     <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
@@ -317,26 +357,54 @@
                 </div>
                 <input type="hidden" class="selected-tag" value="Multicoated">
 
-                <!-- الدرجات مع إمكانية الاقتراح والكيبورد العددي فقط -->
-                <div class="degrees-grid">
-                    <div>
-                        <label>SPH</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="sph" placeholder="-1.00" oninput="updateSummary()">
-                    </div>
-                    <div>
-                        <label>CYL</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl" placeholder="-0.50" oninput="updateSummary()">
-                    </div>
-                    <div class="add-field hidden">
-                        <label>ADD</label>
-                        <input type="text" inputmode="decimal" class="add-val" placeholder="+2.00" oninput="updateSummary()">
+                <!-- واجهة Single Vision البسيطة -->
+                <div class="single-vision-section">
+                    <div class="degrees-grid">
+                        <div>
+                            <label>SPH</label>
+                            <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" placeholder="e.g. -1.00" oninput="updateSummary()">
+                        </div>
+                        <div>
+                            <label>CYL</label>
+                            <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" placeholder="e.g. -0.50" oninput="updateSummary()">
+                        </div>
                     </div>
                 </div>
 
-                <!-- جعل القيمة الافتراضية للعدد 1 -->
+                <!-- واجهة العينين للـ Bifocal و Progressive -->
+                <div class="dual-eye-section hidden">
+                    <table class="eye-table">
+                        <thead>
+                            <tr>
+                                <th>Eye</th>
+                                <th>SPH</th>
+                                <th>CYL</th>
+                                <th>AXIS</th>
+                                <th>ADD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" placeholder="0.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" placeholder="0.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="numeric" class="r-axis" placeholder="180°" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" class="r-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" placeholder="0.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" placeholder="0.00" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="numeric" class="l-axis" placeholder="180°" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" class="l-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="form-group">
                     <label>Lens Quantity (العدد)</label>
-                    <input type="number" class="quantity" value="1" min="1" oninput="updateSummary()">
+                    <input type="number" class="quantity" placeholder="تحديد العدد مطلوب" min="1" oninput="clearQtyError(this); updateSummary();">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
@@ -348,7 +416,7 @@
         <button type="button" class="add-btn" onclick="addNewItem()">+ Add New Prescription</button>
     </div>
 
-    <!-- القسم الأيمن: المعاينة والصورة -->
+    <!-- القسم الأيمن: معاينة القائمة -->
     <div class="sidebar">
         <div class="preview-card" id="captureArea">
             <div class="clinic-header">
@@ -361,11 +429,11 @@
             <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent-color);">Order Summary:</div>
             
             <div class="summary-list" id="summaryList">
-                <!-- المجموعات المدمجة تظهر هنا -->
+                <!-- الوصفات المكتملة فقط ستظهر هنا -->
             </div>
 
             <div style="border-top: 2px dashed var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between;" id="totalQuantity">
-                <span>Total Lenses:</span> <span>1 pcs</span>
+                <span>Total Lenses:</span> <span>0 pcs</span>
             </div>
         </div>
 
@@ -390,13 +458,23 @@
         updateSummary();
     }
 
-    function toggleAddSection(selectEl) {
+    function toggleDesignLayout(selectEl) {
         const parent = selectEl.closest('.card');
-        const addField = parent.querySelector('.add-field');
-        if (selectEl.value === 'Bifocal' || selectEl.value === 'Progressive') {
-            addField.classList.remove('hidden');
+        const singleSec = parent.querySelector('.single-vision-section');
+        const dualSec = parent.querySelector('.dual-eye-section');
+        
+        if (selectEl.value === 'Single Vision') {
+            singleSec.classList.remove('hidden');
+            dualSec.classList.add('hidden');
         } else {
-            addField.classList.add('hidden');
+            singleSec.classList.add('hidden');
+            dualSec.classList.remove('hidden');
+        }
+    }
+
+    function clearQtyError(input) {
+        if(input.value) {
+            input.classList.remove('input-error');
         }
     }
 
@@ -408,13 +486,13 @@
         newItem.id = `item-${itemCount}`;
         newItem.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);">Prescription #${itemCount}</span>
+                <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #${itemCount}</span>
                 <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
             </div>
 
             <div style="margin-bottom: 10px;">
                 <label>Design Type</label>
-                <select class="design-type" onchange="toggleAddSection(this); updateSummary();">
+                <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
                     <option value="Single Vision">Single Vision (سنجل)</option>
                     <option value="Bifocal">Bifocal (باي فوكل)</option>
                     <option value="Progressive">Progressive (بروجريسيف)</option>
@@ -434,24 +512,52 @@
             </div>
             <input type="hidden" class="selected-tag" value="Multicoated">
 
-            <div class="degrees-grid">
-                <div>
-                    <label>SPH</label>
-                    <input type="text" inputmode="decimal" list="common-degrees" class="sph" placeholder="-1.00" oninput="updateSummary()">
+            <div class="single-vision-section">
+                <div class="degrees-grid">
+                    <div>
+                        <label>SPH</label>
+                        <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" placeholder="e.g. -1.00" oninput="updateSummary()">
+                    </div>
+                    <div>
+                        <label>CYL</label>
+                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" placeholder="e.g. -0.50" oninput="updateSummary()">
+                    </div>
                 </div>
-                <div>
-                    <label>CYL</label>
-                    <input type="text" inputmode="decimal" list="common-degrees" class="cyl" placeholder="-0.50" oninput="updateSummary()">
-                </div>
-                <div class="add-field hidden">
-                    <label>ADD</label>
-                    <input type="text" inputmode="decimal" class="add-val" placeholder="+2.00" oninput="updateSummary()">
-                </div>
+            </div>
+
+            <div class="dual-eye-section hidden">
+                <table class="eye-table">
+                    <thead>
+                        <tr>
+                            <th>Eye</th>
+                            <th>SPH</th>
+                            <th>CYL</th>
+                            <th>AXIS</th>
+                            <th>ADD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" placeholder="0.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" placeholder="0.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="numeric" class="r-axis" placeholder="180°" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" class="r-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" placeholder="0.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" placeholder="0.00" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="numeric" class="l-axis" placeholder="180°" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" class="l-add" placeholder="+2.00" oninput="updateSummary()"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="form-group">
                 <label>Lens Quantity (العدد)</label>
-                <input type="number" class="quantity" value="1" min="1" oninput="updateSummary()">
+                <input type="number" class="quantity" placeholder="تحديد العدد مطلوب" min="1" oninput="clearQtyError(this); updateSummary();">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -459,6 +565,14 @@
             </div>
         `;
         container.appendChild(newItem);
+
+        // التعديل الثاني: التمرير التلقائي وتركيز المؤشر في الوصفة الجديدة
+        newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+            const firstInput = newItem.querySelector('.single-sph');
+            if (firstInput) firstInput.focus();
+        }, 300);
+
         updateSummary();
     }
 
@@ -468,51 +582,74 @@
             btn.closest('.card').remove();
             updateSummary();
         } else {
-            alert("At least one item is required.");
+            alert("At least one prescription is required.");
         }
     }
 
-    // الدمج الذكي للعدسات المتشابهة لتظهر كشريحة واحدة متعددة الأسطر
     function updateSummary() {
         const items = document.querySelectorAll('.order-item');
         const summaryList = document.getElementById('summaryList');
         summaryList.innerHTML = '';
         let totalLenses = 0;
 
-        // خريطة لتجميع الوصفات حسب نوع العدسة والتصميم
         const grouped = {};
 
         items.forEach((item) => {
             const design = item.querySelector('.design-type').value;
             const tag = item.querySelector('.selected-tag').value;
-            const qty = parseInt(item.querySelector('.quantity').value) || 0;
-            const sph = item.querySelector('.sph').value || '0.00';
-            const cyl = item.querySelector('.cyl').value || '0.00';
-            const addVal = item.querySelector('.add-val').value;
+            const qtyInput = item.querySelector('.quantity');
+            const qtyVal = qtyInput.value;
             const notes = item.querySelector('.item-notes').value;
 
-            totalLenses += qty;
+            let hasDegrees = false;
+            let lineData = { qty: parseInt(qtyVal) || 0, notes: notes, design: design };
 
-            const groupKey = `${tag}||${design}`;
+            if (design === 'Single Vision') {
+                const sph = item.querySelector('.single-sph').value.trim();
+                const cyl = item.querySelector('.single-cyl').value.trim();
+                if (sph || cyl) {
+                    hasDegrees = true;
+                    lineData.type = 'single';
+                    lineData.sph = sph || '0.00';
+                    lineData.cyl = cyl || '0.00';
+                }
+            } else {
+                // Bifocal / Progressive
+                const rSph = item.querySelector('.r-sph').value.trim();
+                const rCyl = item.querySelector('.r-cyl').value.trim();
+                const rAxis = item.querySelector('.r-axis').value.trim();
+                const rAdd = item.querySelector('.r-add').value.trim();
 
-            if (!grouped[groupKey]) {
-                grouped[groupKey] = {
-                    tag: tag,
-                    design: design,
-                    lines: []
-                };
+                const lSph = item.querySelector('.l-sph').value.trim();
+                const lCyl = item.querySelector('.l-cyl').value.trim();
+                const lAxis = item.querySelector('.l-axis').value.trim();
+                const lAdd = item.querySelector('.l-add').value.trim();
+
+                if (rSph || rCyl || rAdd || lSph || lCyl || lAdd) {
+                    hasDegrees = true;
+                    lineData.type = 'dual';
+                    lineData.right = { sph: rSph || '0.00', cyl: rCyl || '0.00', axis: rAxis, add: rAdd };
+                    lineData.left = { sph: lSph || '0.00', cyl: lCyl || '0.00', axis: lAxis, add: lAdd };
+                }
             }
 
-            grouped[groupKey].lines.push({
-                sph: sph,
-                cyl: cyl,
-                addVal: addVal,
-                qty: qty,
-                notes: notes
-            });
+            // التعديل الخامس: تنبيه ونقل التركيز إذا أدخل درجات ونسي العدد
+            if (hasDegrees && !qtyVal) {
+                qtyInput.classList.add('input-error');
+                qtyInput.focus();
+            } else if (hasDegrees && qtyVal) {
+                qtyInput.classList.remove('input-error');
+                totalLenses += lineData.qty;
+
+                const groupKey = `${tag}||${design}`;
+                if (!grouped[groupKey]) {
+                    grouped[groupKey] = { tag: tag, design: design, lines: [] };
+                }
+                grouped[groupKey].lines.push(lineData);
+            }
         });
 
-        // رسم كروت الملخص المدمجة
+        // توليد الكروت في التلخيص المدمج
         Object.keys(grouped).forEach((key) => {
             const group = grouped[key];
 
@@ -531,16 +668,19 @@
             group.lines.forEach((line) => {
                 groupHTML += `<div class="summary-line-item">`;
                 groupHTML += `<div>`;
-                groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph} | C:${line.cyl}`;
-                if ((group.design === 'Bifocal' || group.design === 'Progressive') && line.addVal) {
-                    groupHTML += ` | A:${line.addVal}`;
+                if (line.type === 'single') {
+                    groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph} | C:${line.cyl}</span>`;
+                } else {
+                    groupHTML += `<div style="font-family: monospace; font-size: 0.78rem;">`;
+                    groupHTML += `<b>R:</b> ${line.right.sph} / ${line.right.cyl} ${line.right.axis ? 'x' + line.right.axis : ''} ${line.right.add ? 'ADD:' + line.right.add : ''}<br>`;
+                    groupHTML += `<b>L:</b> ${line.left.sph} / ${line.left.cyl} ${line.left.axis ? 'x' + line.left.axis : ''} ${line.left.add ? 'ADD:' + line.left.add : ''}`;
+                    groupHTML += `</div>`;
                 }
-                groupHTML += `</span>`;
                 if (line.notes) {
-                    groupHTML += `<br><small style="color: #475569;">Note: ${line.notes}</small>`;
+                    groupHTML += `<small style="color: #475569;">Note: ${line.notes}</small>`;
                 }
                 groupHTML += `</div>`;
-                groupHTML += `<div style="font-weight:bold; font-size:0.85rem; background:#fff; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1;">x${line.qty}</div>`;
+                groupHTML += `<div style="font-weight:bold; font-size:0.85rem; background:#fff; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div>`;
                 groupHTML += `</div>`;
             });
 
@@ -568,24 +708,44 @@
         const items = document.querySelectorAll('.order-item');
         let text = `🏥 *Al-Diqqa Optics - عيادة الدقة للبصريات*\n📍 Karbala - Next to Al-Abbas Hospital\n--------------------------------\n`;
 
-        items.forEach((item, idx) => {
+        let activeCount = 0;
+        items.forEach((item) => {
             const design = item.querySelector('.design-type').value;
             const tag = item.querySelector('.selected-tag').value;
             const qty = item.querySelector('.quantity').value;
-            const sph = item.querySelector('.sph').value || '0.00';
-            const cyl = item.querySelector('.cyl').value || '0.00';
-            const addVal = item.querySelector('.add-val').value;
             const notes = item.querySelector('.item-notes').value;
 
-            text += `🔹 *#${idx + 1} ${tag}* (${design})\n`;
-            text += `• SPH: ${sph} | CYL: ${cyl}`;
-            if ((design === 'Bifocal' || design === 'Progressive') && addVal) {
-                text += ` | ADD: ${addVal}`;
+            if (qty) {
+                activeCount++;
+                text += `🔹 *#${activeCount} ${tag}* (${design})\n`;
+                if (design === 'Single Vision') {
+                    const sph = item.querySelector('.single-sph').value || '0.00';
+                    const cyl = item.querySelector('.single-cyl').value || '0.00';
+                    text += `• SPH: ${sph} | CYL: ${cyl}\n`;
+                } else {
+                    const rSph = item.querySelector('.r-sph').value || '0.00';
+                    const rCyl = item.querySelector('.r-cyl').value || '0.00';
+                    const rAxis = item.querySelector('.r-axis').value;
+                    const rAdd = item.querySelector('.r-add').value;
+
+                    const lSph = item.querySelector('.l-sph').value || '0.00';
+                    const lCyl = item.querySelector('.l-cyl').value || '0.00';
+                    const lAxis = item.querySelector('.l-axis').value;
+                    const lAdd = item.querySelector('.l-add').value;
+
+                    text += `• R: ${rSph} / ${rCyl} ${rAxis ? 'x' + rAxis : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
+                    text += `• L: ${lSph} / ${lCyl} ${lAxis ? 'x' + lAxis : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
+                }
+                text += `• *Qty:* ${qty} pcs\n`;
+                if (notes) text += `• *Note:* ${notes}\n`;
+                text += `--------------------------------\n`;
             }
-            text += `\n• *Qty:* ${qty} pcs\n`;
-            if (notes) text += `• *Note:* ${notes}\n`;
-            text += `--------------------------------\n`;
         });
+
+        if (activeCount === 0) {
+            alert("يرجى إدخال درجات وعدسات أولاً للإرسال عبر واتساب.");
+            return;
+        }
 
         const msg = encodeURIComponent(text);
         window.open(`https://wa.me/${MERCHANT_PHONE}?text=${msg}`, '_blank');
