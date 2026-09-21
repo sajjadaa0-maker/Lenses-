@@ -1,53 +1,70 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👓 طلب عدسات من التاجر</title>
+    <title>Al-Diqqa Optics - Lens Order</title>
+    <!-- مكتبة تحويل العناصر إلى صورة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-color: #0f171e;
             --card-bg: #1a232a;
             --input-bg: #12181f;
             --accent-color: #00e676;
-            --accent-active: #00b0ff;
             --text-color: #ffffff;
             --text-secondary: #90a4ae;
             --border-color: #2a3744;
         }
 
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 15px;
-            direction: rtl;
+            padding: 20px;
+            direction: ltr;
         }
 
-        .container {
-            max-width: 500px;
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
+        @media (max-width: 850px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
         .header h2 {
-            font-size: 1.2rem;
             margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--accent-color);
+            font-size: 1.4rem;
+        }
+
+        .header p {
+            margin: 4px 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 16px;
             margin-bottom: 15px;
             border: 1px solid var(--border-color);
@@ -59,20 +76,19 @@
 
         label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         input[type="text"], input[type="number"], select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-color);
             font-size: 0.95rem;
-            box-sizing: border-box;
             text-align: center;
         }
 
@@ -81,23 +97,22 @@
             border-color: var(--accent-color);
         }
 
-        /* أزرار اختيار نوع العدسة */
+        /* أزرار خصائص العدسات */
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
         .tag-btn {
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .tag-btn.active {
@@ -107,197 +122,229 @@
             border-color: var(--accent-color);
         }
 
-        /* شبكة إدخال الدرجات */
+        /* شبكة الدرجات وتليها أعداد العدسات */
         .degrees-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             margin-bottom: 12px;
-        }
-
-        .degree-input {
-            text-align: center;
-        }
-
-        .degree-input label {
-            font-size: 0.75rem;
-            text-align: center;
         }
 
         .hidden {
             display: none !important;
         }
 
-        /* أزرار الإجراءات */
         .add-btn {
             width: 100%;
             background: transparent;
             border: 2px dashed var(--accent-color);
             color: var(--accent-color);
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
-            margin-bottom: 20px;
+        }
+
+        /* الشريط الجانبي والملخص */
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .preview-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .clinic-header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .clinic-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .clinic-title-ar {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 2px;
+        }
+
+        .clinic-address {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .summary-list {
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            background-color: var(--input-bg);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .action-btns {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             gap: 8px;
         }
 
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--bg-color);
-            padding: 15px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-            box-sizing: border-box;
+        .btn-action {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        .send-btn {
-            flex: 1;
+        .btn-whatsapp {
             background-color: var(--accent-color);
             color: #000;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
         }
 
-        .copy-btn {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 14px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        .item-summary {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 5px;
+        .btn-download {
+            background-color: #29b6f6;
+            color: #000;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h2>👓 طلب عدسات</h2>
-        <span style="font-size: 0.85rem; color: var(--text-secondary);">طلب جديد</span>
-    </div>
+<div class="main-layout">
+    <!-- القسم الأيمن: نموذج الإدخال -->
+    <div class="content-area">
+        <div class="header">
+            <h2>Lens Order Form</h2>
+            <p>Merchant Phone: <b>+9647736429201</b></p>
+        </div>
 
-    <!-- رقم التاجر -->
-    <div class="form-group">
-        <label>رقم التاجر (مع رمز الدولة):</label>
-        <input type="text" id="merchantPhone" value="9647700000000" placeholder="9647700000000">
-    </div>
-
-    <!-- حاوية عناصر الطلب -->
-    <div id="itemsContainer">
-        <!-- العنصر الأول -->
-        <div class="card order-item" id="item-1">
-            <!-- عدد العدسات ونوع التصميم -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                <div>
-                    <label>نوع العدسة (التصميم)</label>
-                    <select class="design-type" onchange="toggleAddSection(this)">
-                        <option value="سنجل">سنجل (Single Vision)</option>
-                        <option value="باي فوكل">باي فوكل (Bifocal)</option>
-                        <option value="بروجريسيف">بروجريسيف (Progressive)</option>
+        <div id="itemsContainer">
+            <!-- كارت الإدخال الأول -->
+            <div class="card order-item" id="item-1">
+                <div style="margin-bottom: 10px;">
+                    <label>Design Type</label>
+                    <select class="design-type" onchange="toggleAddSection(this); updateSummary();">
+                        <option value="Single Vision">Single Vision (سنجل)</option>
+                        <option value="Bifocal">Bifocal (باي فوكل)</option>
+                        <option value="Progressive">Progressive (بروجريسيف)</option>
                     </select>
                 </div>
-                <div>
-                    <label>عدد العدسات المطلوب</label>
-                    <input type="number" class="quantity" value="2" min="1" onchange="updateTotalCount()">
-                </div>
-            </div>
 
-            <!-- أزرار اختيار نوع العدسة -->
-            <label>خصائص العدسة:</label>
-            <div class="lens-tags">
-                <button type="button" class="tag-btn active" onclick="selectTag(this, 'بلوكت أزرق')">بلوكت أزرق</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'بلوكت أخضر')">بلوكت أخضر</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'فوتو بلوكات')">فوتو بلوكات</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'ملتيكوتد')">ملتيكوتد</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'فوتو')">فوتو</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'بلاستيك أبيض')">بلاستيك أبيض</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'أخرى')">أخرى</button>
-            </div>
-            <input type="hidden" class="selected-tag" value="بلوكت أزرق">
+                <label>Lens Properties:</label>
+                <div class="lens-tags">
+                    <button type="button" class="tag-btn active" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'Photochromic')">Photochromic</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                    <button type="button" class="tag-btn" onclick="selectTag(this, 'Other')">Other</button>
+                </div>
+                <input type="hidden" class="selected-tag" value="Blue Cut (Blue)">
 
-            <!-- شبكة إدخال الدرجة -->
-            <div class="degrees-grid">
-                <div class="degree-input">
-                    <label>SPH</label>
-                    <input type="text" class="sph" placeholder="-1.00">
+                <!-- شبكة الدرجات -->
+                <div class="degrees-grid">
+                    <div>
+                        <label>SPH</label>
+                        <input type="text" class="sph" placeholder="-1.00" oninput="updateSummary()">
+                    </div>
+                    <div>
+                        <label>CYL</label>
+                        <input type="text" class="cyl" placeholder="-0.50" oninput="updateSummary()">
+                    </div>
+                    <div class="add-field hidden">
+                        <label>ADD</label>
+                        <input type="text" class="add-val" placeholder="+2.00" oninput="updateSummary()">
+                    </div>
                 </div>
-                <div class="degree-input">
-                    <label>CYL</label>
-                    <input type="text" class="cyl" placeholder="-0.50">
-                </div>
-                <!-- الإضافة البصرية تظهر فقط عند اختيار باي فوكل أو بروجريسيف -->
-                <div class="degree-input add-field hidden">
-                    <label>ADD</label>
-                    <input type="text" class="add-val" placeholder="+2.00">
-                </div>
-            </div>
 
-            <!-- ملاحظة -->
-            <div class="form-group" style="margin-bottom: 0;">
-                <input type="text" class="item-notes" placeholder="مواصفات / ملاحظة لهذه العدسة (اختياري)">
+                <!-- عدد العدسات تحت الدرجات مباشرة -->
+                <div class="form-group">
+                    <label>Lens Quantity (عدد العدسات لهذه الدرجة)</label>
+                    <input type="number" class="quantity" value="2" min="1" oninput="updateSummary()">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <input type="text" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
+                </div>
             </div>
         </div>
+
+        <button type="button" class="add-btn" onclick="addNewItem()">+ Add New Prescription</button>
     </div>
 
-    <button type="button" class="add-btn" onclick="addNewItem()">+ درجة / نظارة جديدة</button>
-    <div style="height: 90px;"></div> <!-- مساحة إضافية للأسفل -->
-</div>
+    <!-- القسم الأيسر: معاينة وحفظ القائمة -->
+    <div class="sidebar">
+        <!-- هذا المربع هو الذي سيتم حفظه كصورة -->
+        <div class="preview-card" id="captureArea">
+            <div class="clinic-header">
+                <div class="clinic-title">Al-Diqqa Optics</div>
+                <div class="clinic-title-ar">عيادة الدقة للبصريات</div>
+                <div class="clinic-address">كربلاء المقدسة - مجاور مستشفى العباس الأهلي</div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 5px;" id="orderDate"></div>
+            </div>
 
-<!-- الشريط السفلي للعمليات -->
-<div class="bottom-bar">
-    <div style="width: 100%;">
-        <div class="item-summary" id="totalSummary">1 طلب • مجموع العدسات: 2</div>
-        <div style="display: flex; gap: 10px;">
-            <button class="copy-btn" onclick="copyMessage()">نسخ</button>
-            <button class="send-btn" onclick="sendWhatsApp()">إرسال عبر واتساب</button>
+            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--accent-color);">Order Summary:</div>
+            
+            <div class="summary-list" id="summaryList">
+                <!-- سيتم توليد العناصر هنا ديناميكياً -->
+            </div>
+
+            <div style="border-top: 1px solid var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold;" id="totalQuantity">
+                Total Lenses: 2
+            </div>
+        </div>
+
+        <!-- الأزرار التفاعلية خارج نطاق الصورة -->
+        <div class="action-btns" style="margin-top: 15px;">
+            <button class="btn-action btn-download" onclick="downloadImage()">📸 Save Order as Image</button>
+            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 Send via WhatsApp</button>
         </div>
     </div>
 </div>
 
 <script>
+    const MERCHANT_PHONE = "9647736429201";
     let itemCount = 1;
 
-    // اختيار خصائص العدسة (الأزرار)
+    // ضبط التاريخ الحالي
+    document.getElementById('orderDate').innerText = "Date: " + new Date().toLocaleDateString('en-GB');
+
     function selectTag(btn, val) {
         const parent = btn.closest('.card');
         parent.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         parent.querySelector('.selected-tag').value = val;
+        updateSummary();
     }
 
-    // إظهار/إخفاء حقل الإضافة البصرية ADD
     function toggleAddSection(selectEl) {
         const parent = selectEl.closest('.card');
         const addField = parent.querySelector('.add-field');
-        if (selectEl.value === 'باي فوكل' || selectEl.value === 'بروجريسيف') {
+        if (selectEl.value === 'Bifocal' || selectEl.value === 'Progressive') {
             addField.classList.remove('hidden');
         } else {
             addField.classList.add('hidden');
         }
     }
 
-    // إضافة درجة جديدة
     function addNewItem() {
         itemCount++;
         const container = document.getElementById('itemsContainer');
@@ -306,80 +353,120 @@
         newItem.id = `item-${itemCount}`;
         newItem.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-weight: bold; font-size: 0.9rem; color: var(--accent-color);">درجة #${itemCount}</span>
-                <button onclick="removeItem(this)" style="background:none; border:none; color:#ff5252; cursor:pointer;">حذف</button>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                <div>
-                    <label>نوع العدسة</label>
-                    <select class="design-type" onchange="toggleAddSection(this)">
-                        <option value="سنجل">سنجل (Single Vision)</option>
-                        <option value="باي فوكل">باي فوكل (Bifocal)</option>
-                        <option value="بروجريسيف">بروجريسيف (Progressive)</option>
-                    </select>
-                </div>
-                <div>
-                    <label>عدد العدسات المطلوب</label>
-                    <input type="number" class="quantity" value="2" min="1" onchange="updateTotalCount()">
-                </div>
+                <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);">Prescription #${itemCount}</span>
+                <button onclick="removeItem(this)" style="background:none; border:none; color:#ff5252; cursor:pointer; font-weight:bold;">Remove</button>
             </div>
 
-            <label>خصائص العدسة:</label>
-            <div class="lens-tags">
-                <button type="button" class="tag-btn active" onclick="selectTag(this, 'بلوكت أزرق')">بلوكت أزرق</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'بلوكت أخضر')">بلوكت أخضر</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'فوتو بلوكات')">فوتو بلوكات</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'ملتيكوتد')">ملتيكوتد</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'فوتو')">فوتو</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'بلاستيك أبيض')">بلاستيك أبيض</button>
-                <button type="button" class="tag-btn" onclick="selectTag(this, 'أخرى')">أخرى</button>
+            <div style="margin-bottom: 10px;">
+                <label>Design Type</label>
+                <select class="design-type" onchange="toggleAddSection(this); updateSummary();">
+                    <option value="Single Vision">Single Vision (سنجل)</option>
+                    <option value="Bifocal">Bifocal (باي فوكل)</option>
+                    <option value="Progressive">Progressive (بروجريسيف)</option>
+                </select>
             </div>
-            <input type="hidden" class="selected-tag" value="بلوكت أزرق">
+
+            <label>Lens Properties:</label>
+            <div class="lens-tags">
+                <button type="button" class="tag-btn active" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'Photochromic')">Photochromic</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                <button type="button" class="tag-btn" onclick="selectTag(this, 'Other')">Other</button>
+            </div>
+            <input type="hidden" class="selected-tag" value="Blue Cut (Blue)">
 
             <div class="degrees-grid">
-                <div class="degree-input">
+                <div>
                     <label>SPH</label>
-                    <input type="text" class="sph" placeholder="-1.00">
+                    <input type="text" class="sph" placeholder="-1.00" oninput="updateSummary()">
                 </div>
-                <div class="degree-input">
+                <div>
                     <label>CYL</label>
-                    <input type="text" class="cyl" placeholder="-0.50">
+                    <input type="text" class="cyl" placeholder="-0.50" oninput="updateSummary()">
                 </div>
-                <div class="degree-input add-field hidden">
+                <div class="add-field hidden">
                     <label>ADD</label>
-                    <input type="text" class="add-val" placeholder="+2.00">
+                    <input type="text" class="add-val" placeholder="+2.00" oninput="updateSummary()">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Lens Quantity (عدد العدسات لهذه الدرجة)</label>
+                <input type="number" class="quantity" value="2" min="1" oninput="updateSummary()">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
-                <input type="text" class="item-notes" placeholder="مواصفات / ملاحظة لهذه العدسة (اختياري)">
+                <input type="text" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
             </div>
         `;
         container.appendChild(newItem);
-        updateTotalCount();
+        updateSummary();
     }
 
     function removeItem(btn) {
         btn.closest('.card').remove();
-        updateTotalCount();
+        updateSummary();
     }
 
-    function updateTotalCount() {
+    // التحديث المباشر للملخص الجانبي
+    function updateSummary() {
         const items = document.querySelectorAll('.order-item');
+        const summaryList = document.getElementById('summaryList');
+        summaryList.innerHTML = '';
         let totalLenses = 0;
-        items.forEach(item => {
+
+        items.forEach((item, idx) => {
+            const design = item.querySelector('.design-type').value;
+            const tag = item.querySelector('.selected-tag').value;
             const qty = parseInt(item.querySelector('.quantity').value) || 0;
+            const sph = item.querySelector('.sph').value || '0.00';
+            const cyl = item.querySelector('.cyl').value || '0.00';
+            const addVal = item.querySelector('.add-val').value;
+            const notes = item.querySelector('.item-notes').value;
+
             totalLenses += qty;
+
+            let itemHTML = `<div class="summary-item">`;
+            itemHTML += `<b>#${idx + 1} ${tag}</b> (${design})<br>`;
+            itemHTML += `SPH: ${sph} | CYL: ${cyl}`;
+            if ((design === 'Bifocal' || design === 'Progressive') && addVal) {
+                itemHTML += ` | ADD: ${addVal}`;
+            }
+            itemHTML += `<br><b>Qty:</b> ${qty} pcs`;
+            if (notes) {
+                itemHTML += `<br><i style="color: var(--text-secondary); font-size:0.75rem;">Note: ${notes}</i>`;
+            }
+            itemHTML += `</div>`;
+
+            summaryList.innerHTML += itemHTML;
         });
-        document.getElementById('totalSummary').innerText = `${items.length} طلب • مجموع العدسات: ${totalLenses}`;
+
+        document.getElementById('totalQuantity').innerText = `Total Lenses: ${totalLenses} pcs`;
     }
 
-    // بناء النص للواتساب
-    function buildMessage() {
-        const items = document.querySelectorAll('.order-item');
-        let text = `📋 *طلب عدسات جديد*\n---------------------------\n`;
+    // حفظ كصورة
+    function downloadImage() {
+        const captureArea = document.getElementById('captureArea');
+        html2canvas(captureArea, {
+            backgroundColor: '#1a232a',
+            scale: 2
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `AlDiqqa_Optics_Order_${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
 
-        items.forEach((item, index) => {
+    // إرسال عبر الواتساب
+    function sendWhatsApp() {
+        const items = document.querySelectorAll('.order-item');
+        let text = `🏥 *Al-Diqqa Optics - عيادة الدقة للبصريات*\n📍 Karbala - Next to Al-Abbas Hospital\n--------------------------------\n`;
+
+        items.forEach((item, idx) => {
             const design = item.querySelector('.design-type').value;
             const tag = item.querySelector('.selected-tag').value;
             const qty = item.querySelector('.quantity').value;
@@ -388,41 +475,24 @@
             const addVal = item.querySelector('.add-val').value;
             const notes = item.querySelector('.item-notes').value;
 
-            text += `🔹 *طلب #${index + 1}:* (${tag} - ${design})\n`;
-            text += `• *العدد:* ${qty} عدسة\n`;
-            text += `• *الدرجة:* SPH: ${sph} | CYL: ${cyl}`;
-            
-            if ((design === 'باي فوكل' || design === 'بروجريسيف') && addVal) {
+            text += `🔹 *Item #${idx + 1}:* ${tag} (${design})\n`;
+            text += `• SPH: ${sph} | CYL: ${cyl}`;
+            if ((design === 'Bifocal' || design === 'Progressive') && addVal) {
                 text += ` | ADD: ${addVal}`;
             }
-            text += `\n`;
-
-            if (notes) {
-                text += `• *ملاحظة:* ${notes}\n`;
-            }
-            text += `---------------------------\n`;
+            text += `\n• *Qty:* ${qty} pcs\n`;
+            if (notes) text += `• *Note:* ${notes}\n`;
+            text += `--------------------------------\n`;
         });
 
-        return text;
+        const msg = encodeURIComponent(text);
+        window.open(`https://wa.me/${MERCHANT_PHONE}?text=${msg}`, '_blank');
     }
 
-    function sendWhatsApp() {
-        const phone = document.getElementById('merchantPhone').value.trim();
-        if (!phone) {
-            alert('يرجى كتابة رقم التاجر');
-            return;
-        }
-        const msg = encodeURIComponent(buildMessage());
-        window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-    }
-
-    function copyMessage() {
-        const msg = buildMessage();
-        navigator.clipboard.writeText(msg).then(() => {
-            alert('تم نسخ الطلب بنجاح!');
-        });
-    }
+    // تشغيل التحديث عند الفتح
+    updateSummary();
 </script>
 
 </body>
 </html>
+ 
