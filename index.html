@@ -16,18 +16,15 @@
             --border-color: #cbd5e1;
             --accent-color: #0284c7;
             
-            /* ألوان خصائص العدسات */
-            --color-blue-cut: #e0f2fe;
-            --border-blue-cut: #0284c7;
-            --color-green-cut: #dcfce7;
-            --border-green-cut: #16a34a;
-            --color-photo-blue: linear-gradient(90deg, #1e293b 50%, #38bdf8 50%);
+            /* ألوان أنواع العدسات */
             --color-multicoated: #fef9c3;
             --border-multicoated: #ca8a04;
+            --color-green-cut: #dcfce7;
+            --border-green-cut: #16a34a;
+            --color-blue-cut: #e0f2fe;
+            --border-blue-cut: #0284c7;
             --color-photochromic: #f1f5f9;
             --border-photochromic: #475569;
-            --color-white-plastic: #ffffff;
-            --border-white-plastic: #94a3b8;
             --color-photo-glass: #e0f7fa;
             --border-photo-glass: #00acc1;
         }
@@ -114,7 +111,6 @@
             border-color: var(--accent-color);
         }
 
-        /* أزرار خصائص العدسات مع ألوانها الخاصة */
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
@@ -138,14 +134,13 @@
             box-shadow: 0 0 0 2px var(--accent-color);
         }
 
-        /* تخصيص ألوان الأزرار المفعلة */
-        .tag-btn[data-type="Blue Cut (Blue)"].active { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); }
-        .tag-btn[data-type="Blue Cut (Green)"].active { background-color: var(--color-green-cut); border-color: var(--border-green-cut); }
-        .tag-btn[data-type="Photo Blue Cut"].active { background: #38bdf8; color: #fff; }
         .tag-btn[data-type="Multicoated"].active { background-color: var(--color-multicoated); border-color: var(--border-multicoated); }
+        .tag-btn[data-type="Blue Cut (Green)"].active { background-color: var(--color-green-cut); border-color: var(--border-green-cut); }
+        .tag-btn[data-type="Blue Cut (Blue)"].active { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); }
         .tag-btn[data-type="Photochromic"].active { background-color: #cbd5e1; }
-        .tag-btn[data-type="White Plastic"].active { background-color: #fff; border-color: #000; }
+        .tag-btn[data-type="Photo Blue Cut"].active { background: #38bdf8; color: #fff; }
         .tag-btn[data-type="Photo Glass"].active { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
+        .tag-btn[data-type="White Plastic"].active { background-color: #fff; border-color: #000; }
 
         .degrees-grid {
             display: grid;
@@ -207,30 +202,39 @@
         }
 
         .summary-list {
-            max-height: 420px;
+            max-height: 480px;
             overflow-y: auto;
             margin-bottom: 12px;
         }
 
-        /* تصميم كارت التلخيص المميز والمنظم للطباعة/الصورة */
-        .summary-item {
-            border-radius: 6px;
-            padding: 8px 10px;
-            margin-bottom: 6px;
+        /* تصميم كارت التلخيص مع إمكانية دمج الأسطر */
+        .summary-card-group {
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
             font-size: 0.82rem;
             border-left: 5px solid #94a3b8;
             background-color: #f8fafc;
+        }
+
+        .summary-card-group.multicoated { background-color: var(--color-multicoated); border-left-color: var(--border-multicoated); }
+        .summary-card-group.green-cut { background-color: var(--color-green-cut); border-left-color: var(--border-green-cut); }
+        .summary-card-group.blue-cut { background-color: var(--color-blue-cut); border-left-color: var(--border-blue-cut); }
+        .summary-card-group.photochromic { background-color: #f1f5f9; border-left-color: #475569; }
+        .summary-card-group.photo-blue { background: linear-gradient(90deg, #f1f5f9 60%, #e0f2fe 100%); border-left-color: #0284c7; }
+        .summary-card-group.photo-glass { background-color: var(--color-photo-glass); border-left-color: var(--border-photo-glass); }
+        .summary-card-group.white-plastic { background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #64748b; }
+
+        .summary-line-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
         }
-
-        .summary-item.blue-cut { background-color: var(--color-blue-cut); border-left-color: var(--border-blue-cut); }
-        .summary-item.green-cut { background-color: var(--color-green-cut); border-left-color: var(--border-green-cut); }
-        .summary-item.photo-blue { background: linear-gradient(90deg, #f1f5f9 60%, #e0f2fe 100%); border-left-color: #0284c7; }
-        .summary-item.multicoated { background-color: var(--color-multicoated); border-left-color: var(--border-multicoated); }
-        .summary-item.white-plastic { background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #64748b; }
-        .summary-item.photo-glass { background-color: var(--color-photo-glass); border-left-color: var(--border-photo-glass); }
+        .summary-line-item:last-child {
+            border-bottom: none;
+        }
 
         .action-btns {
             display: flex;
@@ -262,6 +266,18 @@
 </head>
 <body>
 
+<!-- قائمة الخيارات السريعة للدرجات (SPH/CYL) من 0.25 إلى 4.00 مع المتاح للكتابة الحرّة -->
+<datalist id="common-degrees">
+    <option value="-0.25"><option value="-0.50"><option value="-0.75"><option value="-1.00">
+    <option value="-1.25"><option value="-1.50"><option value="-1.75"><option value="-2.00">
+    <option value="-2.25"><option value="-2.50"><option value="-2.75"><option value="-3.00">
+    <option value="-3.25"><option value="-3.50"><option value="-3.75"><option value="-4.00">
+    <option value="+0.25"><option value="+0.50"><option value="+0.75"><option value="+1.00">
+    <option value="+1.25"><option value="+1.50"><option value="+1.75"><option value="+2.00">
+    <option value="+2.25"><option value="+2.50"><option value="+2.75"><option value="+3.00">
+    <option value="+3.25"><option value="+3.50"><option value="+3.75"><option value="+4.00">
+</datalist>
+
 <div class="main-layout">
     <!-- القسم الأيسر: نموذج الإدخال -->
     <div class="content-area">
@@ -288,37 +304,39 @@
                 </div>
 
                 <label>Lens Properties:</label>
+                <!-- الترتيب التنازلي الجديد لأنواع العدسات -->
                 <div class="lens-tags">
-                    <button type="button" class="tag-btn active" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
+                    <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
                     <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
-                    <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
-                    <button type="button" class="tag-btn" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
+                    <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
                     <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">Photochromic</button>
-                    <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                    <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
                     <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
+                    <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
                     <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
                 </div>
-                <input type="hidden" class="selected-tag" value="Blue Cut (Blue)">
+                <input type="hidden" class="selected-tag" value="Multicoated">
 
-                <!-- الدرجات والعدد -->
+                <!-- الدرجات مع إمكانية الاقتراح والكيبورد العددي فقط -->
                 <div class="degrees-grid">
                     <div>
                         <label>SPH</label>
-                        <input type="text" class="sph" placeholder="-1.00" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="sph" placeholder="-1.00" oninput="updateSummary()">
                     </div>
                     <div>
                         <label>CYL</label>
-                        <input type="text" class="cyl" placeholder="-0.50" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl" placeholder="-0.50" oninput="updateSummary()">
                     </div>
                     <div class="add-field hidden">
                         <label>ADD</label>
-                        <input type="text" class="add-val" placeholder="+2.00" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" class="add-val" placeholder="+2.00" oninput="updateSummary()">
                     </div>
                 </div>
 
+                <!-- جعل القيمة الافتراضية للعدد 1 -->
                 <div class="form-group">
                     <label>Lens Quantity (العدد)</label>
-                    <input type="number" class="quantity" value="2" min="1" oninput="updateSummary()">
+                    <input type="number" class="quantity" value="1" min="1" oninput="updateSummary()">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
@@ -330,9 +348,8 @@
         <button type="button" class="add-btn" onclick="addNewItem()">+ Add New Prescription</button>
     </div>
 
-    <!-- القسم الأيمن: معاينة وحفظ القائمة -->
+    <!-- القسم الأيمن: المعاينة والصورة -->
     <div class="sidebar">
-        <!-- المربع الذي يتم تحويله لصورة -->
         <div class="preview-card" id="captureArea">
             <div class="clinic-header">
                 <div class="clinic-title">Al-Diqqa Optics</div>
@@ -344,15 +361,14 @@
             <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent-color);">Order Summary:</div>
             
             <div class="summary-list" id="summaryList">
-                <!-- العناصر المدمجة تظهر هنا -->
+                <!-- المجموعات المدمجة تظهر هنا -->
             </div>
 
             <div style="border-top: 2px dashed var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between;" id="totalQuantity">
-                <span>Total Lenses:</span> <span>2 pcs</span>
+                <span>Total Lenses:</span> <span>1 pcs</span>
             </div>
         </div>
 
-        <!-- أزرار الإجراءات -->
         <div class="action-btns" style="margin-top: 15px;">
             <button class="btn-action btn-download" onclick="downloadImage()">📸 Save Order as Image</button>
             <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 Send via WhatsApp</button>
@@ -407,35 +423,35 @@
 
             <label>Lens Properties:</label>
             <div class="lens-tags">
-                <button type="button" class="tag-btn active" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
+                <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
                 <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
-                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
-                <button type="button" class="tag-btn" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
+                <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
                 <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">Photochromic</button>
-                <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut</button>
                 <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
+                <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
                 <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
             </div>
-            <input type="hidden" class="selected-tag" value="Blue Cut (Blue)">
+            <input type="hidden" class="selected-tag" value="Multicoated">
 
             <div class="degrees-grid">
                 <div>
                     <label>SPH</label>
-                    <input type="text" class="sph" placeholder="-1.00" oninput="updateSummary()">
+                    <input type="text" inputmode="decimal" list="common-degrees" class="sph" placeholder="-1.00" oninput="updateSummary()">
                 </div>
                 <div>
                     <label>CYL</label>
-                    <input type="text" class="cyl" placeholder="-0.50" oninput="updateSummary()">
+                    <input type="text" inputmode="decimal" list="common-degrees" class="cyl" placeholder="-0.50" oninput="updateSummary()">
                 </div>
                 <div class="add-field hidden">
                     <label>ADD</label>
-                    <input type="text" class="add-val" placeholder="+2.00" oninput="updateSummary()">
+                    <input type="text" inputmode="decimal" class="add-val" placeholder="+2.00" oninput="updateSummary()">
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Lens Quantity (العدد)</label>
-                <input type="number" class="quantity" value="2" min="1" oninput="updateSummary()">
+                <input type="number" class="quantity" value="1" min="1" oninput="updateSummary()">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -456,14 +472,17 @@
         }
     }
 
-    // تحديث وتجميع القائمة في السطر الواحد
+    // الدمج الذكي للعدسات المتشابهة لتظهر كشريحة واحدة متعددة الأسطر
     function updateSummary() {
         const items = document.querySelectorAll('.order-item');
         const summaryList = document.getElementById('summaryList');
         summaryList.innerHTML = '';
         let totalLenses = 0;
 
-        items.forEach((item, idx) => {
+        // خريطة لتجميع الوصفات حسب نوع العدسة والتصميم
+        const grouped = {};
+
+        items.forEach((item) => {
             const design = item.querySelector('.design-type').value;
             const tag = item.querySelector('.selected-tag').value;
             const qty = parseInt(item.querySelector('.quantity').value) || 0;
@@ -474,37 +493,64 @@
 
             totalLenses += qty;
 
-            // تحديد اللون حسب نوع العدسة
+            const groupKey = `${tag}||${design}`;
+
+            if (!grouped[groupKey]) {
+                grouped[groupKey] = {
+                    tag: tag,
+                    design: design,
+                    lines: []
+                };
+            }
+
+            grouped[groupKey].lines.push({
+                sph: sph,
+                cyl: cyl,
+                addVal: addVal,
+                qty: qty,
+                notes: notes
+            });
+        });
+
+        // رسم كروت الملخص المدمجة
+        Object.keys(grouped).forEach((key) => {
+            const group = grouped[key];
+
             let colorClass = "";
-            if (tag.includes("Blue Cut (Blue)")) colorClass = "blue-cut";
-            else if (tag.includes("Blue Cut (Green)")) colorClass = "green-cut";
-            else if (tag.includes("Photo Blue Cut")) colorClass = "photo-blue";
-            else if (tag.includes("Multicoated")) colorClass = "multicoated";
-            else if (tag.includes("White Plastic")) colorClass = "white-plastic";
-            else if (tag.includes("Photo Glass")) colorClass = "photo-glass";
+            if (group.tag.includes("Multicoated")) colorClass = "multicoated";
+            else if (group.tag.includes("Blue Cut (Green)")) colorClass = "green-cut";
+            else if (group.tag.includes("Blue Cut (Blue)")) colorClass = "blue-cut";
+            else if (group.tag.includes("Photochromic")) colorClass = "photochromic";
+            else if (group.tag.includes("Photo Blue Cut")) colorClass = "photo-blue";
+            else if (group.tag.includes("Photo Glass")) colorClass = "photo-glass";
+            else if (group.tag.includes("White Plastic")) colorClass = "white-plastic";
 
-            let itemHTML = `<div class="summary-item ${colorClass}">`;
-            itemHTML += `<div>`;
-            itemHTML += `<b>#${idx + 1} ${tag}</b> <small style="color:#64748b">(${design})</small><br>`;
-            itemHTML += `<span style="font-family: monospace; font-weight:600;">S:${sph} | C:${cyl}`;
-            if ((design === 'Bifocal' || design === 'Progressive') && addVal) {
-                itemHTML += ` | A:${addVal}`;
-            }
-            itemHTML += `</span>`;
-            if (notes) {
-                itemHTML += `<br><small style="color: #475569;">Note: ${notes}</small>`;
-            }
-            itemHTML += `</div>`;
-            itemHTML += `<div style="font-weight:bold; font-size:0.95rem; background:#fff; padding:2px 8px; border-radius:4px; border:1px solid #cbd5e1;">x${qty}</div>`;
-            itemHTML += `</div>`;
+            let groupHTML = `<div class="summary-card-group ${colorClass}">`;
+            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:4px; color:#0f172a;">${group.tag} <small style="color:#64748b; font-weight:normal;">(${group.design})</small></div>`;
 
-            summaryList.innerHTML += itemHTML;
+            group.lines.forEach((line) => {
+                groupHTML += `<div class="summary-line-item">`;
+                groupHTML += `<div>`;
+                groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph} | C:${line.cyl}`;
+                if ((group.design === 'Bifocal' || group.design === 'Progressive') && line.addVal) {
+                    groupHTML += ` | A:${line.addVal}`;
+                }
+                groupHTML += `</span>`;
+                if (line.notes) {
+                    groupHTML += `<br><small style="color: #475569;">Note: ${line.notes}</small>`;
+                }
+                groupHTML += `</div>`;
+                groupHTML += `<div style="font-weight:bold; font-size:0.85rem; background:#fff; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1;">x${line.qty}</div>`;
+                groupHTML += `</div>`;
+            });
+
+            groupHTML += `</div>`;
+            summaryList.innerHTML += groupHTML;
         });
 
         document.getElementById('totalQuantity').innerHTML = `<span>Total Lenses:</span> <span>${totalLenses} pcs</span>`;
     }
 
-    // حفظ كصورة عالية الجودة
     function downloadImage() {
         const captureArea = document.getElementById('captureArea');
         html2canvas(captureArea, {
@@ -518,7 +564,6 @@
         });
     }
 
-    // إرسال عبر واتساب
     function sendWhatsApp() {
         const items = document.querySelectorAll('.order-item');
         let text = `🏥 *Al-Diqqa Optics - عيادة الدقة للبصريات*\n📍 Karbala - Next to Al-Abbas Hospital\n--------------------------------\n`;
@@ -550,4 +595,4 @@
 </script>
 
 </body>
-</html> 
+</html>
