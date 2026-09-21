@@ -127,7 +127,6 @@
             transition: all 0.2s ease;
         }
 
-        /* تفاعل الألوان عند النقر فقط */
         .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; }
         .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; }
         .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; }
@@ -217,12 +216,26 @@
         }
         .summary-line-item:last-child { border-bottom: none; }
 
-        /* الشارة المميزة للغاية للـ Bifocal و Progressive */
-        .special-design-badge {
+        /* الشارات المخصصة للباي فوكل والبروجرسيف بألوان وعلامات مختلفة */
+        .badge-bifocal {
             display: inline-block;
-            background-color: #dc2626;
+            background-color: #d97706; /* برتقالي داكن متميز */
             color: #ffffff;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(217, 119, 6, 0.3);
+            margin-left: 5px;
+        }
+
+        .badge-progressive {
+            display: inline-block;
+            background-color: #dc2626; /* أحمر */
+            color: #ffffff;
+            font-size: 0.82rem;
             font-weight: 900;
             padding: 3px 8px;
             border-radius: 4px;
@@ -258,9 +271,9 @@
 </head>
 <body>
 
-<!-- قوائم الخيارات التلقائية والمقترحة -->
 <datalist id="common-degrees">
-    <option value="Plano (0.00)">
+    <option value="Plano">
+    <option value="0.00">
     <option value="-0.25"><option value="-0.50"><option value="-0.75"><option value="-1.00">
     <option value="-1.25"><option value="-1.50"><option value="-1.75"><option value="-2.00">
     <option value="-2.25"><option value="-2.50"><option value="-2.75"><option value="-3.00">
@@ -291,7 +304,6 @@
         </div>
 
         <div id="itemsContainer">
-            <!-- الكارت الأول -->
             <div class="card order-item" id="item-1">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #1</span>
@@ -320,21 +332,19 @@
                 </div>
                 <input type="hidden" class="selected-tag" value="Multicoated">
 
-                <!-- واجهة Single Vision البسيطة -->
                 <div class="single-vision-section">
                     <div class="degrees-grid">
                         <div>
                             <label>SPH</label>
-                            <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" oninput="updateSummary()">
+                            <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                         </div>
                         <div>
                             <label>CYL</label>
-                            <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" oninput="updateSummary()">
+                            <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                         </div>
                     </div>
                 </div>
 
-                <!-- واجهة العينين للـ Bifocal و Progressive -->
                 <div class="dual-eye-section hidden">
                     <table class="eye-table">
                         <thead>
@@ -349,15 +359,15 @@
                         <tbody>
                             <tr>
                                 <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                                 <td><input type="text" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
                             </tr>
                             <tr>
                                 <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                                 <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
                                 <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                             </tr>
@@ -391,9 +401,7 @@
 
             <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent-color);">Order Summary:</div>
 
-            <div class="summary-list" id="summaryList">
-                <!-- الوصفات المكتملة تظهر هنا -->
-            </div>
+            <div class="summary-list" id="summaryList"></div>
 
             <div style="border-top: 2px dashed var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between;" id="totalQuantity">
                 <span>Total Lenses:</span> <span>0 pcs</span>
@@ -432,14 +440,37 @@
             dualSec.classList.add('hidden');
             qtyGroup.classList.remove('hidden');
         } else {
-            // إخفاء خانة العدد للـ Bifocal و Progressive لأنها عدسة واحدة مخصصة
             singleSec.classList.add('hidden');
             dualSec.classList.remove('hidden');
             qtyGroup.classList.add('hidden');
         }
     }
 
-    // تنسيق الـ ADD تلقائياً إضافة + ورقمين عشريين
+    // نسخ قيمة الـ ADD من العين اليمنى للعين اليسرى تلقائياً
+    function syncAddLeft(rAddInput) {
+        const parent = rAddInput.closest('.card');
+        const lAddInput = parent.querySelector('.l-add');
+        lAddInput.value = rAddInput.value;
+    }
+
+    // تنسيق إدخال الأرقام العشرية (مثال: 6 -> -6.00 أو +6.00)
+    function formatDegreeInput(input) {
+        let val = input.value.trim();
+        if (!val) return;
+
+        if (val.toLowerCase() === 'plano') {
+            input.value = 'Plano';
+            return;
+        }
+
+        let num = parseFloat(val);
+        if (!isNaN(num)) {
+            let sign = (num > 0) ? '+' : '';
+            input.value = sign + num.toFixed(2);
+        }
+    }
+
+    // تنسيق إضافة الـ ADD مع + ومرتبتين عشرية
     function formatAddValue(input) {
         let val = input.value.trim();
         if (!val) return;
@@ -495,11 +526,11 @@
                 <div class="degrees-grid">
                     <div>
                         <label>SPH</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                     </div>
                     <div>
                         <label>CYL</label>
-                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" oninput="updateSummary()">
+                        <input type="text" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                     </div>
                 </div>
             </div>
@@ -518,15 +549,15 @@
                     <tbody>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                             <td><input type="text" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
                         </tr>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                             <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
                             <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                         </tr>
@@ -545,7 +576,6 @@
         `;
         container.appendChild(newItem);
 
-        // التمرير والتركيز التلقائي
         newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setTimeout(() => {
             const firstInput = newItem.querySelector('.single-sph');
@@ -563,6 +593,18 @@
         } else {
             alert("At least one prescription is required.");
         }
+    }
+
+    function formatEyeDegreeText(sph, cyl) {
+        if (sph.toLowerCase() === 'plano' && (!cyl || cyl === '0.00')) {
+            return 'Plano';
+        }
+        let str = '';
+        str += sph ? sph : '0.00';
+        if (cyl && cyl !== '0.00') {
+            str += ` / ${cyl}`;
+        }
+        return str;
     }
 
     function updateSummary() {
@@ -589,11 +631,10 @@
                 if (sph || cyl) {
                     hasDegrees = true;
                     lineData.type = 'single';
-                    lineData.sph = sph || 'Plano';
-                    lineData.cyl = cyl || '0.00';
+                    lineData.sph = sph;
+                    lineData.cyl = cyl;
                 }
             } else {
-                // Bifocal أو Progressive
                 const rSph = item.querySelector('.r-sph').value.trim();
                 const rCyl = item.querySelector('.r-cyl').value.trim();
                 const rAxis = item.querySelector('.r-axis').value.trim();
@@ -610,8 +651,15 @@
                 if (hasRight || hasLeft) {
                     hasDegrees = true;
                     lineData.type = 'dual';
-                    lineData.right = hasRight ? { sph: rSph || 'Plano', cyl: rCyl || '0.00', axis: rAxis, add: rAdd } : null;
-                    lineData.left = hasLeft ? { sph: lSph || 'Plano', cyl: lCyl || '0.00', axis: lAxis, add: lAdd } : null;
+                    lineData.right = hasRight ? { sph: rSph, cyl: rCyl, axis: rAxis, add: rAdd } : null;
+                    lineData.left = hasLeft ? { sph: lSph, cyl: lCyl, axis: lAxis, add: lAdd } : null;
+
+                    // التحقق إذا كانت الإضافات متساوية في العينين
+                    if (hasRight && hasLeft && rAdd && lAdd && rAdd === lAdd) {
+                        lineData.commonAdd = rAdd;
+                    } else {
+                        lineData.commonAdd = null;
+                    }
                 }
             }
 
@@ -642,11 +690,13 @@
             else if (group.tag.includes("White Plastic")) colorClass = "white-plastic";
 
             let groupHTML = `<div class="summary-card-group ${colorClass}">`;
-            
-            // تمييز الـ Bifocal و Progressive بشارة حمراء فخمة
+
+            // شارات مختلفة للـ Bifocal و Progressive
             let designLabel = group.design;
-            if (group.design === 'Bifocal' || group.design === 'Progressive') {
-                designLabel = `<span class="special-design-badge">⚡ ${group.design}</span>`;
+            if (group.design === 'Bifocal') {
+                designLabel = `<span class="badge-bifocal">👓 BIFOCAL</span>`;
+            } else if (group.design === 'Progressive') {
+                designLabel = `<span class="badge-progressive">⚡ PROGRESSIVE</span>`;
             } else {
                 designLabel = `<small style="color:#64748b; font-weight:normal;">(${group.design})</small>`;
             }
@@ -660,14 +710,31 @@
                 groupHTML += `<div class="summary-line-item">`;
                 groupHTML += `<div>`;
                 if (line.type === 'single') {
-                    groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph} | C:${line.cyl}</span>`;
+                    if (line.sph.toLowerCase() === 'plano' && (!line.cyl || line.cyl === '0.00')) {
+                        groupHTML += `<span style="font-weight:bold; color:#0f172a;">Plano</span>`;
+                    } else {
+                        groupHTML += `<span style="font-family: monospace; font-weight:600;">S:${line.sph || '0.00'} | C:${line.cyl || '0.00'}</span>`;
+                    }
                 } else {
                     groupHTML += `<div style="font-family: monospace; font-size: 0.8rem;">`;
                     if (line.right) {
-                        groupHTML += `<b style="color:#0284c7;">R:</b> ${line.right.sph} / ${line.right.cyl} ${line.right.axis ? 'x' + line.right.axis + '°' : ''} ${line.right.add ? '<b>ADD:</b>' + line.right.add : ''}<br>`;
+                        const rText = formatEyeDegreeText(line.right.sph, line.right.cyl);
+                        groupHTML += `<b style="color:#0284c7;">R:</b> ${rText} ${line.right.axis ? 'x' + line.right.axis + '°' : ''}`;
+                        if (!line.commonAdd && line.right.add) {
+                            groupHTML += ` <b>ADD:</b>${line.right.add}`;
+                        }
+                        groupHTML += `<br>`;
                     }
                     if (line.left) {
-                        groupHTML += `<b style="color:#0284c7;">L:</b> ${line.left.sph} / ${line.left.cyl} ${line.left.axis ? 'x' + line.left.axis + '°' : ''} ${line.left.add ? '<b>ADD:</b>' + line.left.add : ''}`;
+                        const lText = formatEyeDegreeText(line.left.sph, line.left.cyl);
+                        groupHTML += `<b style="color:#0284c7;">L:</b> ${lText} ${line.left.axis ? 'x' + line.left.axis + '°' : ''}`;
+                        if (!line.commonAdd && line.left.add) {
+                            groupHTML += ` <b>ADD:</b>${line.left.add}`;
+                        }
+                    }
+                    // في حال كانت الإضافة متساوية للعينين تظهر بشكل موحد وبخط أكبر
+                    if (line.commonAdd) {
+                        groupHTML += `<div style="font-size:0.88rem; font-weight:bold; color:#0f172a; margin-top:2px;">ADD: ${line.commonAdd}</div>`;
                     }
                     groupHTML += `</div>`;
                 }
@@ -714,9 +781,13 @@
                 activeCount++;
                 text += `🔹 *#${activeCount} ${tag}* [${design.toUpperCase()}]\n`;
                 if (design === 'Single Vision') {
-                    const sph = item.querySelector('.single-sph').value || 'Plano';
+                    const sph = item.querySelector('.single-sph').value || '0.00';
                     const cyl = item.querySelector('.single-cyl').value || '0.00';
-                    text += `• SPH: ${sph} | CYL: ${cyl}\n`;
+                    if (sph.toLowerCase() === 'plano' && cyl === '0.00') {
+                        text += `• Plano\n`;
+                    } else {
+                        text += `• SPH: ${sph} | CYL: ${cyl}\n`;
+                    }
                     text += `• *Qty:* ${qty} pcs\n`;
                 } else {
                     const rSph = item.querySelector('.r-sph').value;
@@ -730,10 +801,10 @@
                     const lAdd = item.querySelector('.l-add').value;
 
                     if (rSph || rCyl || rAdd) {
-                        text += `• *R:* ${rSph || 'Plano'} / ${rCyl || '0.00'} ${rAxis ? 'x' + rAxis + '°' : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
+                        text += `• *R:* ${formatEyeDegreeText(rSph, rCyl)} ${rAxis ? 'x' + rAxis + '°' : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
                     }
                     if (lSph || lCyl || lAdd) {
-                        text += `• *L:* ${lSph || 'Plano'} / ${lCyl || '0.00'} ${lAxis ? 'x' + lAxis + '°' : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
+                        text += `• *L:* ${formatEyeDegreeText(lSph, lCyl)} ${lAxis ? 'x' + lAxis + '°' : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
                     }
                     text += `• *Qty:* 1 Pair/Lens\n`;
                 }
