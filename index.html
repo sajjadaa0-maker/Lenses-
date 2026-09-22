@@ -619,6 +619,14 @@
     }
 
     function addNewItem() {
+        // جلب نوع العدسة للبطاقة الأخيرة لاستمرارية التحديد تلقائياً
+        const existingItems = document.querySelectorAll('.order-item');
+        let lastTag = "Multicoated";
+        if (existingItems.length > 0) {
+            const lastItem = existingItems[existingItems.length - 1];
+            lastTag = lastItem.querySelector('.selected-tag').value || "Multicoated";
+        }
+
         itemCount++;
         const container = document.getElementById('itemsContainer');
         const newItem = document.createElement('div');
@@ -641,16 +649,16 @@
 
             <label>Lens Properties:</label>
             <div class="lens-tags">
-                <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
-                <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
-                <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
-                <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
-                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
-                <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
-                <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
-                <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
+                <button type="button" class="tag-btn ${lastTag === 'Multicoated' ? 'active' : ''}" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
+                <button type="button" class="tag-btn ${lastTag === 'Blue Cut (Green)' ? 'active' : ''}" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
+                <button type="button" class="tag-btn ${lastTag === 'Blue Cut (Blue)' ? 'active' : ''}" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
+                <button type="button" class="tag-btn ${lastTag === 'Photochromic' ? 'active' : ''}" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
+                <button type="button" class="tag-btn ${lastTag === 'Photo Blue Cut' ? 'active' : ''}" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
+                <button type="button" class="tag-btn ${lastTag === 'Photo Glass' ? 'active' : ''}" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
+                <button type="button" class="tag-btn ${lastTag === 'White Plastic' ? 'active' : ''}" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                <button type="button" class="tag-btn ${lastTag === 'Other' ? 'active' : ''}" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
             </div>
-            <input type="hidden" class="selected-tag" value="Multicoated">
+            <input type="hidden" class="selected-tag" value="${lastTag}">
 
             <div class="single-vision-section">
                 <div class="degrees-grid">
@@ -1046,3 +1054,4 @@
 
 </body>
 </html>
+
