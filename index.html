@@ -25,11 +25,8 @@
             --border-blue-cut: #0284c7;
             --color-photochromic: #e2e8f0;
             --border-photochromic: #475569;
-            
-            /* تعديل لون الفوتو بلوكات وتعميقه لتمييزه */
-            --color-photo-blue: #60a5fa;
+            --color-photo-blue: #3b82f6;
             --border-photo-blue: #1d4ed8;
-            
             --color-photo-glass: #cff4fc;
             --border-photo-glass: #0891b2;
             --color-white-plastic: #ffffff;
@@ -101,7 +98,7 @@
             font-weight: 600;
         }
 
-        /* حماية الحقول لمنع ظهور نافذة كلمة المرور */
+        /* منع التعرّف على الحقول كـ Password Vault */
         input[type="text"], input[type="number"], select {
             width: 100%;
             padding: 10px;
@@ -142,14 +139,12 @@
             transition: all 0.2s ease;
         }
 
-        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; }
-        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; }
-        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; }
-        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); font-weight: bold; }
-        
-        /* تظليل زر فوتو بلوكات باللون الغامق مع تمييز النصوص */
+        /* تحديد ألوان وتنسيقات الأزرار حسب الإيموجيات المحددة */
+        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; color: #713f12; }
+        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; color: #14532d; }
+        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; color: #0c4a6e; }
+        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); font-weight: bold; color: #1e293b; }
         .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); color: #ffffff; font-weight: bold; }
-        
         .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); font-weight: bold; }
         .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); font-weight: bold; }
         .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; font-weight: bold; }
@@ -217,12 +212,10 @@
             background-color: #f8fafc;
         }
 
-        .summary-card-group.multicoated { background-color: var(--color-multicoated); border-left-color: var(--border-multicoated); }
-        .summary-card-group.green-cut { background-color: var(--color-green-cut); border-left-color: var(--border-green-cut); }
-        .summary-card-group.blue-cut { background-color: var(--color-blue-cut); border-left-color: var(--border-blue-cut); }
-        .summary-card-group.photochromic { background-color: var(--color-photochromic); border-left-color: var(--border-photochromic); }
-        
-        /* كارت فوتو بلوكات غميق في المعاينة */
+        .summary-card-group.multicoated { background-color: var(--color-multicoated); border-left-color: var(--border-multicoated); color: #713f12; }
+        .summary-card-group.green-cut { background-color: var(--color-green-cut); border-left-color: var(--border-green-cut); color: #14532d; }
+        .summary-card-group.blue-cut { background-color: var(--color-blue-cut); border-left-color: var(--border-blue-cut); color: #0c4a6e; }
+        .summary-card-group.photochromic { background-color: var(--color-photochromic); border-left-color: var(--border-photochromic); color: #1e293b; }
         .summary-card-group.photo-blue { background-color: var(--color-photo-blue); border-left-color: var(--border-photo-blue); color: #ffffff; }
         .summary-card-group.photo-blue .summary-line-item { border-bottom-color: rgba(255,255,255,0.3); }
 
@@ -322,7 +315,7 @@
             padding: 20px;
             border-radius: 12px;
             width: 90%;
-            max-width: 520px;
+            max-width: 540px;
             max-height: 85vh;
             overflow-y: auto;
             direction: rtl;
@@ -344,6 +337,39 @@
         .stats-table th {
             background-color: #f1f5f9;
             color: #1e293b;
+        }
+
+        .backup-section {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-backup {
+            background-color: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
+        }
+
+        .btn-restore {
+            background-color: #16a34a;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
         }
     </style>
 </head>
@@ -368,12 +394,11 @@
 
 <div class="top-navbar">
     <h3>Al-Diqqa Optics System</h3>
-    <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والتفاصيل</button>
+    <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والأرشيف</button>
 </div>
 
 <div class="main-layout">
     <div class="content-area">
-        <!-- منع متصفحات النظام من التعرّف على الحقول كـ login form -->
         <form onsubmit="return false;" autocomplete="off" data-form-type="other">
             <div id="itemsContainer">
                 <div class="card order-item" id="item-1">
@@ -393,14 +418,11 @@
 
                     <label>Lens Properties:</label>
                     <div class="lens-tags">
-                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
-                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">Photochromic 🌓</button>
-                        
-                        <!-- الزر المحدث لعدسات الفوتو بلوكات مع أيقونة الشمس والقمر واللون الداكن -->
-                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut ☀️🌙</button>
-                        
+                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
+                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
+                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
                         <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
                         <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
                         <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
@@ -495,17 +517,27 @@
     </div>
 </div>
 
-<!-- Modal الإحصائيات والأرشيف التفصيلي -->
+<!-- Modal الإحصائيات مع النسخ الاحتياطي والاستعادة -->
 <div class="modal" id="statsModal">
     <div class="modal-content">
-        <h3 style="margin-top:0; color:var(--accent-color);">📊 إحصائيات العدسات الشهرية</h3>
+        <h3 style="margin-top:0; color:var(--accent-color);">📊 إحصائيات العدسات الشهرية والأرشيف</h3>
         <hr>
         <div id="statsBody">
             <p>جارٍ تحميل الإحصائيات...</p>
         </div>
+
+        <div class="backup-section">
+            <b style="font-size: 0.85rem; color: #334155;">💾 إدارة النسخ الاحتياطي (Backup & Restore):</b>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-backup" style="flex:1;" onclick="exportBackup()">📥 تصدير النسخة الاحتياطية</button>
+                <button class="btn-restore" style="flex:1;" onclick="document.getElementById('importFileInput').click()">📤 استعادة النسخة الاحتياطية</button>
+            </div>
+            <input type="file" id="importFileInput" style="display: none;" accept=".json" onchange="importBackup(event)">
+        </div>
+
         <br>
-        <button onclick="clearHistory()" style="background:#ef4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;">تفريغ الأرشيف</button>
-        <button onclick="closeStatsModal()" style="background:#64748b; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; float:left;">إغلاق</button>
+        <button onclick="clearHistory()" style="background:#ef4444; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">تفريغ الأرشيف</button>
+        <button onclick="closeStatsModal()" style="background:#64748b; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; float:left; font-weight:bold;">إغلاق</button>
     </div>
 </div>
 
@@ -609,11 +641,11 @@
 
             <label>Lens Properties:</label>
             <div class="lens-tags">
-                <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">Multicoated</button>
-                <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">Blue Cut (Green)</button>
-                <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">Blue Cut (Blue)</button>
-                <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">Photochromic 🌓</button>
-                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">Photo Blue Cut ☀️🌙</button>
+                <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
+                <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
+                <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
+                <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
+                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
                 <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
                 <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
                 <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
@@ -768,16 +800,13 @@
             let colorClass = "";
             let tagDisplay = group.tag;
             
-            if (group.tag.includes("Multicoated")) colorClass = "multicoated";
-            else if (group.tag.includes("Blue Cut (Green)")) colorClass = "green-cut";
-            else if (group.tag.includes("Blue Cut (Blue)")) colorClass = "blue-cut";
-            else if (group.tag.includes("Photochromic")) colorClass = "photochromic";
-            else if (group.tag.includes("Photo Blue Cut")) {
-                colorClass = "photo-blue";
-                tagDisplay = "Photo Blue Cut 🌑";
-            }
-            else if (group.tag.includes("Photo Glass")) colorClass = "photo-glass";
-            else if (group.tag.includes("White Plastic")) colorClass = "white-plastic";
+            if (group.tag.includes("Multicoated")) { colorClass = "multicoated"; tagDisplay = "🟡 Multicoated"; }
+            else if (group.tag.includes("Blue Cut (Green)")) { colorClass = "green-cut"; tagDisplay = "🟢 Blue Cut (Green)"; }
+            else if (group.tag.includes("Blue Cut (Blue)")) { colorClass = "blue-cut"; tagDisplay = "🔵 Blue Cut (Blue)"; }
+            else if (group.tag.includes("Photochromic")) { colorClass = "photochromic"; tagDisplay = "⚪ Photochromic"; }
+            else if (group.tag.includes("Photo Blue Cut")) { colorClass = "photo-blue"; tagDisplay = "⚫ Photo Blue Cut ☀️🌙"; }
+            else if (group.tag.includes("Photo Glass")) { colorClass = "photo-glass"; tagDisplay = "Photo Glass 👓"; }
+            else if (group.tag.includes("White Plastic")) { colorClass = "white-plastic"; tagDisplay = "White Plastic"; }
 
             let groupHTML = `<div class="summary-card-group ${colorClass}">`;
             let designLabel = (group.design === 'Bifocal') ? `<span class="badge-bifocal">👓 BIFOCAL</span>` : (group.design === 'Progressive') ? `<span class="badge-progressive">⚡ PROGRESSIVE</span>` : `<small>(${group.design})</small>`;
@@ -809,7 +838,6 @@
         document.getElementById('totalQuantity').innerHTML = `<span>Total Lenses:</span> <span>${totalLenses} pcs</span>`;
     }
 
-    // حفظ تفاصيل الطلب حسب نوع العدسات
     function saveOrderToHistory(detailsObj) {
         let history = JSON.parse(localStorage.getItem('optics_orders_v2') || '[]');
         history.push({
@@ -904,7 +932,7 @@
     function openDirectMerchantChat() { window.open(`https://wa.me/${MERCHANT_PHONE}`, '_blank'); }
     function callMerchant() { window.open(`tel:+${MERCHANT_PHONE}`, '_self'); }
 
-    // عرض الإحصائيات الشهرية المفصلة حسب كل نوع عدسة
+    // عرض الإحصائيات مع الرموز التعبيرية
     function openStatsModal() {
         document.getElementById('statsModal').style.display = 'flex';
         const history = JSON.parse(localStorage.getItem('optics_orders_v2') || '[]');
@@ -950,15 +978,15 @@
                 <thead>
                     <tr>
                         <th>نوع العدسة</th>
-                        <th>عدد العدسات المطلوبة</th>
+                        <th>عدد العدسات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>Multicoated</td><td><b>${typeTotals["Multicoated"]}</b></td></tr>
-                    <tr><td>Blue Cut (Green)</td><td><b>${typeTotals["Blue Cut (Green)"]}</b></td></tr>
-                    <tr><td>Blue Cut (Blue)</td><td><b>${typeTotals["Blue Cut (Blue)"]}</b></td></tr>
-                    <tr><td>Photochromic 🌚</td><td><b>${typeTotals["Photochromic"]}</b></td></tr>
-                    <tr style="background:#eff6ff;"><td><b>Photo Blue Cut 🌑</b></td><td><b style="color:var(--accent-color);">${typeTotals["Photo Blue Cut"]}</b></td></tr>
+                    <tr><td>🟡 Multicoated</td><td><b>${typeTotals["Multicoated"]}</b></td></tr>
+                    <tr><td>🟢 Blue Cut (Green)</td><td><b>${typeTotals["Blue Cut (Green)"]}</b></td></tr>
+                    <tr><td>🔵 Blue Cut (Blue)</td><td><b>${typeTotals["Blue Cut (Blue)"]}</b></td></tr>
+                    <tr><td>⚪ Photochromic</td><td><b>${typeTotals["Photochromic"]}</b></td></tr>
+                    <tr style="background:#eff6ff;"><td><b>⚫ Photo Blue Cut ☀️🌙</b></td><td><b style="color:var(--accent-color);">${typeTotals["Photo Blue Cut"]}</b></td></tr>
                     <tr><td>Photo Glass 👓</td><td><b>${typeTotals["Photo Glass"]}</b></td></tr>
                     <tr><td>White Plastic</td><td><b>${typeTotals["White Plastic"]}</b></td></tr>
                     <tr><td>أنواع أخرى (Other)</td><td><b>${typeTotals["Other"]}</b></td></tr>
@@ -970,11 +998,47 @@
     }
 
     function closeStatsModal() { document.getElementById('statsModal').style.display = 'none'; }
+    
     function clearHistory() {
         if(confirm("هل أنت تأكد من مسح كافة الإحصائيات والأرشيف؟")) {
             localStorage.removeItem('optics_orders_v2');
             openStatsModal();
         }
+    }
+
+    // آليات تصدير واستعادة النسخة الاحتياطية (Export / Import Backup)
+    function exportBackup() {
+        const history = localStorage.getItem('optics_orders_v2') || '[]';
+        const blob = new Blob([history], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `AlDiqqa_Optics_Backup_${dateStr}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function importBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (Array.isArray(importedData)) {
+                    localStorage.setItem('optics_orders_v2', JSON.stringify(importedData));
+                    alert("تمت استعادة النسخة الاحتياطية بنجاح!");
+                    openStatsModal();
+                } else {
+                    alert("صيغة الملف غير صحيحة.");
+                }
+            } catch (err) {
+                alert("حدث خطأ أثناء قراءة ملف النسخة الاحتياطية.");
+            }
+        };
+        reader.readAsText(file);
     }
 
     updateSummary();
