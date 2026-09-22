@@ -619,7 +619,6 @@
     }
 
     function addNewItem() {
-        // جلب نوع العدسة للبطاقة الأخيرة لاستمرارية التحديد تلقائياً
         const existingItems = document.querySelectorAll('.order-item');
         let lastTag = "Multicoated";
         if (existingItems.length > 0) {
@@ -876,7 +875,25 @@
 
     function downloadImage() {
         const captureArea = document.getElementById('captureArea');
-        html2canvas(captureArea, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+        const summaryList = document.getElementById('summaryList');
+
+        // حفظ التنسيقات الأصلية مؤقتاً
+        const origMaxHeight = summaryList.style.maxHeight;
+        const origOverflow = summaryList.style.overflowY;
+
+        // إلغاء حدود الارتفاع وشريط التمرير لالتقاط كامل قائمة العدسات
+        summaryList.style.maxHeight = 'none';
+        summaryList.style.overflowY = 'visible';
+
+        html2canvas(captureArea, { 
+            backgroundColor: '#ffffff', 
+            scale: 2,
+            windowHeight: captureArea.scrollHeight + 100
+        }).then(canvas => {
+            // إعادة التنسيقات الأصلية للشاشة بعد التقاط الصورة
+            summaryList.style.maxHeight = origMaxHeight;
+            summaryList.style.overflowY = origOverflow;
+
             const link = document.createElement('a');
             link.download = `AlDiqqa_Optics_${Date.now()}.png`;
             link.href = canvas.toDataURL();
@@ -884,6 +901,10 @@
 
             const details = extractOrderDetails();
             saveOrderToHistory(details);
+        }).catch(err => {
+            // إرجاع التنسيقات في حال حدوث خطأ
+            summaryList.style.maxHeight = origMaxHeight;
+            summaryList.style.overflowY = origOverflow;
         });
     }
 
@@ -1054,4 +1075,4 @@
 
 </body>
 </html>
-
+ 
