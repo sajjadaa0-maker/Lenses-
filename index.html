@@ -216,10 +216,9 @@
         }
         .summary-line-item:last-child { border-bottom: none; }
 
-        /* الشارات المخصصة للباي فوكل والبروجرسيف بألوان وعلامات مختلفة */
         .badge-bifocal {
             display: inline-block;
-            background-color: #d97706; /* برتقالي داكن متميز */
+            background-color: #d97706;
             color: #ffffff;
             font-size: 0.82rem;
             font-weight: 900;
@@ -233,7 +232,7 @@
 
         .badge-progressive {
             display: inline-block;
-            background-color: #dc2626; /* أحمر */
+            background-color: #dc2626;
             color: #ffffff;
             font-size: 0.82rem;
             font-weight: 900;
@@ -257,6 +256,7 @@
         }
 
         .btn-whatsapp { background-color: #22c55e; color: #fff; }
+        .btn-chat-merchant { background-color: #4f46e5; color: #fff; }
         .btn-download { background-color: #0284c7; color: #fff; }
 
         .remove-link {
@@ -369,7 +369,7 @@
                                 <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                                 <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                                 <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                                <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="handleNextKey(event, this)" oninput="updateSummary()"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -377,7 +377,7 @@
 
                 <div class="form-group qty-group">
                     <label>Lens Quantity (العدد)</label>
-                    <input type="number" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();">
+                    <input type="number" class="quantity" min="1" onkeydown="handleNextKey(event, this)" oninput="clearQtyError(this); updateSummary();">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
@@ -410,7 +410,8 @@
 
         <div class="action-btns" style="margin-top: 15px;">
             <button class="btn-action btn-download" onclick="downloadImage()">📸 Save Order as Image</button>
-            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 Send via WhatsApp</button>
+            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 Send Order via WhatsApp</button>
+            <button class="btn-action btn-chat-merchant" onclick="openDirectMerchantChat()">💬 Chat with Merchant (محادثة التاجر)</button>
         </div>
     </div>
 </div>
@@ -446,14 +447,20 @@
         }
     }
 
-    // نسخ قيمة الـ ADD من العين اليمنى للعين اليسرى تلقائياً
     function syncAddLeft(rAddInput) {
         const parent = rAddInput.closest('.card');
         const lAddInput = parent.querySelector('.l-add');
         lAddInput.value = rAddInput.value;
     }
 
-    // تنسيق إدخال الأرقام العشرية (مثال: 6 -> -6.00 أو +6.00)
+    // زر التالي في الكيبورد يضيف طلباً جديداً وينتقل له مباشرة دون المرور بخانة الملاحظات
+    function handleNextKey(event, inputEl) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addNewItem();
+        }
+    }
+
     function formatDegreeInput(input) {
         let val = input.value.trim();
         if (!val) return;
@@ -470,7 +477,6 @@
         }
     }
 
-    // تنسيق إضافة الـ ADD مع + ومرتبتين عشرية
     function formatAddValue(input) {
         let val = input.value.trim();
         if (!val) return;
@@ -559,7 +565,7 @@
                             <td><input type="text" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                             <td><input type="text" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
                             <td><input type="text" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="handleNextKey(event, this)" oninput="updateSummary()"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -567,7 +573,7 @@
 
             <div class="form-group qty-group">
                 <label>Lens Quantity (العدد)</label>
-                <input type="number" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();">
+                <input type="number" class="quantity" min="1" onkeydown="handleNextKey(event, this)" oninput="clearQtyError(this); updateSummary();">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -654,7 +660,6 @@
                     lineData.right = hasRight ? { sph: rSph, cyl: rCyl, axis: rAxis, add: rAdd } : null;
                     lineData.left = hasLeft ? { sph: lSph, cyl: lCyl, axis: lAxis, add: lAdd } : null;
 
-                    // التحقق إذا كانت الإضافات متساوية في العينين
                     if (hasRight && hasLeft && rAdd && lAdd && rAdd === lAdd) {
                         lineData.commonAdd = rAdd;
                     } else {
@@ -691,7 +696,6 @@
 
             let groupHTML = `<div class="summary-card-group ${colorClass}">`;
 
-            // شارات مختلفة للـ Bifocal و Progressive
             let designLabel = group.design;
             if (group.design === 'Bifocal') {
                 designLabel = `<span class="badge-bifocal">👓 BIFOCAL</span>`;
@@ -732,7 +736,6 @@
                             groupHTML += ` <b>ADD:</b>${line.left.add}`;
                         }
                     }
-                    // في حال كانت الإضافة متساوية للعينين تظهر بشكل موحد وبخط أكبر
                     if (line.commonAdd) {
                         groupHTML += `<div style="font-size:0.88rem; font-weight:bold; color:#0f172a; margin-top:2px;">ADD: ${line.commonAdd}</div>`;
                     }
@@ -822,9 +825,13 @@
         window.open(`https://wa.me/${MERCHANT_PHONE}?text=${msg}`, '_blank');
     }
 
+    // فتح محادثة واتساب directa فارغة مع التاجر للاستفسارات والأسئلة
+    function openDirectMerchantChat() {
+        window.open(`https://wa.me/${MERCHANT_PHONE}`, '_blank');
+    }
+
     updateSummary();
 </script>
 
 </body>
 </html>
- 
