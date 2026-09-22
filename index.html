@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام طلبات عيادة الدقة للبصريات</title>
+    <title>Al-Diqqa Optics - Lens Order</title>
     <!-- مكتبة تحويل العناصر إلى صورة -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --bg-color: #f1f5f9;
+            --bg-color: #f4f6f8;
             --card-bg: #ffffff;
             --input-bg: #ffffff;
-            --primary-text: #0f172a;
-            --secondary-text: #475569;
+            --primary-text: #1e293b;
+            --secondary-text: #64748b;
             --border-color: #cbd5e1;
             --accent-color: #0284c7;
 
@@ -33,14 +33,14 @@
             --border-white-plastic: #64748b;
         }
 
-        * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
         body {
             background-color: var(--bg-color);
             color: var(--primary-text);
             margin: 0;
-            padding: 10px;
-            direction: rtl;
+            padding: 15px;
+            direction: ltr;
         }
 
         .top-navbar {
@@ -48,78 +48,66 @@
             justify-content: space-between;
             align-items: center;
             background: #ffffff;
-            padding: 8px 14px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             border: 1px solid var(--border-color);
         }
 
-        .top-navbar h3 { margin: 0; color: var(--accent-color); font-size: 1rem; }
+        .top-navbar h3 { margin: 0; color: var(--accent-color); font-size: 1.1rem; }
 
         .btn-stats-toggle {
             background-color: #0f172a;
             color: #fff;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .main-layout {
             display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 12px;
-            max-width: 1300px;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 850px) {
             .main-layout { grid-template-columns: 1fr; }
-        }
-
-        /* شبكة الكروت المصغرة - التعديل الأول */
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .items-grid { grid-template-columns: 1fr; }
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 8px;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
+
+        .form-group { margin-bottom: 12px; }
 
         label {
             display: block;
-            font-size: 0.72rem;
+            font-size: 0.8rem;
             color: var(--secondary-text);
-            margin-bottom: 2px;
-            font-weight: bold;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
 
-        /* حقول الإدخال مصغرة للغاية وحل مشكلة الباسورد */
-        input[type="text"], input[type="number"], select, input[type="search"] {
+        /* منع التعرّف على الحقول كـ Password Vault */
+        input[type="text"], input[type="number"], select {
             width: 100%;
-            padding: 4px 6px;
+            padding: 10px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 8px;
             color: var(--primary-text);
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             text-align: center;
-            height: 32px;
         }
 
         input:focus, select:focus {
@@ -127,56 +115,56 @@
             border-color: var(--accent-color);
         }
 
-        .input-invalid {
+        .input-error {
             border-color: #ef4444 !important;
             background-color: #fef2f2 !important;
-            color: #dc2626 !important;
-            font-weight: bold;
         }
 
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .tag-btn {
             background-color: #f1f5f9;
             border: 1px solid #cbd5e1;
             color: #334155;
-            padding: 3px 6px;
-            border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: bold;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
         }
 
-        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); color: #713f12; }
-        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); color: #14532d; }
-        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); color: #0c4a6e; }
-        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); color: #1e293b; }
-        .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); color: #ffffff; }
-        .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
-        .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); }
-        .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; }
+        /* تحديد ألوان وتنسيقات الأزرار حسب الإيموجيات المحددة */
+        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; color: #713f12; }
+        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; color: #14532d; }
+        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; color: #0c4a6e; }
+        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); font-weight: bold; color: #1e293b; }
+        .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); color: #ffffff; font-weight: bold; }
+        .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); font-weight: bold; }
+        .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); font-weight: bold; }
+        .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; font-weight: bold; }
 
         .degrees-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 70px;
-            gap: 6px;
-            align-items: center;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .eye-table {
             width: 100%;
+            margin-bottom: 12px;
             border-collapse: collapse;
-            direction: ltr;
         }
 
-        .eye-table th { font-size: 0.68rem; color: var(--secondary-text); padding: 2px; }
-        .eye-table td { padding: 2px; }
-        .eye-table input { padding: 2px 4px; height: 28px; font-size: 0.8rem; }
+        .eye-table th { font-size: 0.75rem; color: var(--secondary-text); padding: 4px; }
+        .eye-table td { padding: 3px; }
+        .eye-table input { padding: 8px 4px; }
 
         .hidden { display: none !important; }
 
@@ -185,44 +173,42 @@
             background: #fff;
             border: 2px dashed var(--accent-color);
             color: var(--accent-color);
-            padding: 8px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            font-size: 1rem;
         }
 
-        .sidebar { position: sticky; top: 10px; height: fit-content; }
+        .sidebar { position: sticky; top: 20px; height: fit-content; }
 
         .preview-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            direction: ltr;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .clinic-header {
             text-align: center;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .clinic-title { font-size: 1.1rem; font-weight: 900; color: #0f172a; }
-        .clinic-title-ar { font-size: 0.88rem; color: var(--accent-color); font-weight: bold; direction: rtl; }
-        .clinic-address { font-size: 0.7rem; color: var(--secondary-text); direction: rtl; }
+        .clinic-title { font-size: 1.2rem; font-weight: bold; color: #0f172a; }
+        .clinic-title-ar { font-size: 0.95rem; color: var(--accent-color); font-weight: 600; }
+        .clinic-address { font-size: 0.75rem; color: var(--secondary-text); margin-top: 2px; }
 
-        .summary-list { max-height: 480px; overflow-y: auto; margin-bottom: 8px; }
+        .summary-list { max-height: 420px; overflow-y: auto; margin-bottom: 12px; }
 
         .summary-card-group {
-            border-radius: 6px;
-            padding: 6px 8px;
-            margin-bottom: 6px;
-            font-size: 0.8rem;
-            border-left: 4px solid #94a3b8;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            border-left: 5px solid #94a3b8;
             background-color: #f8fafc;
         }
 
@@ -233,62 +219,158 @@
         .summary-card-group.photo-blue { background-color: var(--color-photo-blue); border-left-color: var(--border-photo-blue); color: #ffffff; }
         .summary-card-group.photo-blue .summary-line-item { border-bottom-color: rgba(255,255,255,0.3); }
 
+        .summary-card-group.photo-glass { background-color: var(--color-photo-glass); border-left-color: var(--border-photo-glass); }
+        .summary-card-group.white-plastic { background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #64748b; }
+
         .summary-line-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 3px 0;
-            border-bottom: 1px dashed rgba(0,0,0,0.12);
-        }
-
-        /* تنسيق الخط الفخم وتكبير الإشارات للتاجر */
-        .degree-bold-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900 !important;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-        }
-
-        .sign-highlight {
-            font-weight: 900 !important;
-            font-size: 1.05rem;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.15);
         }
 
         .badge-bifocal {
-            background-color: #d97706; color: #ffffff; font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px;
+            display: inline-block;
+            background-color: #d97706;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
         }
 
         .badge-progressive {
-            background-color: #dc2626; color: #ffffff; font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px;
+            display: inline-block;
+            background-color: #dc2626;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
         }
 
-        .action-btns { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+        .action-btns { display: flex; flex-direction: column; gap: 8px; }
 
         .btn-action {
             width: 100%;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
         }
 
-        .btn-download { background-color: #f97316; color: #fff; }
+        .btn-download { background-color: #f97316; color: #fff; opacity: 0.9; }
+        .btn-download:hover { opacity: 1; }
+
         .btn-whatsapp { background-color: #22c55e; color: #fff; }
 
-        .merchant-split-btn { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid #4338ca; }
-        .merchant-btn-part { flex: 1; padding: 8px 4px; border: none; color: #fff; font-weight: bold; font-size: 0.78rem; cursor: pointer; text-align: center; }
+        .merchant-split-btn {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #4338ca;
+        }
+
+        .merchant-btn-part {
+            flex: 1;
+            padding: 12px 6px;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
         .merchant-chat { background-color: #4f46e5; }
         .merchant-call { background-color: #3730a3; border-left: 1px solid #6366f1; }
 
-        .remove-link { color: #ef4444; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
+        .remove-link {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 16px; border-radius: 8px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; direction: rtl; }
-        .stats-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.8rem; }
-        .stats-table th, .stats-table td { border: 1px solid #cbd5e1; padding: 4px; text-align: center; }
-        .stats-table th { background-color: #f1f5f9; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 540px;
+            max-height: 85vh;
+            overflow-y: auto;
+            direction: rtl;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .stats-table th, .stats-table td {
+            border: 1px solid #cbd5e1;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .stats-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .backup-section {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-backup {
+            background-color: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
+        }
+
+        .btn-restore {
+            background-color: #16a34a;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.82rem;
+        }
     </style>
 </head>
 <body>
@@ -311,37 +393,39 @@
 </datalist>
 
 <div class="top-navbar">
-    <h3>عيادة الدقة للبصريات - نظام الطلبات</h3>
+    <h3>Al-Diqqa Optics System</h3>
     <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والأرشيف</button>
 </div>
 
 <div class="main-layout">
     <div class="content-area">
-        <form onsubmit="return false;" autocomplete="off">
-            <div id="itemsContainer" class="items-grid">
-                <!-- الكارت الأول متواجد افتراضياً -->
+        <form onsubmit="return false;" autocomplete="off" data-form-type="other">
+            <div id="itemsContainer">
                 <div class="card order-item" id="item-1">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: bold; font-size: 0.8rem; color: var(--accent-color);" class="item-title">طلب #1</span>
-                        <button type="button" class="remove-link" onclick="removeItem(this)">حذف</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #1</span>
+                        <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
                     </div>
 
-                    <div>
+                    <div style="margin-bottom: 10px;">
+                        <label>Design Type</label>
                         <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
-                            <option value="Single Vision">عادية (عادية)</option>
+                            <option value="Single Vision">Single Vision (سنجل)</option>
                             <option value="Bifocal">Bifocal (باي فوكل)</option>
                             <option value="Progressive">Progressive (بروجريسيف)</option>
                         </select>
                     </div>
 
+                    <label>Lens Properties:</label>
                     <div class="lens-tags">
-                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 مالتي كوتد</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 بلوك أخضر</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 بلوك أزرق</button>
-                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ فوتو عادي</button>
-                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ فوتو بلوك ☀️🌙</button>
-                        <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">فوتو زجاج 👓</button>
-                        <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">أبيض بلاستيك</button>
+                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
+                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
+                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
+                        <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
+                        <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                        <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
                     </div>
                     <input type="hidden" class="selected-tag" value="Multicoated">
 
@@ -349,15 +433,11 @@
                         <div class="degrees-grid">
                             <div>
                                 <label>SPH</label>
-                                <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
+                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                             </div>
                             <div>
                                 <label>CYL</label>
-                                <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
-                            </div>
-                            <div>
-                                <label>العدد</label>
-                                <input type="number" autocomplete="one-time-code" class="quantity" min="1" value="1" oninput="validateAndFormatInput(this); updateSummary();">
+                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                             </div>
                         </div>
                     </div>
@@ -376,30 +456,35 @@
                             <tbody>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="number" autocomplete="one-time-code" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="number" autocomplete="one-time-code" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="jumpToNextPrescription(event, this)" oninput="updateSummary()"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div>
-                        <input type="text" autocomplete="one-time-code" style="text-align:right; font-size:0.75rem; height:26px;" class="item-notes" placeholder="ملاحظات (اختياري)" oninput="updateSummary()">
+                    <div class="form-group qty-group">
+                        <label>Lens Quantity (العدد)</label>
+                        <input type="number" autocomplete="new-password" class="quantity" min="1" onkeydown="jumpToNextPrescription(event, this)" oninput="clearQtyError(this); updateSummary();">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
                     </div>
                 </div>
             </div>
         </form>
 
-        <button type="button" class="add-btn" onclick="addNewItem()">+ إضافة وصفة جديدة</button>
+        <button type="button" class="add-btn" onclick="addNewItem()">+ Add New Prescription</button>
     </div>
 
     <div class="sidebar">
@@ -408,21 +493,21 @@
                 <div class="clinic-title">Al-Diqqa Optics</div>
                 <div class="clinic-title-ar">عيادة الدقة للبصريات</div>
                 <div class="clinic-address">كربلاء المقدسة - مجاور مستشفى العباس الأهلي</div>
-                <div style="font-size: 0.68rem; color: var(--secondary-text); margin-top: 2px;" id="orderDate"></div>
+                <div style="font-size: 0.7rem; color: var(--secondary-text); margin-top: 4px;" id="orderDate"></div>
             </div>
 
-            <div style="font-size: 0.78rem; font-weight: bold; margin-bottom: 4px; color: var(--accent-color); direction: rtl;">تفاصيل الطلب:</div>
+            <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent-color);">Order Summary:</div>
 
             <div class="summary-list" id="summaryList"></div>
 
-            <div style="border-top: 2px dashed var(--border-color); padding-top: 6px; font-size: 0.82rem; font-weight: bold; display: flex; justify-content: space-between; direction: rtl;" id="totalQuantity">
-                <span>إجمالي العدسات:</span> <span>0 قطعة</span>
+            <div style="border-top: 2px dashed var(--border-color); padding-top: 8px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between;" id="totalQuantity">
+                <span>Total Lenses:</span> <span>0 pcs</span>
             </div>
         </div>
 
-        <div class="action-btns">
-            <button class="btn-action btn-download" onclick="downloadImage()">📸 حفظ الطلب كصورة كاملة</button>
-            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 إرسال الطلب عبر الواتساب</button>
+        <div class="action-btns" style="margin-top: 15px;">
+            <button class="btn-action btn-download" onclick="downloadImage()">📸 Save Order as Image</button>
+            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 Send Order via WhatsApp</button>
             
             <div class="merchant-split-btn">
                 <button class="merchant-btn-part merchant-chat" onclick="openDirectMerchantChat()">💬 محادثة التاجر</button>
@@ -432,36 +517,33 @@
     </div>
 </div>
 
-<!-- Modal الإحصائيات -->
+<!-- Modal الإحصائيات مع النسخ الاحتياطي والاستعادة -->
 <div class="modal" id="statsModal">
     <div class="modal-content">
-        <h3 style="margin-top:0; color:var(--accent-color);">📊 إحصائيات العدسات والأرشيف</h3>
+        <h3 style="margin-top:0; color:var(--accent-color);">📊 إحصائيات العدسات الشهرية والأرشيف</h3>
         <hr>
         <div id="statsBody">
             <p>جارٍ تحميل الإحصائيات...</p>
         </div>
 
+        <div class="backup-section">
+            <b style="font-size: 0.85rem; color: #334155;">💾 إدارة النسخ الاحتياطي (Backup & Restore):</b>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-backup" style="flex:1;" onclick="exportBackup()">📥 تصدير النسخة الاحتياطية</button>
+                <button class="btn-restore" style="flex:1;" onclick="document.getElementById('importFileInput').click()">📤 استعادة النسخة الاحتياطية</button>
+            </div>
+            <input type="file" id="importFileInput" style="display: none;" accept=".json" onchange="importBackup(event)">
+        </div>
+
         <br>
-        <button onclick="clearHistory()" style="background:#ef4444; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">تفريغ الأرشيف</button>
-        <button onclick="closeStatsModal()" style="background:#64748b; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; float:left; font-weight:bold;">إغلاق</button>
+        <button onclick="clearHistory()" style="background:#ef4444; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">تفريغ الأرشيف</button>
+        <button onclick="closeStatsModal()" style="background:#64748b; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; float:left; font-weight:bold;">إغلاق</button>
     </div>
 </div>
 
 <script>
     const MERCHANT_PHONE = "9647736429201";
     let itemCount = 1;
-
-    // قاموس الأسماء العربية للتاجر (التعديل العاشر)
-    const arabicLensNames = {
-        "Multicoated": "🟡 مالتي كوتد",
-        "Blue Cut (Green)": "🟢 بلوك أخضر",
-        "Blue Cut (Blue)": "🔵 بلوك أزرق",
-        "Photochromic": "⚪ فوتو عادي",
-        "Photo Blue Cut": "⚫ فوتو بلوك ☀️🌙",
-        "Photo Glass": "فوتو زجاج 👓",
-        "White Plastic": "أبيض بلاستيك",
-        "Other": "أنواع أخرى"
-    };
 
     document.getElementById('orderDate').innerText = "Date: " + new Date().toLocaleDateString('en-GB');
 
@@ -477,13 +559,16 @@
         const parent = selectEl.closest('.card');
         const singleSec = parent.querySelector('.single-vision-section');
         const dualSec = parent.querySelector('.dual-eye-section');
+        const qtyGroup = parent.querySelector('.qty-group');
 
         if (selectEl.value === 'Single Vision') {
             singleSec.classList.remove('hidden');
             dualSec.classList.add('hidden');
+            qtyGroup.classList.remove('hidden');
         } else {
             singleSec.classList.add('hidden');
             dualSec.classList.remove('hidden');
+            qtyGroup.classList.add('hidden');
         }
     }
 
@@ -493,36 +578,24 @@
         lAddInput.value = rAddInput.value;
     }
 
-    // التعديل الثامن: التحقق من مضاعفات الربع 0.25 لتنبيه المستخدم باللون الأحمر
-    function validateAndFormatInput(input) {
-        let val = input.value.trim();
-        if (!val) {
-            input.classList.remove('input-invalid');
-            return;
+    function jumpToNextPrescription(event, inputEl) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault();
+            addNewItem();
         }
+    }
 
-        if (input.type === 'number') {
-            return;
-        }
+    function formatDegreeInput(input) {
+        let val = input.value.trim();
+        if (!val) return;
 
         if (val.toLowerCase() === 'plano') {
             input.value = 'Plano';
-            input.classList.remove('input-invalid');
             return;
         }
 
         let num = parseFloat(val);
-        if (isNaN(num)) {
-            input.classList.add('input-invalid');
-            return;
-        }
-
-        // فحص الخصم الطبية (مضاعفات 0.25)
-        let remainder = Math.abs(num * 100) % 25;
-        if (remainder !== 0) {
-            input.classList.add('input-invalid'); // تظليل بالأحمر
-        } else {
-            input.classList.remove('input-invalid');
+        if (!isNaN(num)) {
             let sign = (num > 0) ? '+' : '';
             input.value = sign + num.toFixed(2);
         }
@@ -539,67 +612,60 @@
         }
     }
 
-    // التعديل الثاني: الاحتفاظ بنوع العدسة المختار سابقاً للطلب الجديد
+    function clearQtyError(input) {
+        if(input.value) {
+            input.classList.remove('input-error');
+        }
+    }
+
     function addNewItem() {
         itemCount++;
         const container = document.getElementById('itemsContainer');
-        const items = document.querySelectorAll('.order-item');
-        
-        // جلب خامة العدسة والتصميم من الطلب الأخير
-        let lastTag = "Multicoated";
-        let lastDesign = "Single Vision";
-        if (items.length > 0) {
-            const lastItem = items[items.length - 1];
-            lastTag = lastItem.querySelector('.selected-tag').value;
-            lastDesign = lastItem.querySelector('.design-type').value;
-        }
-
         const newItem = document.createElement('div');
         newItem.className = 'card order-item';
         newItem.id = `item-${itemCount}`;
         newItem.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: bold; font-size: 0.8rem; color: var(--accent-color);" class="item-title">طلب #${itemCount}</span>
-                <button type="button" class="remove-link" onclick="removeItem(this)">حذف</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #${itemCount}</span>
+                <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
             </div>
 
-            <div>
+            <div style="margin-bottom: 10px;">
+                <label>Design Type</label>
                 <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
-                    <option value="Single Vision" ${lastDesign === 'Single Vision' ? 'selected' : ''}>عادية (عادية)</option>
-                    <option value="Bifocal" ${lastDesign === 'Bifocal' ? 'selected' : ''}>Bifocal (باي فوكل)</option>
-                    <option value="Progressive" ${lastDesign === 'Progressive' ? 'selected' : ''}>Progressive (بروجريسيف)</option>
+                    <option value="Single Vision">Single Vision (سنجل)</option>
+                    <option value="Bifocal">Bifocal (باي فوكل)</option>
+                    <option value="Progressive">Progressive (بروجريسيف)</option>
                 </select>
             </div>
 
+            <label>Lens Properties:</label>
             <div class="lens-tags">
-                <button type="button" class="tag-btn ${lastTag==='Multicoated'?'active':''}" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 مالتي كوتد</button>
-                <button type="button" class="tag-btn ${lastTag==='Blue Cut (Green)'?'active':''}" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 بلوك أخضر</button>
-                <button type="button" class="tag-btn ${lastTag==='Blue Cut (Blue)'?'active':''}" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 بلوك أزرق</button>
-                <button type="button" class="tag-btn ${lastTag==='Photochromic'?'active':''}" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ فوتو عادي</button>
-                <button type="button" class="tag-btn ${lastTag==='Photo Blue Cut'?'active':''}" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ فوتو بلوك ☀️🌙</button>
-                <button type="button" class="tag-btn ${lastTag==='Photo Glass'?'active':''}" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">فوتو زجاج 👓</button>
-                <button type="button" class="tag-btn ${lastTag==='White Plastic'?'active':''}" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">أبيض بلاستيك</button>
+                <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
+                <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
+                <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
+                <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
+                <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
+                <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
+                <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
+                <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
             </div>
-            <input type="hidden" class="selected-tag" value="${lastTag}">
+            <input type="hidden" class="selected-tag" value="Multicoated">
 
-            <div class="single-vision-section ${lastDesign !== 'Single Vision' ? 'hidden' : ''}">
+            <div class="single-vision-section">
                 <div class="degrees-grid">
                     <div>
                         <label>SPH</label>
-                        <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
+                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                     </div>
                     <div>
                         <label>CYL</label>
-                        <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
-                    </div>
-                    <div>
-                        <label>العدد</label>
-                        <input type="number" autocomplete="one-time-code" class="quantity" min="1" value="1" oninput="validateAndFormatInput(this); updateSummary();">
+                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
                     </div>
                 </div>
             </div>
 
-            <div class="dual-eye-section ${lastDesign === 'Single Vision' ? 'hidden' : ''}">
+            <div class="dual-eye-section hidden">
                 <table class="eye-table">
                     <thead>
                         <tr>
@@ -613,27 +679,39 @@
                     <tbody>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="number" autocomplete="one-time-code" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
                         </tr>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="number" autocomplete="one-time-code" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="jumpToNextPrescription(event, this)" oninput="updateSummary()"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div>
-                <input type="text" autocomplete="one-time-code" style="text-align:right; font-size:0.75rem; height:26px;" class="item-notes" placeholder="ملاحظات (اختياري)" oninput="updateSummary()">
+            <div class="form-group qty-group">
+                <label>Lens Quantity (العدد)</label>
+                <input type="number" autocomplete="new-password" class="quantity" min="1" onkeydown="jumpToNextPrescription(event, this)" oninput="clearQtyError(this); updateSummary();">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
             </div>
         `;
         container.appendChild(newItem);
+
+        newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+            const firstInput = newItem.querySelector('.single-sph');
+            if (firstInput) firstInput.focus();
+        }, 200);
+
         updateSummary();
     }
 
@@ -643,35 +721,15 @@
             btn.closest('.card').remove();
             updateSummary();
         } else {
-            alert("يجب إبقاء وصفة واحدة على الأقل.");
+            alert("At least one prescription is required.");
         }
     }
 
-    // تنسيق النص البرمجي وتكبير الإشارات للتاجر (التعديل الرابع والخامس)
-    function formatDegreeForMerchant(sph, cyl) {
-        let result = "";
-        
-        let hasSph = sph && sph !== '';
-        let hasCyl = cyl && cyl !== '' && cyl !== '0.00';
-
-        if (hasSph) {
-            let formattedSph = sph;
-            if (sph.startsWith('+')) formattedSph = `<b class="sign-highlight">+</b>` + sph.substring(1);
-            else if (sph.startsWith('-')) formattedSph = `<b class="sign-highlight">-</b>` + sph.substring(1);
-            
-            result += `<b>S:</b> <span class="degree-bold-text">${formattedSph}</span>`;
-        }
-
-        // التعديل الخامس: إخفاء السلندر تماماً من الصورة إذا كان فارغاً
-        if (hasCyl) {
-            let formattedCyl = cyl;
-            if (cyl.startsWith('+')) formattedCyl = `<b class="sign-highlight">+</b>` + cyl.substring(1);
-            else if (cyl.startsWith('-')) formattedCyl = `<b class="sign-highlight">-</b>` + cyl.substring(1);
-
-            result += ` | <b>C:</b> <span class="degree-bold-text">${formattedCyl}</span>`;
-        }
-
-        return result;
+    function formatEyeDegreeText(sph, cyl) {
+        if (sph.toLowerCase() === 'plano' && (!cyl || cyl === '0.00')) return 'Plano';
+        let str = sph ? sph : '0.00';
+        if (cyl && cyl !== '0.00') str += ` / ${cyl}`;
+        return str;
     }
 
     function updateSummary() {
@@ -686,11 +744,11 @@
             const design = item.querySelector('.design-type').value;
             const tag = item.querySelector('.selected-tag').value;
             const qtyInput = item.querySelector('.quantity');
-            const qtyVal = parseInt(qtyInput.value) || 0;
+            const qtyVal = qtyInput.value;
             const notes = item.querySelector('.item-notes').value;
 
             let hasDegrees = false;
-            let lineData = { qty: (design === 'Single Vision') ? qtyVal : 1, notes: notes, design: design };
+            let lineData = { qty: (design === 'Single Vision') ? (parseInt(qtyVal) || 0) : 1, notes: notes, design: design };
 
             if (design === 'Single Vision') {
                 const sph = item.querySelector('.single-sph').value.trim();
@@ -700,8 +758,6 @@
                     lineData.type = 'single';
                     lineData.sph = sph;
                     lineData.cyl = cyl;
-                    lineData.sphVal = parseFloat(sph) || 0;
-                    lineData.cylVal = parseFloat(cyl) || 0;
                 }
             } else {
                 const rSph = item.querySelector('.r-sph').value.trim();
@@ -726,109 +782,100 @@
                 }
             }
 
-            if (hasDegrees) {
+            if (design === 'Single Vision' && hasDegrees && !qtyVal) {
+                qtyInput.classList.add('input-error');
+            } else if (hasDegrees) {
+                if (design === 'Single Vision') qtyInput.classList.remove('input-error');
                 totalLenses += lineData.qty;
+
                 const groupKey = `${tag}||${design}`;
                 if (!grouped[groupKey]) grouped[groupKey] = { tag: tag, design: design, lines: [] };
                 grouped[groupKey].lines.push(lineData);
             }
         });
 
-        // التعديل الثالث: الترتيب التصاعدي المخصص للتاجر
         Object.keys(grouped).forEach((key) => {
             const group = grouped[key];
 
-            group.lines.sort((a, b) => {
-                if (a.type === 'single' && b.type === 'single') {
-                    // إذا كان أحدهما يحتوي سلندر والآخر بدون سلندر
-                    let aHasCyl = a.cyl && a.cyl !== '0.00';
-                    let bHasCyl = b.cyl && b.cyl !== '0.00';
-
-                    if (!aHasCyl && !bHasCyl) {
-                        return a.sphVal - b.sphVal; // ترتيب SPH تصاعدياً
-                    } else if (aHasCyl && bHasCyl) {
-                        // ثبات السلندر وترتيب السفير تصاعدياً فوقه
-                        if (a.cylVal !== b.cylVal) return a.cylVal - b.cylVal;
-                        return a.sphVal - b.sphVal;
-                    } else {
-                        return aHasCyl ? 1 : -1;
-                    }
-                }
-                return 0;
-            });
-
             let colorClass = "";
-            let tagArabic = arabicLensNames[group.tag] || group.tag;
+            let tagDisplay = group.tag;
             
-            if (group.tag.includes("Multicoated")) colorClass = "multicoated";
-            else if (group.tag.includes("Blue Cut (Green)")) colorClass = "green-cut";
-            else if (group.tag.includes("Blue Cut (Blue)")) colorClass = "blue-cut";
-            else if (group.tag.includes("Photochromic")) colorClass = "photochromic";
-            else if (group.tag.includes("Photo Blue Cut")) colorClass = "photo-blue";
+            if (group.tag.includes("Multicoated")) { colorClass = "multicoated"; tagDisplay = "🟡 Multicoated"; }
+            else if (group.tag.includes("Blue Cut (Green)")) { colorClass = "green-cut"; tagDisplay = "🟢 Blue Cut (Green)"; }
+            else if (group.tag.includes("Blue Cut (Blue)")) { colorClass = "blue-cut"; tagDisplay = "🔵 Blue Cut (Blue)"; }
+            else if (group.tag.includes("Photochromic")) { colorClass = "photochromic"; tagDisplay = "⚪ Photochromic"; }
+            else if (group.tag.includes("Photo Blue Cut")) { colorClass = "photo-blue"; tagDisplay = "⚫ Photo Blue Cut ☀️🌙"; }
+            else if (group.tag.includes("Photo Glass")) { colorClass = "photo-glass"; tagDisplay = "Photo Glass 👓"; }
+            else if (group.tag.includes("White Plastic")) { colorClass = "white-plastic"; tagDisplay = "White Plastic"; }
 
             let groupHTML = `<div class="summary-card-group ${colorClass}">`;
-            
-            // التعديل العاشر: عدم كتابة Single Vision بل كتابة الخامة بالعربي فقط
-            let designLabel = "";
-            if (group.design === 'Bifocal') designLabel = `<span class="badge-bifocal">👓 BIFOCAL</span>`;
-            else if (group.design === 'Progressive') designLabel = `<span class="badge-progressive">⚡ PROGRESSIVE</span>`;
+            let designLabel = (group.design === 'Bifocal') ? `<span class="badge-bifocal">👓 BIFOCAL</span>` : (group.design === 'Progressive') ? `<span class="badge-progressive">⚡ PROGRESSIVE</span>` : `<small>(${group.design})</small>`;
 
-            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:0.9rem;">${tagArabic}</span>
+            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                <span>${tagDisplay}</span>
                 <span>${designLabel}</span>
             </div>`;
 
             group.lines.forEach((line) => {
                 groupHTML += `<div class="summary-line-item"><div>`;
                 if (line.type === 'single') {
-                    groupHTML += line.sph.toLowerCase() === 'plano' && (!line.cyl || line.cyl === '0.00') ? 
-                        `<b>Plano</b>` : 
-                        formatDegreeForMerchant(line.sph, line.cyl);
+                    groupHTML += (line.sph.toLowerCase() === 'plano' && (!line.cyl || line.cyl === '0.00')) ? `<span style="font-weight:bold;">Plano</span>` : `<span style="font-family: monospace; font-weight:600;">S:${line.sph || '0.00'} | C:${line.cyl || '0.00'}</span>`;
                 } else {
-                    groupHTML += `<div style="font-size: 0.78rem;">`;
-                    if (line.right) groupHTML += `<b>R:</b> ${formatDegreeForMerchant(line.right.sph, line.right.cyl)} ${line.right.axis ? 'x' + line.right.axis + '°' : ''} <br>`;
-                    if (line.left) groupHTML += `<b>L:</b> ${formatDegreeForMerchant(line.left.sph, line.left.cyl)} ${line.left.axis ? 'x' + line.left.axis + '°' : ''}`;
-                    if (line.commonAdd) groupHTML += `<div style="font-size:0.8rem; font-weight:bold; margin-top:1px;">ADD: ${line.commonAdd}</div>`;
+                    groupHTML += `<div style="font-family: monospace; font-size: 0.8rem;">`;
+                    if (line.right) groupHTML += `<b>R:</b> ${formatEyeDegreeText(line.right.sph, line.right.cyl)} ${line.right.axis ? 'x' + line.right.axis + '°' : ''} ${(!line.commonAdd && line.right.add)?'<b>ADD:</b>'+line.right.add:''}<br>`;
+                    if (line.left) groupHTML += `<b>L:</b> ${formatEyeDegreeText(line.left.sph, line.left.cyl)} ${line.left.axis ? 'x' + line.left.axis + '°' : ''} ${(!line.commonAdd && line.left.add)?'<b>ADD:</b>'+line.left.add:''}`;
+                    if (line.commonAdd) groupHTML += `<div style="font-size:0.88rem; font-weight:bold; margin-top:2px;">ADD: ${line.commonAdd}</div>`;
                     groupHTML += `</div>`;
                 }
-                if (line.notes) groupHTML += `<small style="display:block; color:#64748b; font-size:0.7rem; direction:rtl;">ملاحظة: ${line.notes}</small>`;
-                groupHTML += `</div><div style="font-weight:bold; font-size:0.85rem; background:#fff; color:#000; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div></div>`;
+                if (line.notes) groupHTML += `<small style="display:block; opacity:0.9;">Note: ${line.notes}</small>`;
+                groupHTML += `</div><div style="font-weight:bold; font-size:0.85rem; background:#fff; color:#000; padding:2px 8px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div></div>`;
             });
 
             groupHTML += `</div>`;
             summaryList.innerHTML += groupHTML;
         });
 
-        document.getElementById('totalQuantity').innerHTML = `<span>إجمالي العدسات:</span> <span>${totalLenses} قطعة</span>`;
+        document.getElementById('totalQuantity').innerHTML = `<span>Total Lenses:</span> <span>${totalLenses} pcs</span>`;
     }
 
-    // التعديل التاسع: حل مشكلة قص الصورة للطلبات الكبيرة
+    function saveOrderToHistory(detailsObj) {
+        let history = JSON.parse(localStorage.getItem('optics_orders_v2') || '[]');
+        history.push({
+            date: new Date().toISOString(),
+            month: new Date().toISOString().slice(0, 7),
+            types: detailsObj
+        });
+        localStorage.setItem('optics_orders_v2', JSON.stringify(history));
+    }
+
+    function extractOrderDetails() {
+        const items = document.querySelectorAll('.order-item');
+        let details = {};
+
+        items.forEach((item) => {
+            const design = item.querySelector('.design-type').value;
+            const tag = item.querySelector('.selected-tag').value;
+            const qtyVal = parseInt(item.querySelector('.quantity').value) || 0;
+
+            let qty = (design === 'Single Vision') ? qtyVal : 1;
+            if (qty > 0) {
+                details[tag] = (details[tag] || 0) + qty;
+            }
+        });
+
+        return details;
+    }
+
     function downloadImage() {
         const captureArea = document.getElementById('captureArea');
-        const summaryList = document.getElementById('summaryList');
-
-        // حفظ التنسيق الحالي
-        const originalMaxHeight = summaryList.style.maxHeight;
-        const originalOverflow = summaryList.style.overflowY;
-
-        // إزالة التمرير للتمدد بكامل المحتوى ومنع قص أي طلب
-        summaryList.style.maxHeight = 'none';
-        summaryList.style.overflowY = 'visible';
-
-        html2canvas(captureArea, {
-            backgroundColor: '#ffffff',
-            scale: 2,
-            useCORS: true,
-            windowHeight: captureArea.scrollHeight
-        }).then(canvas => {
-            // إعادة التنسيق الطبيعي
-            summaryList.style.maxHeight = originalMaxHeight;
-            summaryList.style.overflowY = originalOverflow;
-
+        html2canvas(captureArea, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
             const link = document.createElement('a');
-            link.download = `AlDiqqa_Optics_Order_${Date.now()}.png`;
+            link.download = `AlDiqqa_Optics_${Date.now()}.png`;
             link.href = canvas.toDataURL();
             link.click();
+
+            const details = extractOrderDetails();
+            saveOrderToHistory(details);
         });
     }
 
@@ -842,28 +889,41 @@
             const tag = item.querySelector('.selected-tag').value;
             const qty = item.querySelector('.quantity').value;
             const notes = item.querySelector('.item-notes').value;
-            const tagAr = arabicLensNames[tag] || tag;
 
-            activeCount++;
-            text += `🔹 *#${activeCount} ${tagAr}*\n`;
-            if (design === 'Single Vision') {
-                const sph = item.querySelector('.single-sph').value || '0.00';
-                const cyl = item.querySelector('.single-cyl').value || '';
-                text += `• SPH: ${sph} ${cyl ? '| CYL: ' + cyl : ''}\n`;
-                text += `• *العدد:* ${qty} قطعة\n`;
-            } else {
-                const rSph = item.querySelector('.r-sph').value;
-                const rCyl = item.querySelector('.r-cyl').value;
-                const lSph = item.querySelector('.l-sph').value;
-                const lCyl = item.querySelector('.l-cyl').value;
+            if (design !== 'Single Vision' || qty) {
+                activeCount++;
+                text += `🔹 *#${activeCount} ${tag}* [${design.toUpperCase()}]\n`;
+                if (design === 'Single Vision') {
+                    const sph = item.querySelector('.single-sph').value || '0.00';
+                    const cyl = item.querySelector('.single-cyl').value || '0.00';
+                    text += (sph.toLowerCase() === 'plano' && cyl === '0.00') ? `• Plano\n` : `• SPH: ${sph} | CYL: ${cyl}\n`;
+                    text += `• *Qty:* ${qty} pcs\n`;
+                } else {
+                    const rSph = item.querySelector('.r-sph').value;
+                    const rCyl = item.querySelector('.r-cyl').value;
+                    const rAxis = item.querySelector('.r-axis').value;
+                    const rAdd = item.querySelector('.r-add').value;
+                    const lSph = item.querySelector('.l-sph').value;
+                    const lCyl = item.querySelector('.l-cyl').value;
+                    const lAxis = item.querySelector('.l-axis').value;
+                    const lAdd = item.querySelector('.l-add').value;
 
-                if (rSph || rCyl) text += `• *R:* SPH:${rSph} CYL:${rCyl}\n`;
-                if (lSph || lCyl) text += `• *L:* SPH:${lSph} CYL:${lCyl}\n`;
-                text += `• *النوع:* ${design}\n`;
+                    if (rSph || rCyl || rAdd) text += `• *R:* ${formatEyeDegreeText(rSph, rCyl)} ${rAxis ? 'x' + rAxis + '°' : ''} ${rAdd ? 'ADD:' + rAdd : ''}\n`;
+                    if (lSph || lCyl || lAdd) text += `• *L:* ${formatEyeDegreeText(lSph, lCyl)} ${lAxis ? 'x' + lAxis + '°' : ''} ${lAdd ? 'ADD:' + lAdd : ''}\n`;
+                    text += `• *Qty:* 1 Pair/Lens\n`;
+                }
+                if (notes) text += `• *Note:* ${notes}\n`;
+                text += `--------------------------------\n`;
             }
-            if (notes) text += `• *ملاحظة:* ${notes}\n`;
-            text += `--------------------------------\n`;
         });
+
+        if (activeCount === 0) {
+            alert("يرجى إدخال درجات أولاً للإرسال.");
+            return;
+        }
+
+        const details = extractOrderDetails();
+        saveOrderToHistory(details);
 
         const msg = encodeURIComponent(text);
         window.open(`https://wa.me/${MERCHANT_PHONE}?text=${msg}`, '_blank');
@@ -872,9 +932,114 @@
     function openDirectMerchantChat() { window.open(`https://wa.me/${MERCHANT_PHONE}`, '_blank'); }
     function callMerchant() { window.open(`tel:+${MERCHANT_PHONE}`, '_self'); }
 
-    function openStatsModal() { document.getElementById('statsModal').style.display = 'flex'; }
+    // عرض الإحصائيات مع الرموز التعبيرية
+    function openStatsModal() {
+        document.getElementById('statsModal').style.display = 'flex';
+        const history = JSON.parse(localStorage.getItem('optics_orders_v2') || '[]');
+        const currentMonth = new Date().toISOString().slice(0, 7);
+
+        let typeTotals = {
+            "Multicoated": 0,
+            "Blue Cut (Green)": 0,
+            "Blue Cut (Blue)": 0,
+            "Photochromic": 0,
+            "Photo Blue Cut": 0,
+            "Photo Glass": 0,
+            "White Plastic": 0,
+            "Other": 0
+        };
+
+        let totalOrdersThisMonth = 0;
+        let totalLensesThisMonth = 0;
+
+        history.forEach(order => {
+            if (order.month === currentMonth) {
+                totalOrdersThisMonth++;
+                for (let type in order.types) {
+                    if (typeTotals.hasOwnProperty(type)) {
+                        typeTotals[type] += order.types[type];
+                    } else {
+                        typeTotals["Other"] += order.types[type];
+                    }
+                    totalLensesThisMonth += order.types[type];
+                }
+            }
+        });
+
+        let html = `
+            <div style="background:#f1f5f9; padding:10px; border-radius:8px; margin-bottom:12px;">
+                <b>📅 إحصائيات الشهر الحالي (${currentMonth}):</b><br>
+                • عدد الطلبات الكلي: <b>${totalOrdersThisMonth}</b> طلب<br>
+                • إجمالي العدسات المطلوبة: <b style="color:var(--accent-color);">${totalLensesThisMonth} عدسة</b>
+            </div>
+
+            <b>📊 تفاصيل العدسات حسب النوع:</b>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>نوع العدسة</th>
+                        <th>عدد العدسات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>🟡 Multicoated</td><td><b>${typeTotals["Multicoated"]}</b></td></tr>
+                    <tr><td>🟢 Blue Cut (Green)</td><td><b>${typeTotals["Blue Cut (Green)"]}</b></td></tr>
+                    <tr><td>🔵 Blue Cut (Blue)</td><td><b>${typeTotals["Blue Cut (Blue)"]}</b></td></tr>
+                    <tr><td>⚪ Photochromic</td><td><b>${typeTotals["Photochromic"]}</b></td></tr>
+                    <tr style="background:#eff6ff;"><td><b>⚫ Photo Blue Cut ☀️🌙</b></td><td><b style="color:var(--accent-color);">${typeTotals["Photo Blue Cut"]}</b></td></tr>
+                    <tr><td>Photo Glass 👓</td><td><b>${typeTotals["Photo Glass"]}</b></td></tr>
+                    <tr><td>White Plastic</td><td><b>${typeTotals["White Plastic"]}</b></td></tr>
+                    <tr><td>أنواع أخرى (Other)</td><td><b>${typeTotals["Other"]}</b></td></tr>
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('statsBody').innerHTML = html;
+    }
+
     function closeStatsModal() { document.getElementById('statsModal').style.display = 'none'; }
-    function clearHistory() { localStorage.removeItem('optics_orders_v2'); openStatsModal(); }
+    
+    function clearHistory() {
+        if(confirm("هل أنت تأكد من مسح كافة الإحصائيات والأرشيف؟")) {
+            localStorage.removeItem('optics_orders_v2');
+            openStatsModal();
+        }
+    }
+
+    // آليات تصدير واستعادة النسخة الاحتياطية (Export / Import Backup)
+    function exportBackup() {
+        const history = localStorage.getItem('optics_orders_v2') || '[]';
+        const blob = new Blob([history], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `AlDiqqa_Optics_Backup_${dateStr}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function importBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (Array.isArray(importedData)) {
+                    localStorage.setItem('optics_orders_v2', JSON.stringify(importedData));
+                    alert("تمت استعادة النسخة الاحتياطية بنجاح!");
+                    openStatsModal();
+                } else {
+                    alert("صيغة الملف غير صحيحة.");
+                }
+            } catch (err) {
+                alert("حدث خطأ أثناء قراءة ملف النسخة الاحتياطية.");
+            }
+        };
+        reader.readAsText(file);
+    }
 
     updateSummary();
 </script>
