@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Diqqa Optics - Lens Order</title>
+    <title>نظام طلبات عيادة الدقة للبصريات</title>
     <!-- مكتبة تحويل العناصر إلى صورة -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --bg-color: #f4f6f8;
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --input-bg: #ffffff;
-            --primary-text: #1e293b;
-            --secondary-text: #64748b;
+            --primary-text: #0f172a;
+            --secondary-text: #475569;
             --border-color: #cbd5e1;
             --accent-color: #0284c7;
 
@@ -33,14 +33,14 @@
             --border-white-plastic: #64748b;
         }
 
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 
         body {
             background-color: var(--bg-color);
             color: var(--primary-text);
             margin: 0;
-            padding: 15px;
-            direction: ltr;
+            padding: 10px;
+            direction: rtl;
         }
 
         .top-navbar {
@@ -48,66 +48,78 @@
             justify-content: space-between;
             align-items: center;
             background: #ffffff;
-            padding: 10px 16px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             border: 1px solid var(--border-color);
         }
 
-        .top-navbar h3 { margin: 0; color: var(--accent-color); font-size: 1.1rem; }
+        .top-navbar h3 { margin: 0; color: var(--accent-color); font-size: 1rem; }
 
         .btn-stats-toggle {
             background-color: #0f172a;
             color: #fff;
             border: none;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .main-layout {
             display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 20px;
-            max-width: 1200px;
+            grid-template-columns: 1fr 340px;
+            gap: 12px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 900px) {
             .main-layout { grid-template-columns: 1fr; }
+        }
+
+        /* شبكة الكروت المصغرة - التعديل الأول */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .items-grid { grid-template-columns: 1fr; }
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            padding: 8px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-
-        .form-group { margin-bottom: 12px; }
 
         label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             color: var(--secondary-text);
-            margin-bottom: 4px;
-            font-weight: 600;
+            margin-bottom: 2px;
+            font-weight: bold;
         }
 
-        /* منع التعرّف على الحقول كـ Password Vault */
-        input[type="text"], input[type="number"], select {
+        /* حقول الإدخال مصغرة للغاية وحل مشكلة الباسورد */
+        input[type="text"], input[type="number"], select, input[type="search"] {
             width: 100%;
-            padding: 10px;
+            padding: 4px 6px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 4px;
             color: var(--primary-text);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             text-align: center;
+            height: 32px;
         }
 
         input:focus, select:focus {
@@ -115,56 +127,56 @@
             border-color: var(--accent-color);
         }
 
-        .input-error {
+        .input-invalid {
             border-color: #ef4444 !important;
             background-color: #fef2f2 !important;
+            color: #dc2626 !important;
+            font-weight: bold;
         }
 
         .lens-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 4px;
         }
 
         .tag-btn {
             background-color: #f1f5f9;
             border: 1px solid #cbd5e1;
             color: #334155;
-            padding: 7px 14px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
-        /* تحديد ألوان وتنسيقات الأزرار حسب الإيموجيات المحددة */
-        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); font-weight: bold; color: #713f12; }
-        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); font-weight: bold; color: #14532d; }
-        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); font-weight: bold; color: #0c4a6e; }
-        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); font-weight: bold; color: #1e293b; }
-        .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); color: #ffffff; font-weight: bold; }
-        .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); font-weight: bold; }
-        .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); font-weight: bold; }
-        .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; font-weight: bold; }
+        .tag-btn.active[data-type="Multicoated"] { background-color: var(--color-multicoated); border-color: var(--border-multicoated); color: #713f12; }
+        .tag-btn.active[data-type="Blue Cut (Green)"] { background-color: var(--color-green-cut); border-color: var(--border-green-cut); color: #14532d; }
+        .tag-btn.active[data-type="Blue Cut (Blue)"] { background-color: var(--color-blue-cut); border-color: var(--border-blue-cut); color: #0c4a6e; }
+        .tag-btn.active[data-type="Photochromic"] { background-color: var(--color-photochromic); border-color: var(--border-photochromic); color: #1e293b; }
+        .tag-btn.active[data-type="Photo Blue Cut"] { background-color: var(--color-photo-blue); border-color: var(--border-photo-blue); color: #ffffff; }
+        .tag-btn.active[data-type="Photo Glass"] { background-color: var(--color-photo-glass); border-color: var(--border-photo-glass); }
+        .tag-btn.active[data-type="White Plastic"] { background-color: var(--color-white-plastic); border-color: var(--border-white-plastic); }
+        .tag-btn.active[data-type="Other"] { background-color: #e2e8f0; border-color: #94a3b8; }
 
         .degrees-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: 1fr 1fr 70px;
+            gap: 6px;
+            align-items: center;
         }
 
         .eye-table {
             width: 100%;
-            margin-bottom: 12px;
             border-collapse: collapse;
+            direction: ltr;
         }
 
-        .eye-table th { font-size: 0.75rem; color: var(--secondary-text); padding: 4px; }
-        .eye-table td { padding: 3px; }
-        .eye-table input { padding: 8px 4px; }
+        .eye-table th { font-size: 0.68rem; color: var(--secondary-text); padding: 2px; }
+        .eye-table td { padding: 2px; }
+        .eye-table input { padding: 2px 4px; height: 28px; font-size: 0.8rem; }
 
         .hidden { display: none !important; }
 
@@ -173,42 +185,44 @@
             background: #fff;
             border: 2px dashed var(--accent-color);
             color: var(--accent-color);
-            padding: 12px;
-            border-radius: 10px;
+            padding: 8px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
 
-        .sidebar { position: sticky; top: 20px; height: fit-content; }
+        .sidebar { position: sticky; top: 10px; height: fit-content; }
 
         .preview-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            direction: ltr;
         }
 
         .clinic-header {
             text-align: center;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-            margin-bottom: 12px;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
         }
 
-        .clinic-title { font-size: 1.2rem; font-weight: bold; color: #0f172a; }
-        .clinic-title-ar { font-size: 0.95rem; color: var(--accent-color); font-weight: 600; }
-        .clinic-address { font-size: 0.75rem; color: var(--secondary-text); margin-top: 2px; }
+        .clinic-title { font-size: 1.1rem; font-weight: 900; color: #0f172a; }
+        .clinic-title-ar { font-size: 0.88rem; color: var(--accent-color); font-weight: bold; direction: rtl; }
+        .clinic-address { font-size: 0.7rem; color: var(--secondary-text); direction: rtl; }
 
-        .summary-list { max-height: 420px; overflow-y: auto; margin-bottom: 12px; }
+        .summary-list { max-height: 480px; overflow-y: auto; margin-bottom: 8px; }
 
         .summary-card-group {
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 8px;
-            font-size: 0.82rem;
-            border-left: 5px solid #94a3b8;
+            border-radius: 6px;
+            padding: 6px 8px;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            border-left: 4px solid #94a3b8;
             background-color: #f8fafc;
         }
 
@@ -219,158 +233,62 @@
         .summary-card-group.photo-blue { background-color: var(--color-photo-blue); border-left-color: var(--border-photo-blue); color: #ffffff; }
         .summary-card-group.photo-blue .summary-line-item { border-bottom-color: rgba(255,255,255,0.3); }
 
-        .summary-card-group.photo-glass { background-color: var(--color-photo-glass); border-left-color: var(--border-photo-glass); }
-        .summary-card-group.white-plastic { background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #64748b; }
-
         .summary-line-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0;
-            border-bottom: 1px dashed rgba(0,0,0,0.15);
+            padding: 3px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.12);
+        }
+
+        /* تنسيق الخط الفخم وتكبير الإشارات للتاجر */
+        .degree-bold-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900 !important;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sign-highlight {
+            font-weight: 900 !important;
+            font-size: 1.05rem;
         }
 
         .badge-bifocal {
-            display: inline-block;
-            background-color: #d97706;
-            color: #ffffff;
-            font-size: 0.82rem;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 4px;
+            background-color: #d97706; color: #ffffff; font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px;
         }
 
         .badge-progressive {
-            display: inline-block;
-            background-color: #dc2626;
-            color: #ffffff;
-            font-size: 0.82rem;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 4px;
+            background-color: #dc2626; color: #ffffff; font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px;
         }
 
-        .action-btns { display: flex; flex-direction: column; gap: 8px; }
+        .action-btns { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 
         .btn-action {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             border: none;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.92rem;
+            font-size: 0.88rem;
         }
 
-        .btn-download { background-color: #f97316; color: #fff; opacity: 0.9; }
-        .btn-download:hover { opacity: 1; }
-
+        .btn-download { background-color: #f97316; color: #fff; }
         .btn-whatsapp { background-color: #22c55e; color: #fff; }
 
-        .merchant-split-btn {
-            display: flex;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #4338ca;
-        }
-
-        .merchant-btn-part {
-            flex: 1;
-            padding: 12px 6px;
-            border: none;
-            color: #fff;
-            font-weight: bold;
-            font-size: 0.82rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
+        .merchant-split-btn { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid #4338ca; }
+        .merchant-btn-part { flex: 1; padding: 8px 4px; border: none; color: #fff; font-weight: bold; font-size: 0.78rem; cursor: pointer; text-align: center; }
         .merchant-chat { background-color: #4f46e5; }
         .merchant-call { background-color: #3730a3; border-left: 1px solid #6366f1; }
 
-        .remove-link {
-            color: #ef4444;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
+        .remove-link { color: #ef4444; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 540px;
-            max-height: 85vh;
-            overflow-y: auto;
-            direction: rtl;
-        }
-
-        .stats-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-
-        .stats-table th, .stats-table td {
-            border: 1px solid #cbd5e1;
-            padding: 6px;
-            text-align: center;
-        }
-
-        .stats-table th {
-            background-color: #f1f5f9;
-            color: #1e293b;
-        }
-
-        .backup-section {
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .btn-backup {
-            background-color: #0284c7;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.82rem;
-        }
-
-        .btn-restore {
-            background-color: #16a34a;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.82rem;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #fff; padding: 16px; border-radius: 8px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; direction: rtl; }
+        .stats-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.8rem; }
+        .stats-table th, .stats-table td { border: 1px solid #cbd5e1; padding: 4px; text-align: center; }
+        .stats-table th { background-color: #f1f5f9; }
     </style>
 </head>
 <body>
@@ -393,39 +311,37 @@
 </datalist>
 
 <div class="top-navbar">
-    <h3>Al-Diqqa Optics System</h3>
+    <h3>عيادة الدقة للبصريات - نظام الطلبات</h3>
     <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والأرشيف</button>
 </div>
 
 <div class="main-layout">
     <div class="content-area">
-        <form onsubmit="return false;" autocomplete="off" data-form-type="other">
-            <div id="itemsContainer">
+        <form onsubmit="return false;" autocomplete="off">
+            <div id="itemsContainer" class="items-grid">
+                <!-- الكارت الأول متواجد افتراضياً -->
                 <div class="card order-item" id="item-1">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span style="font-weight: bold; font-size: 0.85rem; color: var(--accent-color);" class="item-title">Prescription #1</span>
-                        <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: bold; font-size: 0.8rem; color: var(--accent-color);" class="item-title">طلب #1</span>
+                        <button type="button" class="remove-link" onclick="removeItem(this)">حذف</button>
                     </div>
 
-                    <div style="margin-bottom: 10px;">
-                        <label>Design Type</label>
+                    <div>
                         <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
-                            <option value="Single Vision">Single Vision (سنجل)</option>
+                            <option value="Single Vision">عادية (عادية)</option>
                             <option value="Bifocal">Bifocal (باي فوكل)</option>
                             <option value="Progressive">Progressive (بروجريسيف)</option>
                         </select>
                     </div>
 
-                    <label>Lens Properties:</label>
                     <div class="lens-tags">
-                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 Blue Cut (Green)</button>
-                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 Blue Cut (Blue)</button>
-                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ Photochromic</button>
-                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ Photo Blue Cut ☀️🌙</button>
-                        <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">Photo Glass 👓</button>
-                        <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">White Plastic</button>
-                        <button type="button" class="tag-btn" data-type="Other" onclick="selectTag(this, 'Other')">Other</button>
+                        <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 مالتي كوتد</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 بلوك أخضر</button>
+                        <button type="button" class="tag-btn" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 بلوك أزرق</button>
+                        <button type="button" class="tag-btn" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ فوتو عادي</button>
+                        <button type="button" class="tag-btn" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ فوتو بلوك ☀️🌙</button>
+                        <button type="button" class="tag-btn" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">فوتو زجاج 👓</button>
+                        <button type="button" class="tag-btn" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">أبيض بلاستيك</button>
                     </div>
                     <input type="hidden" class="selected-tag" value="Multicoated">
 
@@ -433,11 +349,15 @@
                         <div class="degrees-grid">
                             <div>
                                 <label>SPH</label>
-                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                                <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
                             </div>
                             <div>
                                 <label>CYL</label>
-                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                                <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
+                            </div>
+                            <div>
+                                <label>العدد</label>
+                                <input type="number" autocomplete="one-time-code" class="quantity" min="1" value="1" oninput="validateAndFormatInput(this); updateSummary();">
                             </div>
                         </div>
                     </div>
@@ -456,17 +376,509 @@
                             <tbody>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="number" autocomplete="one-time-code" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="jumpToNextPrescription(event, this)" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                                    <td><input type="number" autocomplete="one-time-code" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                                    <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
                                 </tr>
                             </tbody>
-                       
+                        </table>
+                    </div>
+
+                    <div>
+                        <input type="text" autocomplete="one-time-code" style="text-align:right; font-size:0.75rem; height:26px;" class="item-notes" placeholder="ملاحظات (اختياري)" oninput="updateSummary()">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <button type="button" class="add-btn" onclick="addNewItem()">+ إضافة وصفة جديدة</button>
+    </div>
+
+    <div class="sidebar">
+        <div class="preview-card" id="captureArea">
+            <div class="clinic-header">
+                <div class="clinic-title">Al-Diqqa Optics</div>
+                <div class="clinic-title-ar">عيادة الدقة للبصريات</div>
+                <div class="clinic-address">كربلاء المقدسة - مجاور مستشفى العباس الأهلي</div>
+                <div style="font-size: 0.68rem; color: var(--secondary-text); margin-top: 2px;" id="orderDate"></div>
+            </div>
+
+            <div style="font-size: 0.78rem; font-weight: bold; margin-bottom: 4px; color: var(--accent-color); direction: rtl;">تفاصيل الطلب:</div>
+
+            <div class="summary-list" id="summaryList"></div>
+
+            <div style="border-top: 2px dashed var(--border-color); padding-top: 6px; font-size: 0.82rem; font-weight: bold; display: flex; justify-content: space-between; direction: rtl;" id="totalQuantity">
+                <span>إجمالي العدسات:</span> <span>0 قطعة</span>
+            </div>
+        </div>
+
+        <div class="action-btns">
+            <button class="btn-action btn-download" onclick="downloadImage()">📸 حفظ الطلب كصورة كاملة</button>
+            <button class="btn-action btn-whatsapp" onclick="sendWhatsApp()">💬 إرسال الطلب عبر الواتساب</button>
+            
+            <div class="merchant-split-btn">
+                <button class="merchant-btn-part merchant-chat" onclick="openDirectMerchantChat()">💬 محادثة التاجر</button>
+                <button class="merchant-btn-part merchant-call" onclick="callMerchant()">📞 اتصال بالتاجر</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal الإحصائيات -->
+<div class="modal" id="statsModal">
+    <div class="modal-content">
+        <h3 style="margin-top:0; color:var(--accent-color);">📊 إحصائيات العدسات والأرشيف</h3>
+        <hr>
+        <div id="statsBody">
+            <p>جارٍ تحميل الإحصائيات...</p>
+        </div>
+
+        <br>
+        <button onclick="clearHistory()" style="background:#ef4444; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">تفريغ الأرشيف</button>
+        <button onclick="closeStatsModal()" style="background:#64748b; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; float:left; font-weight:bold;">إغلاق</button>
+    </div>
+</div>
+
+<script>
+    const MERCHANT_PHONE = "9647736429201";
+    let itemCount = 1;
+
+    // قاموس الأسماء العربية للتاجر (التعديل العاشر)
+    const arabicLensNames = {
+        "Multicoated": "🟡 مالتي كوتد",
+        "Blue Cut (Green)": "🟢 بلوك أخضر",
+        "Blue Cut (Blue)": "🔵 بلوك أزرق",
+        "Photochromic": "⚪ فوتو عادي",
+        "Photo Blue Cut": "⚫ فوتو بلوك ☀️🌙",
+        "Photo Glass": "فوتو زجاج 👓",
+        "White Plastic": "أبيض بلاستيك",
+        "Other": "أنواع أخرى"
+    };
+
+    document.getElementById('orderDate').innerText = "Date: " + new Date().toLocaleDateString('en-GB');
+
+    function selectTag(btn, val) {
+        const parent = btn.closest('.card');
+        parent.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        parent.querySelector('.selected-tag').value = val;
+        updateSummary();
+    }
+
+    function toggleDesignLayout(selectEl) {
+        const parent = selectEl.closest('.card');
+        const singleSec = parent.querySelector('.single-vision-section');
+        const dualSec = parent.querySelector('.dual-eye-section');
+
+        if (selectEl.value === 'Single Vision') {
+            singleSec.classList.remove('hidden');
+            dualSec.classList.add('hidden');
+        } else {
+            singleSec.classList.add('hidden');
+            dualSec.classList.remove('hidden');
+        }
+    }
+
+    function syncAddLeft(rAddInput) {
+        const parent = rAddInput.closest('.card');
+        const lAddInput = parent.querySelector('.l-add');
+        lAddInput.value = rAddInput.value;
+    }
+
+    // التعديل الثامن: التحقق من مضاعفات الربع 0.25 لتنبيه المستخدم باللون الأحمر
+    function validateAndFormatInput(input) {
+        let val = input.value.trim();
+        if (!val) {
+            input.classList.remove('input-invalid');
+            return;
+        }
+
+        if (input.type === 'number') {
+            return;
+        }
+
+        if (val.toLowerCase() === 'plano') {
+            input.value = 'Plano';
+            input.classList.remove('input-invalid');
+            return;
+        }
+
+        let num = parseFloat(val);
+        if (isNaN(num)) {
+            input.classList.add('input-invalid');
+            return;
+        }
+
+        // فحص الخصم الطبية (مضاعفات 0.25)
+        let remainder = Math.abs(num * 100) % 25;
+        if (remainder !== 0) {
+            input.classList.add('input-invalid'); // تظليل بالأحمر
+        } else {
+            input.classList.remove('input-invalid');
+            let sign = (num > 0) ? '+' : '';
+            input.value = sign + num.toFixed(2);
+        }
+    }
+
+    function formatAddValue(input) {
+        let val = input.value.trim();
+        if (!val) return;
+
+        val = val.replace('+', '');
+        let num = parseFloat(val);
+        if (!isNaN(num)) {
+            input.value = '+' + Math.abs(num).toFixed(2);
+        }
+    }
+
+    // التعديل الثاني: الاحتفاظ بنوع العدسة المختار سابقاً للطلب الجديد
+    function addNewItem() {
+        itemCount++;
+        const container = document.getElementById('itemsContainer');
+        const items = document.querySelectorAll('.order-item');
+        
+        // جلب خامة العدسة والتصميم من الطلب الأخير
+        let lastTag = "Multicoated";
+        let lastDesign = "Single Vision";
+        if (items.length > 0) {
+            const lastItem = items[items.length - 1];
+            lastTag = lastItem.querySelector('.selected-tag').value;
+            lastDesign = lastItem.querySelector('.design-type').value;
+        }
+
+        const newItem = document.createElement('div');
+        newItem.className = 'card order-item';
+        newItem.id = `item-${itemCount}`;
+        newItem.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold; font-size: 0.8rem; color: var(--accent-color);" class="item-title">طلب #${itemCount}</span>
+                <button type="button" class="remove-link" onclick="removeItem(this)">حذف</button>
+            </div>
+
+            <div>
+                <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
+                    <option value="Single Vision" ${lastDesign === 'Single Vision' ? 'selected' : ''}>عادية (عادية)</option>
+                    <option value="Bifocal" ${lastDesign === 'Bifocal' ? 'selected' : ''}>Bifocal (باي فوكل)</option>
+                    <option value="Progressive" ${lastDesign === 'Progressive' ? 'selected' : ''}>Progressive (بروجريسيف)</option>
+                </select>
+            </div>
+
+            <div class="lens-tags">
+                <button type="button" class="tag-btn ${lastTag==='Multicoated'?'active':''}" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 مالتي كوتد</button>
+                <button type="button" class="tag-btn ${lastTag==='Blue Cut (Green)'?'active':''}" data-type="Blue Cut (Green)" onclick="selectTag(this, 'Blue Cut (Green)')">🟢 بلوك أخضر</button>
+                <button type="button" class="tag-btn ${lastTag==='Blue Cut (Blue)'?'active':''}" data-type="Blue Cut (Blue)" onclick="selectTag(this, 'Blue Cut (Blue)')">🔵 بلوك أزرق</button>
+                <button type="button" class="tag-btn ${lastTag==='Photochromic'?'active':''}" data-type="Photochromic" onclick="selectTag(this, 'Photochromic')">⚪ فوتو عادي</button>
+                <button type="button" class="tag-btn ${lastTag==='Photo Blue Cut'?'active':''}" data-type="Photo Blue Cut" onclick="selectTag(this, 'Photo Blue Cut')">⚫ فوتو بلوك ☀️🌙</button>
+                <button type="button" class="tag-btn ${lastTag==='Photo Glass'?'active':''}" data-type="Photo Glass" onclick="selectTag(this, 'Photo Glass')">فوتو زجاج 👓</button>
+                <button type="button" class="tag-btn ${lastTag==='White Plastic'?'active':''}" data-type="White Plastic" onclick="selectTag(this, 'White Plastic')">أبيض بلاستيك</button>
+            </div>
+            <input type="hidden" class="selected-tag" value="${lastTag}">
+
+            <div class="single-vision-section ${lastDesign !== 'Single Vision' ? 'hidden' : ''}">
+                <div class="degrees-grid">
+                    <div>
+                        <label>SPH</label>
+                        <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
+                    </div>
+                    <div>
+                        <label>CYL</label>
+                        <input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()">
+                    </div>
+                    <div>
+                        <label>العدد</label>
+                        <input type="number" autocomplete="one-time-code" class="quantity" min="1" value="1" oninput="validateAndFormatInput(this); updateSummary();">
+                    </div>
+                </div>
+            </div>
+
+            <div class="dual-eye-section ${lastDesign === 'Single Vision' ? 'hidden' : ''}">
+                <table class="eye-table">
+                    <thead>
+                        <tr>
+                            <th>Eye</th>
+                            <th>SPH</th>
+                            <th>CYL</th>
+                            <th>AXIS</th>
+                            <th>ADD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="number" autocomplete="one-time-code" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="validateAndFormatInput(this)" oninput="updateSummary()"></td>
+                            <td><input type="number" autocomplete="one-time-code" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
+                            <td><input type="search" autocomplete="one-time-code" readonly onfocus="this.removeAttribute('readonly');" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <input type="text" autocomplete="one-time-code" style="text-align:right; font-size:0.75rem; height:26px;" class="item-notes" placeholder="ملاحظات (اختياري)" oninput="updateSummary()">
+            </div>
+        `;
+        container.appendChild(newItem);
+        updateSummary();
+    }
+
+    function removeItem(btn) {
+        const items = document.querySelectorAll('.order-item');
+        if (items.length > 1) {
+            btn.closest('.card').remove();
+            updateSummary();
+        } else {
+            alert("يجب إبقاء وصفة واحدة على الأقل.");
+        }
+    }
+
+    // تنسيق النص البرمجي وتكبير الإشارات للتاجر (التعديل الرابع والخامس)
+    function formatDegreeForMerchant(sph, cyl) {
+        let result = "";
+        
+        let hasSph = sph && sph !== '';
+        let hasCyl = cyl && cyl !== '' && cyl !== '0.00';
+
+        if (hasSph) {
+            let formattedSph = sph;
+            if (sph.startsWith('+')) formattedSph = `<b class="sign-highlight">+</b>` + sph.substring(1);
+            else if (sph.startsWith('-')) formattedSph = `<b class="sign-highlight">-</b>` + sph.substring(1);
+            
+            result += `<b>S:</b> <span class="degree-bold-text">${formattedSph}</span>`;
+        }
+
+        // التعديل الخامس: إخفاء السلندر تماماً من الصورة إذا كان فارغاً
+        if (hasCyl) {
+            let formattedCyl = cyl;
+            if (cyl.startsWith('+')) formattedCyl = `<b class="sign-highlight">+</b>` + cyl.substring(1);
+            else if (cyl.startsWith('-')) formattedCyl = `<b class="sign-highlight">-</b>` + cyl.substring(1);
+
+            result += ` | <b>C:</b> <span class="degree-bold-text">${formattedCyl}</span>`;
+        }
+
+        return result;
+    }
+
+    function updateSummary() {
+        const items = document.querySelectorAll('.order-item');
+        const summaryList = document.getElementById('summaryList');
+        summaryList.innerHTML = '';
+        let totalLenses = 0;
+
+        const grouped = {};
+
+        items.forEach((item) => {
+            const design = item.querySelector('.design-type').value;
+            const tag = item.querySelector('.selected-tag').value;
+            const qtyInput = item.querySelector('.quantity');
+            const qtyVal = parseInt(qtyInput.value) || 0;
+            const notes = item.querySelector('.item-notes').value;
+
+            let hasDegrees = false;
+            let lineData = { qty: (design === 'Single Vision') ? qtyVal : 1, notes: notes, design: design };
+
+            if (design === 'Single Vision') {
+                const sph = item.querySelector('.single-sph').value.trim();
+                const cyl = item.querySelector('.single-cyl').value.trim();
+                if (sph || cyl) {
+                    hasDegrees = true;
+                    lineData.type = 'single';
+                    lineData.sph = sph;
+                    lineData.cyl = cyl;
+                    lineData.sphVal = parseFloat(sph) || 0;
+                    lineData.cylVal = parseFloat(cyl) || 0;
+                }
+            } else {
+                const rSph = item.querySelector('.r-sph').value.trim();
+                const rCyl = item.querySelector('.r-cyl').value.trim();
+                const rAxis = item.querySelector('.r-axis').value.trim();
+                const rAdd = item.querySelector('.r-add').value.trim();
+
+                const lSph = item.querySelector('.l-sph').value.trim();
+                const lCyl = item.querySelector('.l-cyl').value.trim();
+                const lAxis = item.querySelector('.l-axis').value.trim();
+                const lAdd = item.querySelector('.l-add').value.trim();
+
+                const hasRight = rSph || rCyl || rAdd;
+                const hasLeft = lSph || lCyl || lAdd;
+
+                if (hasRight || hasLeft) {
+                    hasDegrees = true;
+                    lineData.type = 'dual';
+                    lineData.right = hasRight ? { sph: rSph, cyl: rCyl, axis: rAxis, add: rAdd } : null;
+                    lineData.left = hasLeft ? { sph: lSph, cyl: lCyl, axis: lAxis, add: lAdd } : null;
+                    lineData.commonAdd = (hasRight && hasLeft && rAdd && lAdd && rAdd === lAdd) ? rAdd : null;
+                }
+            }
+
+            if (hasDegrees) {
+                totalLenses += lineData.qty;
+                const groupKey = `${tag}||${design}`;
+                if (!grouped[groupKey]) grouped[groupKey] = { tag: tag, design: design, lines: [] };
+                grouped[groupKey].lines.push(lineData);
+            }
+        });
+
+        // التعديل الثالث: الترتيب التصاعدي المخصص للتاجر
+        Object.keys(grouped).forEach((key) => {
+            const group = grouped[key];
+
+            group.lines.sort((a, b) => {
+                if (a.type === 'single' && b.type === 'single') {
+                    // إذا كان أحدهما يحتوي سلندر والآخر بدون سلندر
+                    let aHasCyl = a.cyl && a.cyl !== '0.00';
+                    let bHasCyl = b.cyl && b.cyl !== '0.00';
+
+                    if (!aHasCyl && !bHasCyl) {
+                        return a.sphVal - b.sphVal; // ترتيب SPH تصاعدياً
+                    } else if (aHasCyl && bHasCyl) {
+                        // ثبات السلندر وترتيب السفير تصاعدياً فوقه
+                        if (a.cylVal !== b.cylVal) return a.cylVal - b.cylVal;
+                        return a.sphVal - b.sphVal;
+                    } else {
+                        return aHasCyl ? 1 : -1;
+                    }
+                }
+                return 0;
+            });
+
+            let colorClass = "";
+            let tagArabic = arabicLensNames[group.tag] || group.tag;
+            
+            if (group.tag.includes("Multicoated")) colorClass = "multicoated";
+            else if (group.tag.includes("Blue Cut (Green)")) colorClass = "green-cut";
+            else if (group.tag.includes("Blue Cut (Blue)")) colorClass = "blue-cut";
+            else if (group.tag.includes("Photochromic")) colorClass = "photochromic";
+            else if (group.tag.includes("Photo Blue Cut")) colorClass = "photo-blue";
+
+            let groupHTML = `<div class="summary-card-group ${colorClass}">`;
+            
+            // التعديل العاشر: عدم كتابة Single Vision بل كتابة الخامة بالعربي فقط
+            let designLabel = "";
+            if (group.design === 'Bifocal') designLabel = `<span class="badge-bifocal">👓 BIFOCAL</span>`;
+            else if (group.design === 'Progressive') designLabel = `<span class="badge-progressive">⚡ PROGRESSIVE</span>`;
+
+            groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.9rem;">${tagArabic}</span>
+                <span>${designLabel}</span>
+            </div>`;
+
+            group.lines.forEach((line) => {
+                groupHTML += `<div class="summary-line-item"><div>`;
+                if (line.type === 'single') {
+                    groupHTML += line.sph.toLowerCase() === 'plano' && (!line.cyl || line.cyl === '0.00') ? 
+                        `<b>Plano</b>` : 
+                        formatDegreeForMerchant(line.sph, line.cyl);
+                } else {
+                    groupHTML += `<div style="font-size: 0.78rem;">`;
+                    if (line.right) groupHTML += `<b>R:</b> ${formatDegreeForMerchant(line.right.sph, line.right.cyl)} ${line.right.axis ? 'x' + line.right.axis + '°' : ''} <br>`;
+                    if (line.left) groupHTML += `<b>L:</b> ${formatDegreeForMerchant(line.left.sph, line.left.cyl)} ${line.left.axis ? 'x' + line.left.axis + '°' : ''}`;
+                    if (line.commonAdd) groupHTML += `<div style="font-size:0.8rem; font-weight:bold; margin-top:1px;">ADD: ${line.commonAdd}</div>`;
+                    groupHTML += `</div>`;
+                }
+                if (line.notes) groupHTML += `<small style="display:block; color:#64748b; font-size:0.7rem; direction:rtl;">ملاحظة: ${line.notes}</small>`;
+                groupHTML += `</div><div style="font-weight:bold; font-size:0.85rem; background:#fff; color:#000; padding:1px 6px; border-radius:4px; border:1px solid #cbd5e1; height:fit-content;">x${line.qty}</div></div>`;
+            });
+
+            groupHTML += `</div>`;
+            summaryList.innerHTML += groupHTML;
+        });
+
+        document.getElementById('totalQuantity').innerHTML = `<span>إجمالي العدسات:</span> <span>${totalLenses} قطعة</span>`;
+    }
+
+    // التعديل التاسع: حل مشكلة قص الصورة للطلبات الكبيرة
+    function downloadImage() {
+        const captureArea = document.getElementById('captureArea');
+        const summaryList = document.getElementById('summaryList');
+
+        // حفظ التنسيق الحالي
+        const originalMaxHeight = summaryList.style.maxHeight;
+        const originalOverflow = summaryList.style.overflowY;
+
+        // إزالة التمرير للتمدد بكامل المحتوى ومنع قص أي طلب
+        summaryList.style.maxHeight = 'none';
+        summaryList.style.overflowY = 'visible';
+
+        html2canvas(captureArea, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            useCORS: true,
+            windowHeight: captureArea.scrollHeight
+        }).then(canvas => {
+            // إعادة التنسيق الطبيعي
+            summaryList.style.maxHeight = originalMaxHeight;
+            summaryList.style.overflowY = originalOverflow;
+
+            const link = document.createElement('a');
+            link.download = `AlDiqqa_Optics_Order_${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
+
+    function sendWhatsApp() {
+        const items = document.querySelectorAll('.order-item');
+        let text = `🏥 *Al-Diqqa Optics - عيادة الدقة للبصريات*\n📍 Karbala - Next to Al-Abbas Hospital\n--------------------------------\n`;
+        let activeCount = 0;
+
+        items.forEach((item) => {
+            const design = item.querySelector('.design-type').value;
+            const tag = item.querySelector('.selected-tag').value;
+            const qty = item.querySelector('.quantity').value;
+            const notes = item.querySelector('.item-notes').value;
+            const tagAr = arabicLensNames[tag] || tag;
+
+            activeCount++;
+            text += `🔹 *#${activeCount} ${tagAr}*\n`;
+            if (design === 'Single Vision') {
+                const sph = item.querySelector('.single-sph').value || '0.00';
+                const cyl = item.querySelector('.single-cyl').value || '';
+                text += `• SPH: ${sph} ${cyl ? '| CYL: ' + cyl : ''}\n`;
+                text += `• *العدد:* ${qty} قطعة\n`;
+            } else {
+                const rSph = item.querySelector('.r-sph').value;
+                const rCyl = item.querySelector('.r-cyl').value;
+                const lSph = item.querySelector('.l-sph').value;
+                const lCyl = item.querySelector('.l-cyl').value;
+
+                if (rSph || rCyl) text += `• *R:* SPH:${rSph} CYL:${rCyl}\n`;
+                if (lSph || lCyl) text += `• *L:* SPH:${lSph} CYL:${lCyl}\n`;
+                text += `• *النوع:* ${design}\n`;
+            }
+            if (notes) text += `• *ملاحظة:* ${notes}\n`;
+            text += `--------------------------------\n`;
+        });
+
+        const msg = encodeURIComponent(text);
+        window.open(`https://wa.me/${MERCHANT_PHONE}?text=${msg}`, '_blank');
+    }
+
+    function openDirectMerchantChat() { window.open(`https://wa.me/${MERCHANT_PHONE}`, '_blank'); }
+    function callMerchant() { window.open(`tel:+${MERCHANT_PHONE}`, '_self'); }
+
+    function openStatsModal() { document.getElementById('statsModal').style.display = 'flex'; }
+    function closeStatsModal() { document.getElementById('statsModal').style.display = 'none'; }
+    function clearHistory() { localStorage.removeItem('optics_orders_v2'); openStatsModal(); }
+
+    updateSummary();
+</script>
+
+</body>
+</html>
+
