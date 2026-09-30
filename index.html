@@ -169,7 +169,10 @@
 
         .degrees-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
         .degrees-grid > div { min-width: 0; }
-        .qty-group label { white-space: nowrap; }
+        .degrees-grid { align-items: end !important; }
+        .degrees-grid label { height: 20px; line-height: 20px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; }
+        .degrees-grid input { height: 42px; margin: 0; }
+        .badge-bifocal, .badge-progressive { white-space: nowrap; }
         .design-notes-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -758,6 +761,39 @@
         return str;
     }
 
+    // ===== ترتيب الوصفات من الأصغر إلى الأكبر =====
+    function parseDeg(v) {
+        if (!v) return 0;
+        const n = parseFloat(String(v).replace(',', '.'));
+        return isNaN(n) ? 0 : n;
+    }
+
+    function sortKey(line) {
+        let sph, cyl;
+        if (line.type === 'single') {
+            sph = parseDeg(line.sph);
+            cyl = parseDeg(line.cyl);
+        } else {
+            const eye = line.right || line.left;
+            sph = parseDeg(eye.sph);
+            cyl = parseDeg(eye.cyl);
+        }
+        return {
+            cylAbs: Math.abs(cyl),          // 1) بدون سلندر أولاً ثم السلندر من الأصغر للأكبر
+            sphGroup: sph > 0 ? 1 : 0,      // 2) السالب (وPlano) قبل الموجب
+            sphAbs: Math.abs(sph),          // 3) السفير من الأصغر للأكبر
+            cylNeg: cyl > 0 ? 1 : 0
+        };
+    }
+
+    function compareLines(a, b) {
+        const ka = sortKey(a), kb = sortKey(b);
+        return (ka.cylAbs - kb.cylAbs)
+            || (ka.sphGroup - kb.sphGroup)
+            || (ka.sphAbs - kb.sphAbs)
+            || (ka.cylNeg - kb.cylNeg);
+    }
+
     function updateSummary() {
         const items = document.querySelectorAll('.order-item');
         const summaryList = document.getElementById('summaryList');
@@ -822,16 +858,17 @@
 
         Object.keys(grouped).forEach((key) => {
             const group = grouped[key];
+            group.lines.sort(compareLines);
 
             let colorClass = "";
             let tagDisplay = group.tag;
             
             // إضافة الأسماء العربية بجانب الإنجليزي لتسهيل قراءتها على التجار
             if (group.tag.includes("Multicoated")) { colorClass = "multicoated"; tagDisplay = "🟡 Multicoated (ملتيكوتد)"; }
-            else if (group.tag.includes("Blue Cut (Green)")) { colorClass = "green-cut"; tagDisplay = "🟢 Blue Cut Green (بلوكت أخضر)"; }
-            else if (group.tag.includes("Blue Cut (Blue)")) { colorClass = "blue-cut"; tagDisplay = "🔵 Blue Cut Blue (بلوكت أزرق)"; }
+            else if (group.tag.includes("Blue Cut (Green)")) { colorClass = "green-cut"; tagDisplay = "🟢 BC Green (بلوكت أخضر)"; }
+            else if (group.tag.includes("Blue Cut (Blue)")) { colorClass = "blue-cut"; tagDisplay = "🔵 BC Blue (بلوكت أزرق)"; }
             else if (group.tag.includes("Photochromic")) { colorClass = "photochromic"; tagDisplay = "⚪ Photochromic (فتوكروميك)"; }
-            else if (group.tag.includes("Photo Blue Cut")) { colorClass = "photo-blue"; tagDisplay = "⚫ Photo Blue Cut (فتو بلوكت)"; }
+            else if (group.tag.includes("Photo Blue Cut")) { colorClass = "photo-blue"; tagDisplay = "⚫ Photo BC (فتو بلوكت)"; }
             else if (group.tag.includes("Photo Glass")) { colorClass = "photo-glass"; tagDisplay = "Photo Glass (فتو زجاج) 👓"; }
             else if (group.tag.includes("White Plastic")) { colorClass = "white-plastic"; tagDisplay = "White Plastic (أبيض بلاستيك)"; }
             else { tagDisplay = `${group.tag} (آخر)`; }
@@ -841,9 +878,9 @@
             // إخفاء وسم Single Vision وعدم إظهار سوى الشارات للأنواع الأخرى فقط
             let designLabel = "";
             if (group.design === 'Bifocal') {
-                designLabel = `<span class="badge-bifocal">👓 BIFOCAL (باي فوكل)</span>`;
+                designLabel = `<span class="badge-bifocal">👓 باي فوكل</span>`;
             } else if (group.design === 'Progressive') {
-                designLabel = `<span class="badge-progressive">⚡ PROGRESSIVE (بروجريسيف)</span>`;
+                designLabel = `<span class="badge-progressive">⚡ بروجريسيف</span>`;
             }
 
             groupHTML += `<div style="font-weight:bold; font-size:0.85rem; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
