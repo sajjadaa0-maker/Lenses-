@@ -166,6 +166,19 @@
         .eye-table td { padding: 3px; }
         .eye-table input { padding: 8px 4px; }
 
+
+        .degrees-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+        .degrees-grid > div { min-width: 0; }
+        .qty-group label { white-space: nowrap; }
+        .design-notes-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .design-notes-row > * { min-width: 0; }
+        .compact-field { padding: 5px 8px !important; font-size: 0.82rem !important; }
+
         .hidden { display: none !important; }
 
         .add-btn {
@@ -407,15 +420,6 @@
                         <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
                     </div>
 
-                    <div style="margin-bottom: 10px;">
-                        <label>Design Type</label>
-                        <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
-                            <option value="Single Vision">Single Vision (سنجل)</option>
-                            <option value="Bifocal">Bifocal (باي فوكل)</option>
-                            <option value="Progressive">Progressive (بروجريسيف)</option>
-                        </select>
-                    </div>
-
                     <label>Lens Properties:</label>
                     <div class="lens-tags">
                         <button type="button" class="tag-btn active" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
@@ -429,16 +433,30 @@
                     </div>
                     <input type="hidden" class="selected-tag" value="Multicoated">
 
+                    <div class="design-notes-row">
+                        <select class="design-type compact-field" onchange="toggleDesignLayout(this); updateSummary();">
+                        <option value="Single Vision">Single Vision (سنجل)</option>
+                        <option value="Bifocal">Bifocal (باي فوكل)</option>
+                        <option value="Progressive">Progressive (بروجريسيف)</option>
+                    </select>
+                        <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes compact-field" placeholder="Notes (Optional)" oninput="updateSummary()">
+                    </div>
+
+
                     <div class="single-vision-section">
                         <div class="degrees-grid">
                             <div>
                                 <label>SPH</label>
-                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next">
                             </div>
                             <div>
                                 <label>CYL</label>
-                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                                <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next">
                             </div>
+                    <div class="qty-group">
+                        <label>Qty (العدد)</label>
+                        <input type="number" inputmode="numeric" autocomplete="new-password" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();" onkeydown="enterNext(event, this)" enterkeyhint="next">
+                    </div>
                         </div>
                     </div>
 
@@ -456,29 +474,20 @@
                             <tbody>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="jumpToNextPrescription(event, this)" oninput="updateSummary()"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                                    <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="form-group qty-group">
-                        <label>Lens Quantity (العدد)</label>
-                        <input type="number" autocomplete="new-password" class="quantity" min="1" onkeydown="jumpToNextPrescription(event, this)" oninput="clearQtyError(this); updateSummary();">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
                     </div>
                 </div>
             </div>
@@ -578,6 +587,20 @@
         lAddInput.value = rAddInput.value;
     }
 
+    function enterNext(event, el) {
+        if (event.key !== 'Enter' && event.keyCode !== 13) return;
+        event.preventDefault();
+        const section = el.closest('.single-vision-section, .dual-eye-section');
+        const fields = Array.from(section.querySelectorAll('input'));
+        const idx = fields.indexOf(el);
+        if (idx > -1 && idx < fields.length - 1) {
+            fields[idx + 1].focus();
+            if (fields[idx + 1].select) fields[idx + 1].select();
+        } else {
+            addNewItem();
+        }
+    }
+
     function jumpToNextPrescription(event, inputEl) {
         if (event.key === 'Enter' || event.keyCode === 13) {
             event.preventDefault();
@@ -637,15 +660,6 @@
                 <button type="button" class="remove-link" onclick="removeItem(this)">Remove</button>
             </div>
 
-            <div style="margin-bottom: 10px;">
-                <label>Design Type</label>
-                <select class="design-type" onchange="toggleDesignLayout(this); updateSummary();">
-                    <option value="Single Vision">Single Vision (سنجل)</option>
-                    <option value="Bifocal">Bifocal (باي فوكل)</option>
-                    <option value="Progressive">Progressive (بروجريسيف)</option>
-                </select>
-            </div>
-
             <label>Lens Properties:</label>
             <div class="lens-tags">
                 <button type="button" class="tag-btn ${lastTag === 'Multicoated' ? 'active' : ''}" data-type="Multicoated" onclick="selectTag(this, 'Multicoated')">🟡 Multicoated</button>
@@ -659,15 +673,29 @@
             </div>
             <input type="hidden" class="selected-tag" value="${lastTag}">
 
+                    <div class="design-notes-row">
+                        <select class="design-type compact-field" onchange="toggleDesignLayout(this); updateSummary();">
+                        <option value="Single Vision">Single Vision (سنجل)</option>
+                        <option value="Bifocal">Bifocal (باي فوكل)</option>
+                        <option value="Progressive">Progressive (بروجريسيف)</option>
+                    </select>
+                        <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes compact-field" placeholder="Notes (Optional)" oninput="updateSummary()">
+                    </div>
+
+
             <div class="single-vision-section">
                 <div class="degrees-grid">
                     <div>
                         <label>SPH</label>
-                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="sph single-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next">
                     </div>
                     <div>
                         <label>CYL</label>
-                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()">
+                        <input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="cyl single-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next">
+                    </div>
+                    <div class="qty-group">
+                        <label>Qty (العدد)</label>
+                        <input type="number" inputmode="numeric" autocomplete="new-password" class="quantity" min="1" oninput="clearQtyError(this); updateSummary();" onkeydown="enterNext(event, this)" enterkeyhint="next">
                     </div>
                 </div>
             </div>
@@ -686,29 +714,20 @@
                     <tbody>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">R</td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="r-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="r-axis" min="1" max="180" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="r-add" onchange="formatAddValue(this); syncAddLeft(this);" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
                         </tr>
                         <tr>
                             <td style="font-weight:bold; color:var(--accent-color); text-align:center;">L</td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()"></td>
-                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" onkeydown="jumpToNextPrescription(event, this)" oninput="updateSummary()"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-sph" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="common-degrees" class="l-cyl" onblur="formatDegreeInput(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="numeric" class="l-axis" min="1" max="180" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
+                            <td><input type="text" autocomplete="new-password" spellcheck="false" inputmode="decimal" list="add-degrees" class="l-add" onchange="formatAddValue(this)" oninput="updateSummary()" onkeydown="enterNext(event, this)" enterkeyhint="next"></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="form-group qty-group">
-                <label>Lens Quantity (العدد)</label>
-                <input type="number" autocomplete="new-password" class="quantity" min="1" onkeydown="jumpToNextPrescription(event, this)" oninput="clearQtyError(this); updateSummary();">
-            </div>
-
-            <div class="form-group" style="margin-bottom: 0;">
-                <input type="text" tabindex="-1" autocomplete="new-password" class="item-notes" placeholder="Notes / Instructions (Optional)" oninput="updateSummary()">
             </div>
         `;
         container.appendChild(newItem);
