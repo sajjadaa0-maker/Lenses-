@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al-Diqqa Optics - Lens Order</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="الدقة للبصريات">
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <!-- مكتبة تحويل العناصر إلى صورة -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -181,6 +188,15 @@
         }
         .design-notes-row > * { min-width: 0; }
         .compact-field { padding: 5px 8px !important; font-size: 0.82rem !important; }
+
+        html, body { overscroll-behavior-y: none; }
+        .top-navbar { flex-wrap: wrap; gap: 8px; }
+        .nav-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        #captureOverlay {
+            position: fixed; inset: 0; background: rgba(255,255,255,0.97);
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: var(--accent-color); font-size: 1rem;
+        }
 
         .hidden { display: none !important; }
 
@@ -410,7 +426,11 @@
 
 <div class="top-navbar">
     <h3>Al-Diqqa Optics System</h3>
-    <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والأرشيف</button>
+    <div class="nav-actions">
+        <button class="btn-stats-toggle hidden" id="installBtn" style="background:#16a34a;" onclick="installApp()">📲 تثبيت التطبيق</button>
+        <button class="btn-stats-toggle" style="background:#dc2626;" onclick="newOrder()">🗑️ طلب جديد</button>
+        <button class="btn-stats-toggle" onclick="openStatsModal()">📊 الإحصائيات والأرشيف</button>
+    </div>
 </div>
 
 <div class="main-layout">
@@ -588,6 +608,7 @@
         const parent = rAddInput.closest('.card');
         const lAddInput = parent.querySelector('.l-add');
         lAddInput.value = rAddInput.value;
+        updateSummary();
     }
 
     function enterNext(event, el) {
@@ -624,6 +645,7 @@
         if (!isNaN(num)) {
             let sign = (num > 0) ? '+' : '';
             input.value = sign + num.toFixed(2);
+            updateSummary();
         }
     }
 
@@ -635,6 +657,7 @@
         let num = parseFloat(val);
         if (!isNaN(num)) {
             input.value = '+' + Math.abs(num).toFixed(2);
+            updateSummary();
         }
     }
 
@@ -644,7 +667,7 @@
         }
     }
 
-    function addNewItem() {
+    function addNewItem(silent) {
         const existingItems = document.querySelectorAll('.order-item');
         let lastTag = "Multicoated";
         if (existingItems.length > 0) {
@@ -735,11 +758,13 @@
         `;
         container.appendChild(newItem);
 
-        newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => {
-            const firstInput = newItem.querySelector('.single-sph');
-            if (firstInput) firstInput.focus();
-        }, 200);
+        if (silent !== true) {
+            newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                const firstInput = newItem.querySelector('.single-sph');
+                if (firstInput) firstInput.focus();
+            }, 200);
+        }
 
         updateSummary();
     }
@@ -917,6 +942,70 @@
         });
 
         document.getElementById('totalQuantity').innerHTML = `<span>Total Lenses:</span> <span>${totalLenses} pcs</span>`;
+        saveDraft();
+    }
+
+    // ===== الحفظ التلقائي للمسودة (لا تضيع الوصفات عند تحديث الصفحة) =====
+    const DRAFT_KEY = 'optics_draft_v1';
+    let isRestoring = false;
+
+    function collectDraft() {
+        return Array.from(document.querySelectorAll('.order-item')).map((item) => {
+            const g = (c) => item.querySelector(c).value;
+            return {
+                design: g('.design-type'), tag: g('.selected-tag'),
+                sph: g('.single-sph'), cyl: g('.single-cyl'), qty: g('.quantity'), notes: g('.item-notes'),
+                rSph: g('.r-sph'), rCyl: g('.r-cyl'), rAxis: g('.r-axis'), rAdd: g('.r-add'),
+                lSph: g('.l-sph'), lCyl: g('.l-cyl'), lAxis: g('.l-axis'), lAdd: g('.l-add')
+            };
+        });
+    }
+
+    function saveDraft() {
+        if (isRestoring) return;
+        try { localStorage.setItem(DRAFT_KEY, JSON.stringify(collectDraft())); } catch (e) {}
+    }
+
+    function restoreDraft() {
+        let d = null;
+        try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) {}
+        if (!Array.isArray(d) || d.length === 0) return;
+
+        isRestoring = true;
+        try {
+            while (document.querySelectorAll('.order-item').length < d.length) addNewItem(true);
+            const items = document.querySelectorAll('.order-item');
+            d.forEach((r, i) => {
+                const item = items[i];
+                if (!item || !r) return;
+                const set = (c, v) => { item.querySelector(c).value = v || ''; };
+
+                const sel = item.querySelector('.design-type');
+                sel.value = ['Single Vision', 'Bifocal', 'Progressive'].includes(r.design) ? r.design : 'Single Vision';
+                toggleDesignLayout(sel);
+
+                const btn = Array.from(item.querySelectorAll('.tag-btn')).find(b => b.dataset.type === r.tag);
+                if (btn) {
+                    item.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    item.querySelector('.selected-tag').value = r.tag;
+                }
+
+                set('.single-sph', r.sph); set('.single-cyl', r.cyl); set('.quantity', r.qty); set('.item-notes', r.notes);
+                set('.r-sph', r.rSph); set('.r-cyl', r.rCyl); set('.r-axis', r.rAxis); set('.r-add', r.rAdd);
+                set('.l-sph', r.lSph); set('.l-cyl', r.lCyl); set('.l-axis', r.lAxis); set('.l-add', r.lAdd);
+            });
+        } finally {
+            isRestoring = false;
+        }
+        updateSummary();
+    }
+
+    function newOrder() {
+        if (!confirm('سيتم مسح كل الوصفات الحالية وبدء طلب جديد. هل أنت متأكد؟')) return;
+        try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+        isRestoring = true;   // منع إعادة حفظ المسودة قبل التحديث
+        location.reload();
     }
 
     function saveOrderToHistory(detailsObj) {
@@ -947,35 +1036,62 @@
         return details;
     }
 
-    function downloadImage() {
-        const captureArea = document.getElementById('captureArea');
-        const summaryList = document.getElementById('summaryList');
+    async function downloadImage() {
+        if (typeof html2canvas === 'undefined') {
+            alert('مكتبة حفظ الصورة غير محمّلة بعد. اتصل بالإنترنت مرة واحدة ثم أعد فتح البرنامج.');
+            return;
+        }
 
-        const origMaxHeight = summaryList.style.maxHeight;
-        const origOverflow = summaryList.style.overflowY;
+        // شاشة تغطي الصفحة أثناء التصوير حتى لا يظهر أي تحرّك أو سكرول
+        const overlay = document.createElement('div');
+        overlay.id = 'captureOverlay';
+        overlay.textContent = '⏳ جارٍ إنشاء الصورة...';
+        document.body.appendChild(overlay);
 
-        summaryList.style.maxHeight = 'none';
-        summaryList.style.overflowY = 'visible';
+        // نسخة مستقلة من الطلب بعرض ثابت وبدون حد للارتفاع (لا نلمس الصفحة الأصلية)
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'position:fixed;left:0;top:0;width:400px;background:#fff;z-index:-1;pointer-events:none;';
+        const clone = document.getElementById('captureArea').cloneNode(true);
+        clone.removeAttribute('id');
+        clone.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+        clone.style.width = '400px';
+        clone.style.boxShadow = 'none';
+        const list = clone.querySelector('.summary-list');
+        if (list) { list.style.maxHeight = 'none'; list.style.overflow = 'visible'; }
+        wrap.appendChild(clone);
+        document.body.appendChild(wrap);
 
-        html2canvas(captureArea, { 
-            backgroundColor: '#ffffff', 
-            scale: 2,
-            windowHeight: captureArea.scrollHeight + 100
-        }).then(canvas => {
-            summaryList.style.maxHeight = origMaxHeight;
-            summaryList.style.overflowY = origOverflow;
+        try {
+            await new Promise(r => setTimeout(r, 60));
+            const canvas = await html2canvas(clone, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                scrollX: 0,
+                scrollY: 0,
+                useCORS: true,
+                logging: false
+            });
 
+            const blob = await new Promise((resolve, reject) => {
+                canvas.toBlob(b => b ? resolve(b) : reject(new Error('تعذّر تحويل الصورة')), 'image/png');
+            });
+
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
+            link.href = url;
             link.download = `AlDiqqa_Optics_${Date.now()}.png`;
-            link.href = canvas.toDataURL();
+            document.body.appendChild(link);
             link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
 
-            const details = extractOrderDetails();
-            saveOrderToHistory(details);
-        }).catch(err => {
-            summaryList.style.maxHeight = origMaxHeight;
-            summaryList.style.overflowY = origOverflow;
-        });
+            saveOrderToHistory(extractOrderDetails());
+        } catch (err) {
+            alert('تعذّر حفظ الصورة: ' + (err && err.message ? err.message : err));
+        } finally {
+            wrap.remove();
+            overlay.remove();
+        }
     }
 
     function sendWhatsApp() {
@@ -1120,8 +1236,10 @@
         const dateStr = new Date().toISOString().slice(0, 10);
         a.href = url;
         a.download = `AlDiqqa_Optics_Backup_${dateStr}.json`;
+        document.body.appendChild(a);
         a.click();
-        URL.revokeObjectURL(url);
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
     }
 
     function importBackup(event) {
@@ -1146,6 +1264,32 @@
         reader.readAsText(file);
     }
 
+    // ===== تثبيت التطبيق + العمل بدون إنترنت =====
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        document.getElementById('installBtn').classList.remove('hidden');
+    });
+    window.addEventListener('appinstalled', () => {
+        deferredInstallPrompt = null;
+        document.getElementById('installBtn').classList.add('hidden');
+    });
+    function installApp() {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.finally(() => {
+            deferredInstallPrompt = null;
+            document.getElementById('installBtn').classList.add('hidden');
+        });
+    }
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+    }
+
+    restoreDraft();
     updateSummary();
 </script>
 
