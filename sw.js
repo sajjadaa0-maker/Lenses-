@@ -1,6 +1,6 @@
 // Service Worker - Al-Diqqa Optics
 // عند تعديل أي ملف من البرنامج غيّر رقم النسخة هنا (v1 -> v2) ليتحدّث عند المستخدمين
-const CACHE = 'aldiqqa-optics-v1';
+const CACHE = 'aldiqqa-optics-v2';
 const LOCAL_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 const HTML2CANVAS = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 

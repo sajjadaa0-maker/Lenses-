@@ -193,10 +193,17 @@
         .top-navbar { flex-wrap: wrap; gap: 8px; }
         .nav-actions { display: flex; gap: 6px; flex-wrap: wrap; }
         #captureOverlay {
-            position: fixed; inset: 0; background: rgba(255,255,255,0.97);
-            z-index: 9999; display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: var(--accent-color); font-size: 1rem;
+            position: fixed; inset: 0; background: var(--bg-color);
+            z-index: 9999;
         }
+        #toast {
+            position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+            background: #16a34a; color: #fff; font-weight: bold; font-size: 0.95rem;
+            padding: 12px 22px; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+            z-index: 10000; white-space: nowrap;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .hidden { display: none !important; }
 
@@ -1036,6 +1043,16 @@
         return details;
     }
 
+    function showToast(msg) {
+        let t = document.getElementById('toast');
+        if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+        t.textContent = msg;
+        void t.offsetWidth;
+        t.classList.add('show');
+        clearTimeout(showToast._timer);
+        showToast._timer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
     async function downloadImage() {
         if (typeof html2canvas === 'undefined') {
             alert('مكتبة حفظ الصورة غير محمّلة بعد. اتصل بالإنترنت مرة واحدة ثم أعد فتح البرنامج.');
@@ -1045,7 +1062,6 @@
         // شاشة تغطي الصفحة أثناء التصوير حتى لا يظهر أي تحرّك أو سكرول
         const overlay = document.createElement('div');
         overlay.id = 'captureOverlay';
-        overlay.textContent = '⏳ جارٍ إنشاء الصورة...';
         document.body.appendChild(overlay);
 
         // نسخة مستقلة من الطلب بعرض ثابت وبدون حد للارتفاع (لا نلمس الصفحة الأصلية)
@@ -1061,6 +1077,7 @@
         wrap.appendChild(clone);
         document.body.appendChild(wrap);
 
+        let saved = false;
         try {
             await new Promise(r => setTimeout(r, 60));
             const canvas = await html2canvas(clone, {
@@ -1086,12 +1103,14 @@
             setTimeout(() => URL.revokeObjectURL(url), 60000);
 
             saveOrderToHistory(extractOrderDetails());
+            saved = true;
         } catch (err) {
             alert('تعذّر حفظ الصورة: ' + (err && err.message ? err.message : err));
         } finally {
             wrap.remove();
             overlay.remove();
         }
+        if (saved) showToast('✅ تم حفظ الصورة');
     }
 
     function sendWhatsApp() {
